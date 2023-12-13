@@ -18,8 +18,7 @@ spring:
       client:
         registration:
           google:
-            client-id: 690154209830-rg21o4rvgi91vels18rlfrpo0mk1831i.apps.googleusercontent.com
-            client-secret: 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
+
           scope:
             - email
             - profile
@@ -27,7 +26,3 @@ spring:
   h2:
     console:
       enabled: true
-
-jwt:
-  issuer: dustjq1005@naver.com
-  secret_key: study_springboot
