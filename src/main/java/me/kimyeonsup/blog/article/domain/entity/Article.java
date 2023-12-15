@@ -1,4 +1,4 @@
-package me.kimyeonsup.blog.domain;
+package me.kimyeonsup.blog.article.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -11,10 +11,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.security.Principal;
 import java.util.List;
-import me.kimyeonsup.blog.domain.Article;
-import me.kimyeonsup.blog.domain.User;
-import me.kimyeonsup.blog.dto.AddArticleRequest;
-import me.kimyeonsup.blog.dto.UpdateArticleRequest;
+import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
+import me.kimyeonsup.blog.article.domain.dto.UpdateArticleRequest;
+import me.kimyeonsup.blog.article.domain.entity.Article;
+import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.repository.BlogRepository;
 import me.kimyeonsup.blog.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +53,7 @@ class BlogApiControllerTest {
     UserRepository userRepository;
 
     User user;
-    
+
     @BeforeEach
     void setSecurityContext() {
         userRepository.deleteAll();

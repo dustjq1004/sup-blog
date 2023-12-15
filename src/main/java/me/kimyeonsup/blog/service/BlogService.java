@@ -2,9 +2,9 @@ package me.kimyeonsup.blog.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.blog.domain.Article;
-import me.kimyeonsup.blog.dto.AddArticleRequest;
-import me.kimyeonsup.blog.dto.UpdateArticleRequest;
+import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
+import me.kimyeonsup.blog.article.domain.dto.UpdateArticleRequest;
+import me.kimyeonsup.blog.article.domain.entity.Article;
 import me.kimyeonsup.blog.repository.BlogRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

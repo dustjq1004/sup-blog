@@ -1,9 +1,9 @@
-package me.kimyeonsup.blog.dto;
+package me.kimyeonsup.blog.article.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.kimyeonsup.blog.domain.Article;
+import me.kimyeonsup.blog.article.domain.entity.Article;
 
 @NoArgsConstructor
 @AllArgsConstructor

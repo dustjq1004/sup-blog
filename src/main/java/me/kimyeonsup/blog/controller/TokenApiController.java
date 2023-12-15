@@ -1,8 +1,8 @@
 package me.kimyeonsup.blog.controller;
 
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.blog.dto.CreateAccessTokenRequest;
-import me.kimyeonsup.blog.dto.CreateAccessTokenResponse;
+import me.kimyeonsup.blog.login.domain.dto.CreateAccessTokenRequest;
+import me.kimyeonsup.blog.login.domain.dto.CreateAccessTokenResponse;
 import me.kimyeonsup.blog.service.TokenService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

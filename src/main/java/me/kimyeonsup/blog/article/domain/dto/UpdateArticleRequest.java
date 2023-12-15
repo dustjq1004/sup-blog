@@ -1,4 +1,4 @@
-package me.kimyeonsup.blog.dto;
+package me.kimyeonsup.blog.article.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

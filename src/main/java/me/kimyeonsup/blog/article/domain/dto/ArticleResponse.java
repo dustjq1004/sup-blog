@@ -1,7 +1,7 @@
-package me.kimyeonsup.blog.dto;
+package me.kimyeonsup.blog.article.domain.dto;
 
 import lombok.Getter;
-import me.kimyeonsup.blog.domain.Article;
+import me.kimyeonsup.blog.article.domain.entity.Article;
 
 @Getter
 public class ArticleResponse {

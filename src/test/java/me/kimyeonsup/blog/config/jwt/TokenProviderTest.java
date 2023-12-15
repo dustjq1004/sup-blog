@@ -6,7 +6,7 @@ import io.jsonwebtoken.Jwts;
 import java.time.Duration;
 import java.util.Date;
 import java.util.Map;
-import me.kimyeonsup.blog.domain.User;
+import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

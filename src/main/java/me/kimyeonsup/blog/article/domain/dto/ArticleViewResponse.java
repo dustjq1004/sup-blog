@@ -1,9 +1,9 @@
-package me.kimyeonsup.blog.dto;
+package me.kimyeonsup.blog.article.domain.dto;
 
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.kimyeonsup.blog.domain.Article;
+import me.kimyeonsup.blog.article.domain.entity.Article;
 
 @NoArgsConstructor
 @Getter

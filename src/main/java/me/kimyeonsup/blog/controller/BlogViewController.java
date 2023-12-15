@@ -2,9 +2,9 @@ package me.kimyeonsup.blog.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.blog.domain.Article;
-import me.kimyeonsup.blog.dto.ArticleListViewResponse;
-import me.kimyeonsup.blog.dto.ArticleViewResponse;
+import me.kimyeonsup.blog.article.domain.dto.ArticleListViewResponse;
+import me.kimyeonsup.blog.article.domain.dto.ArticleViewResponse;
+import me.kimyeonsup.blog.article.domain.entity.Article;
 import me.kimyeonsup.blog.service.BlogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

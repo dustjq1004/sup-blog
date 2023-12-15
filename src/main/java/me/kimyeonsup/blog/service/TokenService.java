@@ -4,7 +4,7 @@ package me.kimyeonsup.blog.service;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.config.jwt.TokenProvider;
-import me.kimyeonsup.blog.domain.User;
+import me.kimyeonsup.blog.login.domain.entity.User;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor

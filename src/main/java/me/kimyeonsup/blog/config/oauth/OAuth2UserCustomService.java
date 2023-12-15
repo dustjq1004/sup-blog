@@ -2,7 +2,7 @@ package me.kimyeonsup.blog.config.oauth;
 
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.blog.domain.User;
+import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.repository.UserRepository;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;

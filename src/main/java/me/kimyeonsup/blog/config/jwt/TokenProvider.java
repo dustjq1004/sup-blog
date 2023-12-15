@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.blog.domain.User;
+import me.kimyeonsup.blog.login.domain.entity.User;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

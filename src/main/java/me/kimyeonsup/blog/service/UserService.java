@@ -1,8 +1,8 @@
 package me.kimyeonsup.blog.service;
 
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.blog.domain.User;
-import me.kimyeonsup.blog.dto.AddUserRequest;
+import me.kimyeonsup.blog.login.domain.dto.AddUserRequest;
+import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
