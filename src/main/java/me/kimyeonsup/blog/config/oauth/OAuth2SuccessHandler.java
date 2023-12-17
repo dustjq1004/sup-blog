@@ -10,7 +10,7 @@ import me.kimyeonsup.blog.config.jwt.TokenProvider;
 import me.kimyeonsup.blog.login.domain.entity.RefreshToken;
 import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.login.repository.RefreshTokenRepository;
-import me.kimyeonsup.blog.service.UserService;
+import me.kimyeonsup.blog.login.service.UserService;
 import me.kimyeonsup.blog.util.CookieUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;

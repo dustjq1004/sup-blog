@@ -1,4 +1,4 @@
-package me.kimyeonsup.blog.service;
+package me.kimyeonsup.blog.article.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class BlogService {
+public class ArticleService {
 
     private final ArticleRepository articleRepository;
 

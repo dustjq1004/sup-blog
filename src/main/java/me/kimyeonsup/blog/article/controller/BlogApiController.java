@@ -7,7 +7,7 @@ import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.blog.article.domain.dto.ArticleResponse;
 import me.kimyeonsup.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.blog.article.domain.entity.Article;
-import me.kimyeonsup.blog.service.BlogService;
+import me.kimyeonsup.blog.article.service.ArticleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,18 +22,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BlogApiController {
 
-    private final BlogService blogService;
+    private final ArticleService articleService;
 
     @PostMapping("/api/articles")
     public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request, Principal principal) {
-        Article savedArticle = blogService.save(request, principal.getName());
+        Article savedArticle = articleService.save(request, principal.getName());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(savedArticle);
     }
 
     @GetMapping("/api/articles")
     public ResponseEntity<List<ArticleResponse>> findAllArticles() {
-        List<ArticleResponse> articles = blogService.findAll()
+        List<ArticleResponse> articles = articleService.findAll()
                 .stream()
                 .map(ArticleResponse::new)
                 .toList();
@@ -44,7 +44,7 @@ public class BlogApiController {
 
     @GetMapping("/api/articles/{id}")
     public ResponseEntity<ArticleResponse> findArticle(@PathVariable long id) {
-        Article article = blogService.findById(id);
+        Article article = articleService.findById(id);
 
         return ResponseEntity.ok()
                 .body(new ArticleResponse(article));
@@ -52,7 +52,7 @@ public class BlogApiController {
 
     @DeleteMapping("/api/articles/{id}")
     public ResponseEntity<Void> deleteArticle(@PathVariable long id) {
-        blogService.delete(id);
+        articleService.delete(id);
 
         return ResponseEntity.ok()
                 .build();
@@ -61,7 +61,7 @@ public class BlogApiController {
     @PutMapping("/api/articles/{id}")
     public ResponseEntity<Article> updateArticle(@PathVariable long id,
                                                  @RequestBody UpdateArticleRequest request) {
-        Article updatedArticle = blogService.update(id, request);
+        Article updatedArticle = articleService.update(id, request);
 
         return ResponseEntity.ok()
                 .body(updatedArticle);

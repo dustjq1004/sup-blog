@@ -3,7 +3,7 @@ package me.kimyeonsup.blog.login.controller;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.login.domain.dto.CreateAccessTokenRequest;
 import me.kimyeonsup.blog.login.domain.dto.CreateAccessTokenResponse;
-import me.kimyeonsup.blog.service.TokenService;
+import me.kimyeonsup.blog.login.service.TokenService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

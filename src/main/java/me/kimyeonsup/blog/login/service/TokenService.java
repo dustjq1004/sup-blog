@@ -1,4 +1,4 @@
-package me.kimyeonsup.blog.service;
+package me.kimyeonsup.blog.login.service;
 
 
 import java.time.Duration;

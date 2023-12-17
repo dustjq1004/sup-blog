@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.article.domain.dto.ArticleListViewResponse;
 import me.kimyeonsup.blog.article.domain.dto.ArticleViewResponse;
 import me.kimyeonsup.blog.article.domain.entity.Article;
-import me.kimyeonsup.blog.service.BlogService;
+import me.kimyeonsup.blog.article.service.ArticleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class BlogViewController {
 
-    private final BlogService blogService;
+    private final ArticleService articleService;
 
     @GetMapping("/articles")
     public String getArticles(Model model) {
-        List<ArticleListViewResponse> articles = blogService.findAll().stream()
+        List<ArticleListViewResponse> articles = articleService.findAll().stream()
                 .map(ArticleListViewResponse::new)
                 .toList();
         model.addAttribute("articles", articles);
@@ -30,7 +30,7 @@ public class BlogViewController {
 
     @GetMapping("/articles/{id}")
     public String getArticle(@PathVariable Long id, Model model) {
-        Article article = blogService.findById(id);
+        Article article = articleService.findById(id);
         model.addAttribute("article", new ArticleViewResponse(article));
 
         return "article";
@@ -41,7 +41,7 @@ public class BlogViewController {
         if (id == null) {
             model.addAttribute("article", new ArticleViewResponse());
         } else {
-            Article article = blogService.findById(id);
+            Article article = articleService.findById(id);
             model.addAttribute("article", new ArticleViewResponse(article));
         }
 

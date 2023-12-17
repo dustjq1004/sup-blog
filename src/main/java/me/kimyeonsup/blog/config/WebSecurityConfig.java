@@ -3,7 +3,7 @@
 //import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 //
 //import lombok.RequiredArgsConstructor;
-//import me.kimyeonsup.blog.service.UserDetailService;
+//import me.kimyeonsup.blog.login.service.UserDetailService;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.security.authentication.AuthenticationManager;

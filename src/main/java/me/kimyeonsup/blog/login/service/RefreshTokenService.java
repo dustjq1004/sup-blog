@@ -1,4 +1,4 @@
-package me.kimyeonsup.blog.service;
+package me.kimyeonsup.blog.login.service;
 
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.login.domain.entity.RefreshToken;
