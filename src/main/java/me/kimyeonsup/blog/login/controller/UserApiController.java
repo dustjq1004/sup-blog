@@ -1,4 +1,4 @@
-package me.kimyeonsup.blog.controller;
+package me.kimyeonsup.blog.login.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

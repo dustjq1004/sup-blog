@@ -1,4 +1,4 @@
-package me.kimyeonsup.blog.controller;
+package me.kimyeonsup.blog.login.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

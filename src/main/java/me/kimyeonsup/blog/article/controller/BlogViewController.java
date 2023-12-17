@@ -1,4 +1,4 @@
-package me.kimyeonsup.blog.controller;
+package me.kimyeonsup.blog.article.controller;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package me.kimyeonsup.blog.controller;
+package me.kimyeonsup.blog.login.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.login.domain.dto.CreateAccessTokenRequest;
