@@ -1,7 +1,7 @@
 package me.kimyeonsup.blog.service;
 
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.blog.repository.UserRepository;
+import me.kimyeonsup.blog.login.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

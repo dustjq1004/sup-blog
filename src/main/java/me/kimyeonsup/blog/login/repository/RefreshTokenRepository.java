@@ -1,4 +1,4 @@
-package me.kimyeonsup.blog.repository;
+package me.kimyeonsup.blog.login.repository;
 
 import java.util.Optional;
 import me.kimyeonsup.blog.login.domain.entity.RefreshToken;

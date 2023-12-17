@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.Map;
 import me.kimyeonsup.blog.login.domain.entity.User;
-import me.kimyeonsup.blog.repository.UserRepository;
+import me.kimyeonsup.blog.login.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

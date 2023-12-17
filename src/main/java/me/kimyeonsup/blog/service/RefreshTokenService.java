@@ -2,7 +2,7 @@ package me.kimyeonsup.blog.service;
 
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.login.domain.entity.RefreshToken;
-import me.kimyeonsup.blog.repository.RefreshTokenRepository;
+import me.kimyeonsup.blog.login.repository.RefreshTokenRepository;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor

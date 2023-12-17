@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.blog.article.domain.entity.Article;
-import me.kimyeonsup.blog.repository.BlogRepository;
+import me.kimyeonsup.blog.article.repository.ArticleRepository;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,33 +14,33 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class BlogService {
 
-    private final BlogRepository blogRepository;
+    private final ArticleRepository articleRepository;
 
     public Article save(AddArticleRequest request, String userName) {
-        return blogRepository.save(request.toEntity(userName));
+        return articleRepository.save(request.toEntity(userName));
     }
 
     public List<Article> findAll() {
-        return blogRepository.findAll();
+        return articleRepository.findAll();
     }
 
     public Article findById(long id) {
-        return blogRepository.findById(id)
+        return articleRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
     }
 
     public void delete(long id) {
-        Article article = blogRepository.findById(id)
+        Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
 
         authorizeArticleAuthor(article);
-        blogRepository.delete(article);
+        articleRepository.delete(article);
     }
 
 
     @Transactional
     public Article update(long id, UpdateArticleRequest request) {
-        Article article = blogRepository.findById(id)
+        Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
 
         authorizeArticleAuthor(article);

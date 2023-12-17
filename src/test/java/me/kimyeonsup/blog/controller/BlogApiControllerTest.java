@@ -14,9 +14,9 @@ import java.util.List;
 import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.blog.article.domain.entity.Article;
+import me.kimyeonsup.blog.article.repository.ArticleRepository;
 import me.kimyeonsup.blog.login.domain.entity.User;
-import me.kimyeonsup.blog.repository.BlogRepository;
-import me.kimyeonsup.blog.repository.UserRepository;
+import me.kimyeonsup.blog.login.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,7 +47,7 @@ class BlogApiControllerTest {
     private WebApplicationContext context;
 
     @Autowired
-    BlogRepository blogRepository;
+    ArticleRepository articleRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -71,7 +71,7 @@ class BlogApiControllerTest {
     public void mockMvcSetUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .build();
-        blogRepository.deleteAll();
+        articleRepository.deleteAll();
     }
 
     @DisplayName("addArticle: 블로그 글 추가에 성공한다.")
@@ -97,7 +97,7 @@ class BlogApiControllerTest {
         // then
         result.andExpect(status().isCreated());
 
-        List<Article> articles = blogRepository.findAll();
+        List<Article> articles = articleRepository.findAll();
 
         assertThat(articles.size()).isEqualTo(1);
         assertThat(articles.get(0).getTitle()).isEqualTo(title);
@@ -152,7 +152,7 @@ class BlogApiControllerTest {
                 .andExpect(status().isOk());
 
         // then
-        List<Article> articles = blogRepository.findAll();
+        List<Article> articles = articleRepository.findAll();
 
         assertThat(articles).isEmpty();
     }
@@ -177,14 +177,14 @@ class BlogApiControllerTest {
         // then
         result.andExpect(status().isOk());
 
-        Article article = blogRepository.findById(savedArticle.getId()).get();
+        Article article = articleRepository.findById(savedArticle.getId()).get();
 
         assertThat(article.getTitle()).isEqualTo(newTitle);
         assertThat(article.getContent()).isEqualTo(newContent);
     }
 
     private Article createDefaultArticle() {
-        return blogRepository.save(Article.builder()
+        return articleRepository.save(Article.builder()
                 .title("title")
                 .author(user.getUsername())
                 .content("content")

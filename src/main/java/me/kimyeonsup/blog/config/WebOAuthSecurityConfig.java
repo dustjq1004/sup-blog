@@ -7,7 +7,7 @@ import me.kimyeonsup.blog.config.jwt.TokenProvider;
 import me.kimyeonsup.blog.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import me.kimyeonsup.blog.config.oauth.OAuth2SuccessHandler;
 import me.kimyeonsup.blog.config.oauth.OAuth2UserCustomService;
-import me.kimyeonsup.blog.repository.RefreshTokenRepository;
+import me.kimyeonsup.blog.login.repository.RefreshTokenRepository;
 import me.kimyeonsup.blog.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
