@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>블로그 글</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-</head>
-<body>
-<div class="p-5 mb-5 text-center</> bg-light">
-    <h1 class="mb-3">My Blog</h1>
-    <h4 class="mb-3">블로그에 오신 것을 환영합니다.</h4>
-</div>
+<div th:include="layouts/head"></div>
+<body class="bg-light">
+<div th:include="layouts/navigator" th:with="title=Blog"></div>
 
 <div class="container mt-5">
     <div class="row">
@@ -35,6 +28,6 @@
         </div>
     </div>
 </div>
-
+<div th:include="layouts/footer"></div>
 <script src="/js/article.js"></script>
 </body>
