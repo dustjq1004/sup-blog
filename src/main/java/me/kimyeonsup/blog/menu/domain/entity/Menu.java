@@ -11,15 +11,16 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @Getter
 @RequiredArgsConstructor
-public class Category {
+public class Menu {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
-    private Long Id;
+    @Column
+    private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "category_id")
+    private Long categoryId;
+
+    @Column
     private String name;
-
-    private Menu menu;
 }
