@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class Category {
     private String name;
 
     @OneToMany
-    private List<Menu> menus;
+    private List<Menu> menus = new ArrayList<>();
 
     @Builder
     public Category(Long id, String name, List<Menu> menus) {

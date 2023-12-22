@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CategoryService {
 
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     public Category save(AddCategoryRequest request) {
         return categoryRepository.save(request.toEntity());
