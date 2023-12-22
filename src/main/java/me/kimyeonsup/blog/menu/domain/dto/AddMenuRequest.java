@@ -3,18 +3,20 @@ package me.kimyeonsup.blog.menu.domain.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.kimyeonsup.blog.menu.domain.entity.Category;
+import me.kimyeonsup.blog.menu.domain.entity.Menu;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class AddCategoryRequest {
+public class AddMenuRequest {
 
     private String name;
+    private Long categoryId;
 
-    public Category toEntity() {
-        return Category.builder()
+    public Menu toEntity() {
+        return Menu.builder()
                 .name(name)
+                .categoryId(categoryId)
                 .build();
     }
 }

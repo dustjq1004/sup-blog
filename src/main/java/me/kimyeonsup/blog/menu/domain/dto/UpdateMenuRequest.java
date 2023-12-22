@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class UpdateCategoryRequest {
+public class UpdateMenuRequest {
     private String name;
+    private Long categoryId;
 }
