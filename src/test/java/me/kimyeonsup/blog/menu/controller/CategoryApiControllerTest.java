@@ -1,15 +1,19 @@
 package me.kimyeonsup.blog.menu.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.login.repository.UserRepository;
 import me.kimyeonsup.blog.menu.domain.dto.AddCategoryRequest;
+import me.kimyeonsup.blog.menu.domain.dto.UpdateCategoryRequest;
 import me.kimyeonsup.blog.menu.domain.entity.Category;
 import me.kimyeonsup.blog.menu.repository.CategoryRepository;
 import me.kimyeonsup.blog.menu.repository.MenuRepository;
@@ -102,7 +106,52 @@ class CategoryApiControllerTest {
 
         assertThat(categories.size()).isEqualTo(1);
         assertThat(categories.get(0).getName()).isEqualTo(name);
-        ;
+    }
+
+    @DisplayName("deleteArticle : 카테고리를 삭제한다.")
+    @Test
+    void deleteCategory() throws Exception {
+        final String url = "/api/category/{id}";
+        Category savedCategory = savedCategory();
+
+        //when
+        mockMvc.perform(delete(url, savedCategory.getId()))
+                .andExpect(status().isOk());
+
+        //then
+        List<Category> categories = categoryRepository.findAll();
+
+        assertThat(categories).isEmpty();
+    }
+
+    @DisplayName("카테고리 이름을 수정한다.")
+    @Test
+    void updateCategory() throws Exception {
+        final String url = "/api/category/{id}";
+        Category savedCategory = savedCategory();
+
+        final String newName = "인프라";
+
+        UpdateCategoryRequest request = new UpdateCategoryRequest(newName);
+
+        //when
+        ResultActions result = mockMvc.perform(put(url, savedCategory.getId())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(request)));
+
+        //then
+        result.andExpect(status().isOk());
+
+        Category category = categoryRepository.findById(savedCategory.getId()).get();
+
+        assertThat(category.getName()).isEqualTo(newName);
+    }
+
+    private Category savedCategory() {
+        return categoryRepository.save(Category.builder()
+                .name("언어")
+                .menus(new ArrayList<>())
+                .build());
     }
 
 }
