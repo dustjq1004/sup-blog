@@ -8,15 +8,15 @@ import me.kimyeonsup.blog.menu.domain.entity.Menu;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class AddMenuRequest {
+public class MenuResponse {
 
+    private Long id;
     private Long categoryId;
     private String name;
 
-    public Menu toEntity() {
-        return Menu.builder()
-                .name(name)
-                .categoryId(categoryId)
-                .build();
+    public MenuResponse(Menu menu) {
+        this.id = menu.getId();
+        this.categoryId = menu.getCategoryId();
+        this.name = menu.getName();
     }
 }

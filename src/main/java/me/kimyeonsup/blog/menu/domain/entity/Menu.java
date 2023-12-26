@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -23,4 +24,16 @@ public class Menu {
 
     @Column
     private String name;
+
+    @Builder
+    public Menu(Long id, Long categoryId, String name) {
+        this.id = id;
+        this.categoryId = categoryId;
+        this.name = name;
+    }
+
+    public void update(String name, Long categoryId) {
+        this.name = name;
+        this.categoryId = categoryId;
+    }
 }
