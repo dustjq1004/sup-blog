@@ -1,0 +1,54 @@
+:root {
+    --background-white: #ffffff;
+    --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+}
+
+/*
+common
+- color
+*/
+
+header {
+    border-bottom: 3px solid #7952B3;
+}
+
+.bg-light {
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--background-white), var(--bs-bg-opacity)) !important;
+}
+
+.bd-navbar {
+    padding: 0.75rem 0;
+    background-color: transparent;
+    background-image: linear-gradient(to bottom, rgba(var(--bd-violet-rgb), 1), rgba(var(--bd-violet-rgb), 0.95));
+    box-shadow: 0 0rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+
+/*
+common
+- size
+*/
+
+.navbar > .container, .navbar > .container-fluid, .navbar > .container-lg, .navbar > .container-md, .navbar > .container-sm, .navbar > .container-xl, .navbar > .container-xxl {
+    display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1320px;
+}
+
+@media (min-width: 1400px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 1140px;
+    }
+}
+
+/*
+common
+- layout
+*/
+.content {
+    grid-template-columns: 1.15fr 3fr;
+    gap: 3rem;
+}
