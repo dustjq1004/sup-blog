@@ -1,6 +1,9 @@
 :root {
     --background-white: #ffffff;
     --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+    --bs-body-color: #212529;
+    --bd-sidebar-link-bg: rgba(var(--bd-violet-rgb), .1);
 }
 
 /*
@@ -45,6 +48,23 @@ common
 - layout
 */
 .content {
-    grid-template-columns: 1.15fr 3fr;
+    grid-template-columns: 0.8fr 3fr;
     gap: 3rem;
+}
+
+/*
+common
+- tag style
+*/
+
+.bd-links-link {
+    padding: 0.1875rem 0.5rem;
+    margin-top: 0.125rem;
+    /*margin-left: 1.125rem;*/
+    color: var(--bs-body-color);
+    text-decoration: none;
+}
+
+.bd-links-link:hover, .bd-links-link:focus, .bd-links-link.active {
+    background-color: var(--bd-sidebar-link-bg);
 }
