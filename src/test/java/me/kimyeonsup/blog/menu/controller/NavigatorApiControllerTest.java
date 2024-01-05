@@ -75,7 +75,7 @@ class NavigatorApiControllerTest {
         categoryRepository.deleteAll();
     }
 
-    @DisplayName("findAllArticles : 블로그 글 목록 조회에 성공한다.")
+    @DisplayName("findAll : 블로그 메뉴를 조회 한다.")
     @Test
     public void findAllArticle() throws Exception {
         // given
@@ -102,7 +102,7 @@ class NavigatorApiControllerTest {
 
         Menu savedMenu = menuRepository.save(Menu.builder()
                 .name("자바")
-                .categoryId(savedCategory.getId())
+                .category(savedCategory)
                 .build());
 
         savedCategory.getMenus().add(savedMenu);

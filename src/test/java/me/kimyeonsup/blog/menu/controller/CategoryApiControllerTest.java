@@ -78,6 +78,7 @@ class CategoryApiControllerTest {
     public void mockMvcSetUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .build();
+        menuRepository.deleteAll();
         categoryRepository.deleteAll();
     }
 

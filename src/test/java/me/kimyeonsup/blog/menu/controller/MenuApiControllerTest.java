@@ -155,7 +155,7 @@ class MenuApiControllerTest {
     private Menu savedMenu(Category category) {
         return menuRepository.save(Menu.builder()
                 .name("자바")
-                .categoryId(category.getId())
+                .category(category)
                 .build());
     }
 }
