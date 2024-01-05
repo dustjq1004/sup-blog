@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.menu.domain.dto.AddMenuRequest;
 import me.kimyeonsup.blog.menu.domain.dto.MenuResponse;
 import me.kimyeonsup.blog.menu.domain.dto.UpdateMenuRequest;
+import me.kimyeonsup.blog.menu.domain.entity.Category;
 import me.kimyeonsup.blog.menu.domain.entity.Menu;
+import me.kimyeonsup.blog.menu.repository.CategoryRepository;
 import me.kimyeonsup.blog.menu.repository.MenuRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,9 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class MenuService {
 
     private final MenuRepository menuRepository;
+    private final CategoryRepository categoryRepository;
 
     public MenuResponse save(AddMenuRequest request) {
-        return new MenuResponse(menuRepository.save(request.toEntity()));
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new IllegalArgumentException("not found: " + request.getCategoryId()));
+        return new MenuResponse(menuRepository.save(request.toEntity(category)));
     }
 
     public List<Menu> findAll() {
@@ -34,7 +39,9 @@ public class MenuService {
     public MenuResponse update(long id, UpdateMenuRequest request) {
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
-        menu.update(request.getName(), request.getCategoryId());
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + request.getCategoryId()));
+        menu.update(request.getName(), category);
         return new MenuResponse(menu);
     }
 }
