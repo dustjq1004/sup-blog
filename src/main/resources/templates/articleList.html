@@ -54,7 +54,7 @@
                         <li th:each="menu : ${item.menus}">
                             <a href="/docs/5.3/getting-started/introduction/"
                                class="bd-links-link d-inline-block rounded active" aria-current="page"
-                               th:text="menu.name">
+                               th:text="${menu.name}">
                                 시작하기
                             </a>
                         </li>
