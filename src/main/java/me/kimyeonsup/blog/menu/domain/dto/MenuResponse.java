@@ -16,7 +16,7 @@ public class MenuResponse {
 
     public MenuResponse(Menu menu) {
         this.id = menu.getId();
-        this.categoryId = menu.getCategoryId();
+        this.categoryId = menu.getCategory().getId();
         this.name = menu.getName();
     }
 }
