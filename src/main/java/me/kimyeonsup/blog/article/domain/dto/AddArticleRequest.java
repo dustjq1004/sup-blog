@@ -12,11 +12,13 @@ public class AddArticleRequest {
 
     private String title;
     private String content;
+    private Long menuId;
 
     public Article toEntity(String author) {
         return Article.builder()
                 .title(title)
                 .content(content)
+                .menuId(menuId)
                 .author(author)
                 .build();
     }
