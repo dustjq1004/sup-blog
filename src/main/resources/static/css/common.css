@@ -7,6 +7,10 @@ html, body {
     overflow-x: hidden;
 }
 
+a {
+    cursor: pointer;
+}
+
 .nav-scroller {
     position: relative;
     z-index: 2;
@@ -18,3 +22,4 @@ html, body {
     --bs-bg-opacity: 1;
     background-color: var(--white) !important;
 }
+
