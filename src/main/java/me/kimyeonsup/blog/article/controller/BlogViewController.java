@@ -3,7 +3,7 @@ package me.kimyeonsup.blog.article.controller;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.blog.article.domain.dto.ArticleListViewResponse;
+import me.kimyeonsup.blog.article.domain.dto.ArticleResponse;
 import me.kimyeonsup.blog.article.domain.dto.ArticleViewResponse;
 import me.kimyeonsup.blog.article.domain.entity.Article;
 import me.kimyeonsup.blog.article.service.ArticleService;
@@ -22,27 +22,35 @@ public class BlogViewController {
     private final ArticleService articleService;
     private final CategoryService categoryService;
 
-    @GetMapping("/articles")
+    @GetMapping("/blog")
     public String getArticles(@RequestParam(required = false) Long menuId, Model model) {
-        List<ArticleListViewResponse> articles = null;
         List<CategoryResponse> categories = categoryService.findAll().stream()
                 .map(CategoryResponse::new)
                 .toList();
 
-        if (Objects.isNull(menuId)) {
-            articles = articleService.findAll().stream()
-                    .map(ArticleListViewResponse::new)
-                    .toList();
-        } else {
-            articles = articleService.findByMenuId(menuId).stream()
-                    .map(ArticleListViewResponse::new)
-                    .toList();
-        }
-        
-        model.addAttribute("articles", articles);
         model.addAttribute("categories", categories);
 
         return "articleList";
+    }
+
+    @GetMapping("/articles")
+    public String findAllArticles(@RequestParam(required = false) Long menuId, Model model) {
+        List<ArticleResponse> articles = null;
+        if (Objects.isNull(menuId)) {
+            articles = articleService.findAll()
+                    .stream()
+                    .map(ArticleResponse::new)
+                    .toList();
+        } else {
+            articles = articleService.findByMenuId(menuId)
+                    .stream()
+                    .map(ArticleResponse::new)
+                    .toList();
+        }
+
+        model.addAttribute("articles", articles);
+
+        return "articleList :: #article-list";
     }
 
     @GetMapping("/articles/{id}")

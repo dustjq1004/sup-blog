@@ -1,7 +1,6 @@
 package me.kimyeonsup.blog.article.controller;
 
 import java.security.Principal;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.blog.article.domain.dto.ArticleResponse;
@@ -29,17 +28,6 @@ public class BlogApiController {
         Article savedArticle = articleService.save(request, principal.getName());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(savedArticle);
-    }
-
-    @GetMapping("/api/articles")
-    public ResponseEntity<List<ArticleResponse>> findAllArticles() {
-        List<ArticleResponse> articles = articleService.findAll()
-                .stream()
-                .map(ArticleResponse::new)
-                .toList();
-
-        return ResponseEntity.ok()
-                .body(articles);
     }
 
     @GetMapping("/api/articles/{id}")

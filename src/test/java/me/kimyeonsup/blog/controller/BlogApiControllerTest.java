@@ -1,10 +1,12 @@
 package me.kimyeonsup.blog.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -81,7 +83,7 @@ class BlogApiControllerTest {
         final String url = "/api/articles";
         final String title = "title";
         final String content = "content";
-        final AddArticleRequest userRequest = new AddArticleRequest(title, content);
+        final AddArticleRequest userRequest = new AddArticleRequest(title, content, 1L);
 
         final String requestBody = objectMapper.writeValueAsString(userRequest);
 
@@ -108,18 +110,18 @@ class BlogApiControllerTest {
     @Test
     public void findAllArticle() throws Exception {
         // given
-        final String url = "/api/articles";
+        final String url = "/articles";
         Article savedArticle = createDefaultArticle();
 
         // when
         final ResultActions resultActions = mockMvc.perform(get(url)
-                .accept(MediaType.APPLICATION_JSON));
+                .accept(MediaType.TEXT_HTML));
 
         // then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].content").value(savedArticle.getContent()))
-                .andExpect(jsonPath("$[0].title").value(savedArticle.getTitle()));
+                .andExpect(content().string(containsString(savedArticle.getContent())))
+                .andExpect(content().string(containsString(savedArticle.getTitle())));
 
     }
 
