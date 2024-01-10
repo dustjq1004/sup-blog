@@ -1,3 +1,21 @@
+// 조회 기능
+const sendGetRequest = (menuId) => {
+    const data = {
+        "menuId": menuId
+    };
+
+    function success(fragment) {
+        $('#article-list').replaceWith(fragment);
+    }
+
+    function fail() {
+    }
+
+    ajaxGetRequest('GET', '/articles', data, success, fail);
+}
+
+sendGetRequest();
+
 // 삭제 기능
 const deleteButton = document.getElementById('delete-btn');
 
@@ -54,7 +72,8 @@ if (createButton) {
     createButton.addEventListener('click', event => {
         body = JSON.stringify({
             title: document.getElementById('title').value,
-            content: document.getElementById('content').value
+            content: document.getElementById('content').value,
+            menuId: document.getElementById('menu').value
         });
 
         function success() {
@@ -88,6 +107,17 @@ function getCookie(key) {
     });
 
     return result;
+}
+
+
+function ajaxGetRequest(method, url, data, success, fail) {
+    $.ajax({
+        url: url,
+        type: method,
+        data: data,
+        success: success,
+        fail: fail
+    });
 }
 
 // HTTP 요청을 보내는 함수
