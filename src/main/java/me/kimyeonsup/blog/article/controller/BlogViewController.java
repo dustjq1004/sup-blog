@@ -3,12 +3,15 @@ package me.kimyeonsup.blog.article.controller;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import me.kimyeonsup.blog.article.domain.dto.ArticleListViewResponse;
 import me.kimyeonsup.blog.article.domain.dto.ArticleResponse;
-import me.kimyeonsup.blog.article.domain.dto.ArticleViewResponse;
+import me.kimyeonsup.blog.article.domain.dto.ArticleUpdatedResponse;
 import me.kimyeonsup.blog.article.domain.entity.Article;
 import me.kimyeonsup.blog.article.service.ArticleService;
 import me.kimyeonsup.blog.menu.domain.dto.CategoryResponse;
+import me.kimyeonsup.blog.menu.domain.dto.MenuResponse;
 import me.kimyeonsup.blog.menu.service.CategoryService;
+import me.kimyeonsup.blog.menu.service.MenuService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +24,7 @@ public class BlogViewController {
 
     private final ArticleService articleService;
     private final CategoryService categoryService;
+    private final MenuService menuService;
 
     @GetMapping("/blog")
     public String getArticles(@RequestParam(required = false) Long menuId, Model model) {
@@ -35,16 +39,16 @@ public class BlogViewController {
 
     @GetMapping("/articles")
     public String findAllArticles(@RequestParam(required = false) Long menuId, Model model) {
-        List<ArticleResponse> articles = null;
+        List<ArticleListViewResponse> articles = null;
         if (Objects.isNull(menuId)) {
             articles = articleService.findAll()
                     .stream()
-                    .map(ArticleResponse::new)
+                    .map(ArticleListViewResponse::new)
                     .toList();
         } else {
             articles = articleService.findByMenuId(menuId)
                     .stream()
-                    .map(ArticleResponse::new)
+                    .map(ArticleListViewResponse::new)
                     .toList();
         }
 
@@ -56,7 +60,7 @@ public class BlogViewController {
     @GetMapping("/articles/{id}")
     public String getArticle(@PathVariable Long id, Model model) {
         Article article = articleService.findById(id);
-        model.addAttribute("article", new ArticleViewResponse(article));
+        model.addAttribute("article", new ArticleResponse(article));
 
         return "article";
     }
@@ -64,15 +68,15 @@ public class BlogViewController {
     @GetMapping("/new-article")
     public String newArticle(@RequestParam(required = false) Long id, Model model) {
         if (id == null) {
-            model.addAttribute("article", new ArticleViewResponse());
+            model.addAttribute("article", new ArticleUpdatedResponse());
         } else {
             Article article = articleService.findById(id);
-            model.addAttribute("article", new ArticleViewResponse(article));
+            model.addAttribute("article", new ArticleUpdatedResponse(article));
         }
 
         model.addAttribute("menus",
-                categoryService.findAll().stream()
-                        .map(CategoryResponse::new)
+                menuService.findAll().stream()
+                        .map(MenuResponse::new)
                         .toList());
 
         return "newArticle";

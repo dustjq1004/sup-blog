@@ -24,10 +24,10 @@ public class BlogApiController {
     private final ArticleService articleService;
 
     @PostMapping("/api/articles")
-    public ResponseEntity<Article> addArticle(@RequestBody AddArticleRequest request, Principal principal) {
+    public ResponseEntity<ArticleResponse> addArticle(@RequestBody AddArticleRequest request, Principal principal) {
         Article savedArticle = articleService.save(request, principal.getName());
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(savedArticle);
+                .body(new ArticleResponse(savedArticle));
     }
 
     @GetMapping("/api/articles/{id}")
@@ -47,11 +47,11 @@ public class BlogApiController {
     }
 
     @PutMapping("/api/articles/{id}")
-    public ResponseEntity<Article> updateArticle(@PathVariable long id,
-                                                 @RequestBody UpdateArticleRequest request) {
+    public ResponseEntity<ArticleResponse> updateArticle(@PathVariable long id,
+                                                         @RequestBody UpdateArticleRequest request) {
         Article updatedArticle = articleService.update(id, request);
 
         return ResponseEntity.ok()
-                .body(updatedArticle);
+                .body(new ArticleResponse(updatedArticle));
     }
 }

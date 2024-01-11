@@ -7,7 +7,7 @@ import me.kimyeonsup.blog.article.domain.entity.Article;
 
 @NoArgsConstructor
 @Getter
-public class ArticleViewResponse {
+public class ArticleUpdatedResponse {
 
     private Long id;
     private String title;
@@ -15,7 +15,7 @@ public class ArticleViewResponse {
     private LocalDateTime createdAt;
     private String author;
 
-    public ArticleViewResponse(Article article) {
+    public ArticleUpdatedResponse(Article article) {
         this.id = article.getId();
         this.title = article.getTitle();
         this.content = article.getContent();

@@ -17,7 +17,8 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     public Article save(AddArticleRequest request, String userName) {
-        return articleRepository.save(request.toEntity(userName));
+        Article savedArticle = articleRepository.save(request.toEntity(userName));
+        return savedArticle;
     }
 
     public List<Article> findAll() {
