@@ -26,6 +26,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
     implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation 'org.commonmark:commonmark:0.21.0'
 
     runtimeOnly 'com.h2database:h2'
     compileOnly 'org.projectlombok:lombok'
