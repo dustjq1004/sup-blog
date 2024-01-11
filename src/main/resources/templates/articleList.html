@@ -3,10 +3,6 @@
 <div th:include="layouts/head"></div>
 <body class="bg-light">
 <div th:include="layouts/navigator" th:with="title=Blog"></div>
-<!--<div class="p-5 mb-5 text-center</> bg-light">-->
-<!--    <h1 class="mb-3">My Blog</h1>-->
-<!--    <h4 class="mb-3">블로그에 오신 것을 환영합니다.</h4>-->
-<!--</div>-->
 
 <div class="container my-5 px-xxl-2">
     <div class="row flex-lg-row-reverse d-lg-grid content">
@@ -43,19 +39,41 @@
                     </div>
                 </div>
             </div>
-            <div id="article-list">
-                <div class="row-6" th:each="item : ${articles}">
-                    <div class="card">
-                        <div class="card-header" th:text="${item.id}">
+            <div id="article-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="col" th:each="item : ${articles}">
+                    <a th:href="@{/articles/{id}(id=${item.id})}"
+                       class="link-offset-2 link-underline link-underline-opacity-0">
+                        <div class="card border border-0">
+                            <svg class="bd-placeholder-img card-img-top rounded-4" width="100%" height="180"
+                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder:"
+                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c"></rect>
+                                <text x="40%" y="50%" fill="#eceeef" dy=".3em">images</text>
+                            </svg>
+                            <div class="card-body">
+                                <h5 class="mb-1" th:text="${item.title}">title</h5>
+                                <p class="card-text text-body-tertiary fs-6" th:utext="${item.content}">
+                                    content
+                                </p>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${item.title}"></h5>
-                            <p class="card-text" th:text="${item.content}"></p>
-                            <a th:href="@{/articles/{id}(id=${item.id})}" class="btn btn-primary">보러가기</a>
-                        </div>
-                    </div>
-                    <br>
+                    </a>
                 </div>
+
+                <!--                <div class="row-6" th:each="item : ${articles}">-->
+                <!--                    <div class="card">-->
+
+                <!--                        <div class="card-body">-->
+                <!--                            <h5 class="card-title">-->
+                <!--                                <a th:href="@{/articles/{id}(id=${item.id})}" th:text="${item.title}" class="">-->
+                <!--                                    보러가기-->
+                <!--                                </a>-->
+                <!--                            </h5>-->
+                <!--                            <p class="card-text" th:text="${item.content}"></p>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                    <br>-->
+                <!--                </div>-->
             </div>
         </div>
     </div>
@@ -64,6 +82,6 @@
 
 <div th:include="layouts/footer"></div>
 <script src="/js/token.js"></script>
-<script src="/js/article.js"></script>
+<script src="/js/blog.js"></script>
 <div th:include="layouts/script"></div>
 </body>

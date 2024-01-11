@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+</head>
 <div th:include="layouts/head"></div>
 <body class="bg-light">
 <div th:include="layouts/navigator" th:with="title=Blog"></div>
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col">
             <h2 class="mb-4">글 등록</h2>
             <article>
                 <input type="hidden" id="article-id" th:value="${article.id}">
@@ -38,4 +42,9 @@
 </div>
 <div th:include="layouts/footer"></div>
 <script src="/js/article.js"></script>
+<script th:inline="javascript">
+    const content = /*[[${article.content}]]*/;
+    simpleMDE.value(content);
+</script>
+<script src="/js/simpleMDE.js"></script>
 </body>

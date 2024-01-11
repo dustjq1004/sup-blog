@@ -1,20 +1,4 @@
-// 조회 기능
-const sendGetRequest = (menuId) => {
-    const data = {
-        "menuId": menuId
-    };
-
-    function success(fragment) {
-        $('#article-list').replaceWith(fragment);
-    }
-
-    function fail() {
-    }
-
-    ajaxGetRequest('GET', '/articles', data, success, fail);
-}
-
-sendGetRequest();
+const simpleMDE = new SimpleMDE({element: $("#content")[0]});
 
 // 삭제 기능
 const deleteButton = document.getElementById('delete-btn');
@@ -44,11 +28,14 @@ if (modifyButton) {
     modifyButton.addEventListener('click', event => {
         let params = new URLSearchParams(location.search);
         let id = params.get('id');
-
+        const content = simpleMDE.value()
+        ;
+        console.log(content);
         body = JSON.stringify({
             title: document.getElementById('title').value,
-            content: document.getElementById('content').value
-        })
+            content: content,
+            menuId: document.getElementById('menu').value
+        });
 
         function success() {
             alert('수정 완료되었습니다.');
@@ -70,20 +57,22 @@ const createButton = document.getElementById('create-btn');
 if (createButton) {
     // 등록 버튼을 클릭하면 /api/articles로 요청을 보낸다
     createButton.addEventListener('click', event => {
+        const content = simpleMDE.value();
+        console.log(content);
         body = JSON.stringify({
             title: document.getElementById('title').value,
-            content: document.getElementById('content').value,
+            content: content,
             menuId: document.getElementById('menu').value
         });
 
         function success() {
             alert('등록 완료되었습니다.');
-            location.replace('/articles');
+            location.replace('/blog');
         };
 
         function fail() {
             alert('등록 실패했습니다.');
-            location.replace('/articles');
+            location.replace('/blog');
         };
 
         httpRequest('POST', '/api/articles', body, success, fail)
@@ -107,17 +96,6 @@ function getCookie(key) {
     });
 
     return result;
-}
-
-
-function ajaxGetRequest(method, url, data, success, fail) {
-    $.ajax({
-        url: url,
-        type: method,
-        data: data,
-        success: success,
-        fail: fail
-    });
 }
 
 // HTTP 요청을 보내는 함수

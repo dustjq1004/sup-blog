@@ -23,3 +23,15 @@ a {
     background-color: var(--white) !important;
 }
 
+.CodeMirror-fullscreen {
+    z-index: 2000;
+}
+
+.editor-toolbar.fullscreen {
+    z-index: 2000;
+}
+
+.editor-preview-side {
+    z-index: 2000;
+}
+
