@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/article-list.css}">
+</head>
 <div th:include="layouts/head"></div>
 <body class="bg-light">
 <div th:include="layouts/navigator" th:with="title=Blog"></div>
@@ -11,7 +14,7 @@
                 <li class="bd-links-group py-2" th:each="item : ${categories}">
                     <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold mb-1"
                             th:text="${item.name}">
-                        시작하기
+                        카테고리
                     </strong>
 
                     <ul class="list-unstyled fw-normal pb-2 small">
@@ -20,7 +23,7 @@
                             <a th:onclick="@{sendGetRequest({id})(id=${menu.id})}"
                                class="bd-links-link d-inline-block rounded" aria-current="page"
                                th:text="${menu.name}">
-                                시작하기
+                                메뉴
                             </a>
                         </li>
                     </ul>
@@ -28,8 +31,8 @@
             </ul>
         </div>
         <div class="main">
-            <div class="d-flex">
-                <h2>BLOG</h2>
+            <div class="d-flex mb-4">
+                <h1>BLOG</h1>
                 <div class="d-flex ms-auto">
                     <div class="">
                         <button type="button" id="create-btn"
