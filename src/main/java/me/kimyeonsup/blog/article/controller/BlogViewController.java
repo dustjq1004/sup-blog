@@ -16,17 +16,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
 @Controller
+@RequestMapping("/blog")
 public class BlogViewController {
 
     private final ArticleService articleService;
     private final CategoryService categoryService;
     private final MenuService menuService;
 
-    @GetMapping("/blog")
+    @GetMapping
     public String getArticles(@RequestParam(required = false) Long menuId, Model model) {
         List<CategoryResponse> categories = categoryService.findAll().stream()
                 .map(CategoryResponse::new)
@@ -34,7 +36,7 @@ public class BlogViewController {
 
         model.addAttribute("categories", categories);
 
-        return "articleList";
+        return "blog";
     }
 
     @GetMapping("/articles")
@@ -54,7 +56,7 @@ public class BlogViewController {
 
         model.addAttribute("articles", articles);
 
-        return "articleList :: #article-list";
+        return "articleList";
     }
 
     @GetMapping("/articles/{id}")
