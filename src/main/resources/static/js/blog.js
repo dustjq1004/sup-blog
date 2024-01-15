@@ -1,19 +1,31 @@
-const sendGetRequest = (menuId) => {
+const getArticles = (menuId) => {
     const data = {
         "menuId": menuId
     };
 
     function success(fragment) {
-        $('#article-list').replaceWith(fragment);
+        $('#main').html(fragment);
     }
 
     function fail() {
     }
 
-    ajaxGetRequest('GET', '/articles', data, success, fail);
+    ajaxGetRequest('GET', '/blog/articles', data, success, fail);
 }
 
-sendGetRequest();
+const getArticle = (articleId) => {
+    function success(fragment) {
+        $('#main').html(fragment);
+    }
+
+    function fail() {
+    }
+
+    ajaxGetRequest('GET', '/blog/articles/' + articleId, null, success, fail);
+}
+
+
+getArticles();
 
 function ajaxGetRequest(method, url, data, success, fail) {
     $.ajax({

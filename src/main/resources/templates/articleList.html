@@ -1,90 +1,32 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" th:href="@{/css/article-list.css}">
-</head>
-<div th:include="layouts/head"></div>
-<body class="bg-light">
-<div th:include="layouts/navigator" th:with="title=Blog"></div>
-
-<div class="container my-5 px-xxl-2">
-    <div class="row flex-lg-row-reverse d-lg-grid content">
-        <div class="offcanvas-body p-4 pt-0 p-lg-0">
-            <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
-                <li class="bd-links-group py-2" th:each="item : ${categories}">
-                    <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold mb-1"
-                            th:text="${item.name}">
-                        카테고리
-                    </strong>
-
-                    <ul class="list-unstyled fw-normal pb-2 small">
-                        <li th:each="menu : ${item.menus}">
-                            <!--                               th:href="@{/articles?menuId={id}(id=${menu.id})}"-->
-                            <a th:onclick="@{sendGetRequest({id})(id=${menu.id})}"
-                               class="bd-links-link d-inline-block rounded" aria-current="page"
-                               th:text="${menu.name}">
-                                메뉴
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div class="main">
-            <div class="d-flex mb-4">
-                <h1>BLOG</h1>
-                <div class="d-flex ms-auto">
-                    <div class="">
-                        <button type="button" id="create-btn"
-                                th:onclick="|location.href='@{/new-article}'|"
-                                class="btn btn-secondary btn-sm ">글 등록
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div id="article-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <div class="col" th:each="item : ${articles}">
-                    <a th:href="@{/articles/{id}(id=${item.id})}"
-                       class="link-offset-2 link-underline link-underline-opacity-0">
-                        <div class="card border border-0">
-                            <svg class="bd-placeholder-img card-img-top rounded-4" width="100%" height="180"
-                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder:"
-                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                                <rect width="100%" height="100%" fill="#55595c"></rect>
-                                <text x="40%" y="50%" fill="#eceeef" dy=".3em">images</text>
-                            </svg>
-                            <div class="card-body">
-                                <h5 class="mb-1" th:text="${item.title}">title</h5>
-                                <p class="card-text text-body-tertiary fs-6" th:utext="${item.content}">
-                                    content
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <!--                <div class="row-6" th:each="item : ${articles}">-->
-                <!--                    <div class="card">-->
-
-                <!--                        <div class="card-body">-->
-                <!--                            <h5 class="card-title">-->
-                <!--                                <a th:href="@{/articles/{id}(id=${item.id})}" th:text="${item.title}" class="">-->
-                <!--                                    보러가기-->
-                <!--                                </a>-->
-                <!--                            </h5>-->
-                <!--                            <p class="card-text" th:text="${item.content}"></p>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                    <br>-->
-                <!--                </div>-->
-            </div>
+<div class="d-flex mb-4">
+    <h1>BLOG</h1>
+    <div class="d-flex ms-auto">
+        <div class="">
+            <button type="button" id="create-btn"
+                    th:onclick="|location.href='@{/blog/new-article}'|"
+                    class="btn btn-blog btn-sm ">글 등록
+            </button>
         </div>
     </div>
-    <!--    <button type="button" class="btn btn-secondary" onclick="location.href='/logout'">로그아웃</button>-->
 </div>
-
-<div th:include="layouts/footer"></div>
-<script src="/js/token.js"></script>
-<script src="/js/blog.js"></script>
-<div th:include="layouts/script"></div>
-</body>
+<div id="article-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="col" th:each="item : ${articles}">
+        <a th:onclick="@{getArticle({id})(id=${item.id})}"
+           class="link-offset-2 link-underline link-underline-opacity-0">
+            <div class="card border border-0 p-2 rounded-4">
+                <svg class="bd-placeholder-img card-img-top rounded-4" width="100%" height="180"
+                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder:"
+                     preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                    <text x="40%" y="50%" fill="#eceeef" dy=".3em">images</text>
+                </svg>
+                <div class="card-body">
+                    <h5 class="mb-1" th:text="${item.title}">title</h5>
+                    <p class="card-text text-body-tertiary fs-6" th:utext="${item.subTitle}">
+                        sub Title
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

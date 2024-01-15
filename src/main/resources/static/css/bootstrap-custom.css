@@ -68,3 +68,18 @@ common
 .bd-links-link:hover, .bd-links-link:focus, .bd-links-link.active {
     background-color: var(--bd-sidebar-link-bg);
 }
+
+/*
+common
+- component
+*/
+
+.btn-blog {
+    background-color: rgba(var(--bd-violet-rgb), 0.9);
+    color: white;
+}
+
+.btn-blog:hover {
+    background-color: rgba(var(--bd-violet-rgb), 1);
+    color: white;
+}

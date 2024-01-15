@@ -1,34 +1,23 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<div th:include="layouts/head"></div>
-<body class="bg-light">
-<div th:include="layouts/navigator" th:with="title=Blog"></div>
-
-<div class="container mt-5">
+<div class="d-flex mb-4">
     <div class="row">
-        <div class="col-lg-8">
-            <article>
-                <input type="hidden" id="article-id" th:value="${article.id}">
-                <header class="mb-4">
-                    <h1 class="fw-bolder mb-1" th:utext="${article.title}"></h1>
-                    <div class="text-muted fst-italic mb-2"
-                         th:text="|Posted on ${#temporals.format(article.updateAt, 'yyyy-MM-dd HH:mm')} By ${article.author}|"></div>
-                </header>
-                <section class="mb-5">
-                    <p class="fs-5 mb-4" th:utext="${article.content}"></p>
-                </section>
-                <button type="button" id="modify-btn"
-                        th:onclick="|location.href='@{/new-article?id={articleId}(articleId=${article.id})}'|"
-                        class="btn btn-primary btn-sm">수정
-                </button>
-                <button type="button" id="delete-btn"
-                        class="btn btn-secondary btn-sm">삭제
-                </button>
-            </article>
-        </div>
+        <article>
+            <input type="hidden" id="article-id" th:value="${article.id}">
+            <header class="mb-4">
+                <h1 class="fw-bolder mb-1" th:utext="${article.title}"></h1>
+                <div class="text-muted fst-italic mb-2"
+                     th:text="|Posted on ${#temporals.format(article.updateAt, 'yyyy-MM-dd HH:mm')} By ${article.author}|"></div>
+            </header>
+            <section class="mb-5">
+                <p class="fs-5 mb-4" th:utext="${article.content}"></p>
+            </section>
+        </article>
     </div>
 </div>
-<div th:include="layouts/footer"></div>
-<!--<script src="/js/article.js"></script>-->
-<div th:include="layouts/script"></div>
-</body>
+<hr/>
+<button type="button" id="modify-btn"
+        th:onclick="|location.href='@{/blog/new-article?id={articleId}(articleId=${article.id})}'|"
+        class="btn btn-primary btn-sm">수정
+</button>
+<button type="button" id="delete-btn"
+        class="btn btn-secondary btn-sm">삭제
+</button>
