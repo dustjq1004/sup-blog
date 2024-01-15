@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -26,6 +27,10 @@ public class Article {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @Column(name = "sub_title")
+    private String subTitle;
+
+    @Lob
     @Column(name = "content", nullable = false)
     private String content;
 
