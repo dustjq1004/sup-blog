@@ -11,11 +11,13 @@ public class ArticleListViewResponse {
     private final String title;
     private final String subTitle;
     private final String content;
+    private final String menuName;
 
     public ArticleListViewResponse(Article article) {
         this.id = article.getId();
         this.title = article.getTitle();
         this.subTitle = article.getSubTitle();
         this.content = StringUtils.replaceAllSpecialCharacter(article.getContent());
+        this.menuName = article.getMenu().getName();
     }
 }

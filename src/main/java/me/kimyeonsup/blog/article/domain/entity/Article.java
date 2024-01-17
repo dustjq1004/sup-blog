@@ -6,11 +6,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.kimyeonsup.blog.menu.domain.entity.Menu;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -45,14 +47,15 @@ public class Article {
     @Column(name = "author", nullable = false)
     private String author;
 
-    private Long menuId;
+    @ManyToOne
+    private Menu menu;
 
     @Builder
-    public Article(String title, String content, String author, Long menuId) {
+    public Article(String title, String content, String author, Menu menu) {
         this.title = title;
         this.content = content;
         this.author = author;
-        this.menuId = menuId;
+        this.menu = menu;
     }
 
 
