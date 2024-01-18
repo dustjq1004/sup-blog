@@ -89,7 +89,7 @@ class MenuApiControllerTest {
 
     @Test
     @DisplayName("AddMenu : 메뉴를 추가를 성공한다.")
-    void addCategoryTest() throws Exception {
+    void addMenuTest() throws Exception {
         final String url = "/api/menu";
         final String name = "자바";
         final AddMenuRequest request = new AddMenuRequest(category.getId(), name);
@@ -115,7 +115,7 @@ class MenuApiControllerTest {
 
     @DisplayName("deleteMenu : 메뉴를 삭제한다.")
     @Test
-    void deleteCategory() throws Exception {
+    void deleteMenu() throws Exception {
         final String url = "/api/menu/{id}";
         Menu savededMenu = savedMenu(category);
 
@@ -131,7 +131,7 @@ class MenuApiControllerTest {
 
     @DisplayName("메뉴 이름을 수정한다.")
     @Test
-    void updateCategory() throws Exception {
+    void updateMenu() throws Exception {
         final String url = "/api/menu/{id}";
         Menu savedMenu = savedMenu(category);
 
