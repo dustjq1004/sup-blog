@@ -3,11 +3,11 @@
 <head>
     <link rel="stylesheet" th:href="@{/css/article-list.css}">
 </head>
-<div th:include="layouts/head"></div>
+<div th:insert="~{layouts/head}"></div>
 <body class="bg-light">
-<div th:include="layouts/navigator" th:with="title=Blog"></div>
+<div th:insert="~{layouts/navigator}" th:with="title=Blog"></div>
 
-<div class="container my-5 px-xxl-2">
+<div class="container my-5 px-xxl-2 pt-4">
     <div class="row flex-lg-row-reverse d-lg-grid content">
         <div class="offcanvas-body p-4 pt-0 p-lg-0">
             <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
@@ -17,11 +17,11 @@
                         카테고리
                     </strong>
 
-                    <ul class="list-unstyled fw-normal pb-2 small">
+                    <ul class="side-link list-unstyled fw-normal pb-2 small">
                         <li th:each="menu : ${item.menus}">
-                            <!--                               th:href="@{/articles?menuId={id}(id=${menu.id})}"-->
-                            <a th:onclick="@{getArticles({id})(id=${menu.id})}"
-                               class="bd-links-link d-inline-block rounded" aria-current="page"
+                            <a class="bd-links-link d-inline-block rounded" aria-current="page"
+                               th:href="@{/blog/{menuName}(menuName=${menu.name})}"
+                               th:data="${menu.id}"
                                th:text="${menu.name}">
                                 메뉴
                             </a>
@@ -31,14 +31,46 @@
             </ul>
         </div>
         <div id="main" class="main">
-
+            <div class="d-flex mb-4">
+                <h1>BLOG</h1>
+                <div class="d-flex ms-auto">
+                    <div>
+                        <button type="button" id="create-btn"
+                                th:onclick="|location.href='@{/blog/new-article}'|"
+                                class="btn btn-blog btn-sm ">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="article-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="col" th:each="item : ${articles}">
+                    <a th:href="@{/blog/{menuName}/{id}(id=${item.id},menuName=${item.menuName})}"
+                       class="link-offset-2 link-underline link-underline-opacity-0">
+                        <div class="card border border-0 p-2 rounded-4">
+                            <svg class="bd-placeholder-img card-img-top rounded-4" width="100%" height="180"
+                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder:"
+                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c"></rect>
+                                <text x="40%" y="50%" fill="#eceeef" dy=".3em">images</text>
+                            </svg>
+                            <div class="card-body">
+                                <h5 class="mb-1" th:text="${item.title}">title</h5>
+                                <p class="card-text text-body-tertiary fs-6" th:utext="${item.subTitle}">
+                                    sub Title
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
     <!--    <button type="button" class="btn btn-secondary" onclick="location.href='/logout'">로그아웃</button>-->
 </div>
 
-<div th:include="layouts/footer"></div>
+<div th:insert="~{layouts/footer}"></div>
 <script src="/js/token.js"></script>
 <script src="/js/blog.js"></script>
-<div th:include="layouts/script"></div>
+<div th:insert="~{layouts/script}"></div>
 </body>

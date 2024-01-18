@@ -1,5 +1,5 @@
 .card:hover {
     background-color: rgba(112.520718, 44.062154, 249.437846, .1);
-    transform: scale(1.02, 1.02);
+    transform: scale(1.01, 1.01);
     transition-duration: 0.5s;
 }

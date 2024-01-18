@@ -1,23 +1,84 @@
-<div class="d-flex mb-4">
-    <div class="row">
-        <article>
-            <input type="hidden" id="article-id" th:value="${article.id}">
-            <header class="mb-4">
-                <h1 class="fw-bolder mb-1" th:utext="${article.title}"></h1>
-                <div class="text-muted fst-italic mb-2"
-                     th:text="|Posted on ${#temporals.format(article.updateAt, 'yyyy-MM-dd HH:mm')} By ${article.author}|"></div>
-            </header>
-            <section class="mb-5">
-                <p class="fs-5 mb-4" th:utext="${article.content}"></p>
-            </section>
-        </article>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:insert="~{layouts/head}"></div>
+<body class="bg-light">
+<div th:insert="~{layouts/navigator}" th:with="title=Blog"></div>
+
+<div class="container my-5 px-xxl-2 pt-4">
+    <div class="row flex-lg-row-reverse d-lg-grid content">
+        <div class="offcanvas-body p-4 pt-0 p-lg-0">
+            <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
+                <li class="bd-links-group py-2" th:each="item : ${categories}">
+                    <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold mb-1"
+                            th:text="${item.name}">
+                        카테고리
+                    </strong>
+
+                    <ul class="side-link list-unstyled fw-normal pb-2 small">
+                        <li th:each="menu : ${item.menus}">
+                            <a th:href="@{/blog/{menuName}(menuName=${menu.name})}"
+                               class="bd-links-link d-inline-block rounded" aria-current="page"
+                               th:data="${menu.id}"
+                               th:text="${menu.name}">
+                                메뉴
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="main">
+            <div class="row">
+                <div class="col">
+                    <article>
+                        <input type="hidden" id="article-id" th:value="${article.id}">
+                        <header class="mb-5">
+                            <div class="d-flex">
+                                <h1 class="fw-bolder mb-3" th:utext="${article.title}"></h1>
+                                <div class="d-flex ms-auto">
+                                    <div>
+                                        <button type="button" id="modify-btn"
+                                                th:onclick="|location.href='@{/blog/new-article?id={articleId}(articleId=${article.id})}'|"
+                                                class="btn btn-primary btn-sm">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                        <button type="button" id="delete-btn"
+                                                class="btn btn-secondary btn-sm">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </header>
+                        <section class="mb-5">
+                            <div class="mb-4 article-min-height" th:utext="${article.content}">
+
+                            </div>
+                        </section>
+                        <div class="text-muted ms-auto d-flex justify-content-end"
+                             th:text="|${#temporals.format(article.updateAt, 'yyyy년 MM월 dd일')}|">
+                        </div>
+                        <div class="mb-2 ms-auto d-flex justify-content-end"
+                             th:text="|${article.author}|">
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col">
+                    <h2>Commonets</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h2>Commonets</h2>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<hr/>
-<button type="button" id="modify-btn"
-        th:onclick="|location.href='@{/blog/new-article?id={articleId}(articleId=${article.id})}'|"
-        class="btn btn-primary btn-sm">수정
-</button>
-<button type="button" id="delete-btn"
-        class="btn btn-secondary btn-sm">삭제
-</button>
+<div th:insert="~{layouts/footer}"></div>
+<script src="/js/blog.js"></script>
+<div th:insert="layouts/script"></div>
+</body>

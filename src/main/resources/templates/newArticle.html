@@ -4,9 +4,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 </head>
-<div th:include="layouts/head"></div>
+<div th:insert="~{layouts/head}"></div>
 <body class="bg-light">
-<div th:include="layouts/navigator" th:with="title=Blog"></div>
+<div th:insert="~{layouts/navigator}" th:with="title=Blog"></div>
 
 <div class="container mt-5">
     <div class="row">
@@ -15,13 +15,13 @@
             <article>
                 <input type="hidden" id="article-id" th:value="${article.id}">
                 <div class="col-md-5 mb-2">
-                    <select class="form-select" id="menu" required="">
+                    <select class="form-select" id="menu" required="required">
                         <option value="">메뉴 선택</option>
                         <option th:each="menu : ${menus}" th:text="${menu.name}" th:value="${menu.id}">United States
                         </option>
                     </select>
                     <div class="invalid-feedback">
-                        Please select a valid country.
+                        Please select a valid menu.
                     </div>
                 </div>
 
@@ -40,7 +40,7 @@
         </div>
     </div>
 </div>
-<div th:include="layouts/footer"></div>
+<div th:insert="~{layouts/footer}"></div>
 <script src="/js/article.js"></script>
 <script th:inline="javascript">
     const content = /*[[${article.content}]]*/;
