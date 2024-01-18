@@ -1,7 +1,6 @@
 package me.kimyeonsup.blog.article.controller;
 
 import java.util.List;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.article.domain.dto.ArticleListViewResponse;
 import me.kimyeonsup.blog.article.domain.dto.ArticleResponse;
@@ -29,39 +28,46 @@ public class BlogViewController {
     private final MenuService menuService;
 
     @GetMapping
-    public String getArticles(@RequestParam(required = false) Long menuId, Model model) {
+    public String getAllArticles(Model model) {
         List<CategoryResponse> categories = categoryService.findAll().stream()
                 .map(CategoryResponse::new)
                 .toList();
 
+        List<ArticleListViewResponse> articles = articleService.findAll().stream()
+                .map(ArticleListViewResponse::new)
+                .toList();
+
         model.addAttribute("categories", categories);
+        model.addAttribute("articles", articles);
 
         return "blog";
     }
 
-    @GetMapping("/articles")
-    public String findAllArticles(@RequestParam(required = false) Long menuId, Model model) {
-        List<ArticleListViewResponse> articles = null;
-        if (Objects.isNull(menuId)) {
-            articles = articleService.findAll()
-                    .stream()
-                    .map(ArticleListViewResponse::new)
-                    .toList();
-        } else {
-            articles = articleService.findByMenuId(menuId)
-                    .stream()
-                    .map(ArticleListViewResponse::new)
-                    .toList();
-        }
+    @GetMapping("/{menuName}")
+    public String findArticlesByMenuName(@PathVariable String menuName, Model model) {
+        List<CategoryResponse> categories = categoryService.findAll().stream()
+                .map(CategoryResponse::new)
+                .toList();
 
+        List<ArticleListViewResponse> articles = articleService.findByMenuName(menuName)
+                .stream()
+                .map(ArticleListViewResponse::new)
+                .toList();
+
+        model.addAttribute("categories", categories);
         model.addAttribute("articles", articles);
 
-        return "articleList";
+        return "blog";
     }
 
-    @GetMapping("/articles/{id}")
+    @GetMapping("/{menuName}/{id}")
     public String getArticle(@PathVariable Long id, Model model) {
+        List<CategoryResponse> categories = categoryService.findAll().stream()
+                .map(CategoryResponse::new)
+                .toList();
         Article article = articleService.findById(id);
+
+        model.addAttribute("categories", categories);
         model.addAttribute("article", new ArticleResponse(article));
 
         return "article";

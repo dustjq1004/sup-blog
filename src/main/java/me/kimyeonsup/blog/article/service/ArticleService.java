@@ -29,6 +29,10 @@ public class ArticleService {
         return articleRepository.findByMenuId(menuId);
     }
 
+    public List<Article> findByMenuName(String menuName) {
+        return articleRepository.findByMenuName(menuName);
+    }
+
     public Article findById(long id) {
         return articleRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
