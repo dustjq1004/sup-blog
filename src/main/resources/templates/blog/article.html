@@ -6,27 +6,8 @@
 
 <div class="container my-5 px-xxl-2 pt-4">
     <div class="row flex-lg-row-reverse d-lg-grid content">
-        <div class="offcanvas-body p-4 pt-0 p-lg-0">
-            <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
-                <li class="bd-links-group py-2" th:each="item : ${categories}">
-                    <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold mb-1"
-                            th:text="${item.name}">
-                        카테고리
-                    </strong>
-
-                    <ul class="side-link list-unstyled fw-normal pb-2 small">
-                        <li th:each="menu : ${item.menus}">
-                            <a th:href="@{/blog/{menuName}(menuName=${menu.name})}"
-                               class="bd-links-link d-inline-block rounded" aria-current="page"
-                               th:data="${menu.id}"
-                               th:text="${menu.name}">
-                                메뉴
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+        <div class="offcanvas-body p-4 pt-0 p-lg-2" th:insert="~{blog/blogSidebar}"
+             th:with="articles=${articles}"></div>
         <div class="main">
             <div class="row">
                 <div class="col">
@@ -64,12 +45,13 @@
                     </article>
                 </div>
             </div>
-            <hr/>
+
             <div class="row">
                 <div class="col">
                     <h2>Commonets</h2>
                 </div>
             </div>
+            <hr/>
             <div class="row">
                 <div class="col">
                     <h2>Commonets</h2>

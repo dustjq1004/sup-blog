@@ -43,7 +43,7 @@ common
 
 @media (min-width: 1400px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-        max-width: 1140px;
+        max-width: 1320px;
     }
 }
 
@@ -52,8 +52,8 @@ common
 - layout
 */
 .content {
-    grid-template-columns: 0.8fr 3fr;
-    gap: 3rem;
+    grid-template-columns: 0.6fr 3fr;
+    gap: 2rem;
 }
 
 /*
