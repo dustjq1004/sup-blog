@@ -11,6 +11,7 @@ import me.kimyeonsup.blog.menu.domain.dto.CategoryResponse;
 import me.kimyeonsup.blog.menu.domain.dto.MenuResponse;
 import me.kimyeonsup.blog.menu.service.CategoryService;
 import me.kimyeonsup.blog.menu.service.MenuService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,14 +34,14 @@ public class BlogViewController {
                 .map(CategoryResponse::new)
                 .toList();
 
-        List<ArticleListViewResponse> articles = articleService.findAll().stream()
-                .map(ArticleListViewResponse::new)
-                .toList();
+        Page<Article> articles = articleService.findAllPagenation(0, null);
 
         model.addAttribute("categories", categories);
-        model.addAttribute("articles", articles);
+        model.addAttribute("articles", articles.stream()
+                .map(ArticleListViewResponse::new)
+                .toList());
 
-        return "blog";
+        return "blog/index";
     }
 
     @GetMapping("/{menuName}")
@@ -49,19 +50,18 @@ public class BlogViewController {
                 .map(CategoryResponse::new)
                 .toList();
 
-        List<ArticleListViewResponse> articles = articleService.findByMenuName(menuName)
-                .stream()
-                .map(ArticleListViewResponse::new)
-                .toList();
+        Page<Article> articles = articleService.findAllPagenation(0, menuName);
 
         model.addAttribute("categories", categories);
-        model.addAttribute("articles", articles);
+        model.addAttribute("articles", articles.stream()
+                .map(ArticleListViewResponse::new)
+                .toList());
 
-        return "blog";
+        return "blog/index";
     }
 
     @GetMapping("/{menuName}/{id}")
-    public String getArticle(@PathVariable Long id, Model model) {
+    public String getArticle(@PathVariable String menuName, @PathVariable Long id, Model model) {
         List<CategoryResponse> categories = categoryService.findAll().stream()
                 .map(CategoryResponse::new)
                 .toList();
@@ -70,7 +70,7 @@ public class BlogViewController {
         model.addAttribute("categories", categories);
         model.addAttribute("article", new ArticleResponse(article));
 
-        return "article";
+        return "blog/article";
     }
 
     @GetMapping("/new-article")
@@ -87,6 +87,6 @@ public class BlogViewController {
                         .map(MenuResponse::new)
                         .toList());
 
-        return "newArticle";
+        return "blog/newArticle";
     }
 }
