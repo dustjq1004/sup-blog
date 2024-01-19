@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.blog.article.domain.dto.UpdateArticleRequest;
@@ -19,6 +20,8 @@ import me.kimyeonsup.blog.article.domain.entity.Article;
 import me.kimyeonsup.blog.article.repository.ArticleRepository;
 import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.login.repository.UserRepository;
+import me.kimyeonsup.blog.menu.domain.entity.Menu;
+import me.kimyeonsup.blog.menu.repository.MenuRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -54,7 +57,11 @@ class BlogApiControllerTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    MenuRepository menuRepository;
+
     User user;
+    Menu menu;
 
     @BeforeEach
     void setSecurityContext() {
@@ -62,6 +69,9 @@ class BlogApiControllerTest {
         user = userRepository.save(User.builder()
                 .email("dustjq1005@gmail.com")
                 .password("test")
+                .build());
+        menu = menuRepository.save(Menu.builder()
+                .name("자바")
                 .build());
 
         SecurityContext context = SecurityContextHolder.getContext();
@@ -122,6 +132,27 @@ class BlogApiControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(savedArticle.getContent())))
                 .andExpect(content().string(containsString(savedArticle.getTitle())));
+
+    }
+
+    @DisplayName("findAllArticles : 블로그 페이지네이션 조회에 성공한다.")
+    @Test
+    public void findAllArticlePagination() throws Exception {
+        // given
+        final String url = "/articles?pageNumber=0";
+        List<Article> articles = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            articles.add(createDefaultArticle());
+        }
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(get(url)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpectAll(jsonPath("$.length()").value(articles.size()));
 
     }
 
@@ -191,6 +222,7 @@ class BlogApiControllerTest {
                 .title("title")
                 .author(user.getUsername())
                 .content("content")
+                .menu(menu)
                 .build());
     }
 }
