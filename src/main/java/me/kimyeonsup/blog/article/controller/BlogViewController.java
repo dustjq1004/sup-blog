@@ -3,6 +3,7 @@ package me.kimyeonsup.blog.article.controller;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.article.domain.dto.ArticleListViewResponse;
+import me.kimyeonsup.blog.article.domain.dto.ArticlePrevNextResponse;
 import me.kimyeonsup.blog.article.domain.dto.ArticleResponse;
 import me.kimyeonsup.blog.article.domain.dto.ArticleUpdatedResponse;
 import me.kimyeonsup.blog.article.domain.entity.Article;
@@ -66,9 +67,11 @@ public class BlogViewController {
                 .map(CategoryResponse::new)
                 .toList();
         Article article = articleService.findById(id);
+        ArticlePrevNextResponse prevNextArticle = articleService.findPrevNextArticle(id, menuName);
 
         model.addAttribute("categories", categories);
         model.addAttribute("article", new ArticleResponse(article));
+        model.addAttribute("prevNextArticle", prevNextArticle);
 
         return "blog/article";
     }

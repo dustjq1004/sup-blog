@@ -13,6 +13,7 @@ public class ArticleResponse {
     private final String subTitle;
     private final String content;
     private final String author;
+    private final String menuName;
     private final LocalDateTime updateAt;
 
     public ArticleResponse(Article article) {
@@ -21,6 +22,7 @@ public class ArticleResponse {
         this.subTitle = article.getSubTitle();
         this.content = CommonMarkUtil.renderHtml(article.getContent());
         this.author = article.getAuthor();
+        this.menuName = article.getMenu().getName();
         this.updateAt = article.getUpdatedAt();
     }
 }

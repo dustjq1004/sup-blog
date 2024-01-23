@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
+import me.kimyeonsup.blog.article.domain.dto.ArticlePrevNextDto;
+import me.kimyeonsup.blog.article.domain.dto.ArticlePrevNextResponse;
 import me.kimyeonsup.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.blog.article.domain.entity.Article;
 import me.kimyeonsup.blog.article.repository.ArticleRepository;
@@ -20,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ArticleService {
 
-    private static final int PAGE_SIZE = 9;
+    private static final int PAGE_SIZE = 12;
     private static final String ORDER_CRITERIA = "createdAt";
 
     private final ArticleRepository articleRepository;
@@ -75,6 +77,13 @@ public class ArticleService {
         article.update(request.getTitle(), request.getContent());
 
         return article;
+    }
+
+    public ArticlePrevNextResponse findPrevNextArticle(long id, String menuName) {
+        ArticlePrevNextDto prevNextArticle = articleRepository.findPrevNextArticle(id, menuName);
+        return ArticlePrevNextResponse.builder()
+                .articlePrevNextDto(prevNextArticle)
+                .build();
     }
 
     private void authorizeArticleAuthor(Article article) {
