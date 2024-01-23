@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/article.css}">
+</head>
 <div th:insert="~{layouts/head}"></div>
 <body class="bg-light">
 <div th:insert="~{layouts/navigator}" th:with="title=Blog"></div>
@@ -9,10 +12,10 @@
         <div class="offcanvas-body p-4 pt-0 p-lg-2" th:insert="~{blog/blogSidebar}"
              th:with="articles=${articles}"></div>
         <div class="main">
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col">
                     <article>
-                        <input type="hidden" id="article-id" th:value="${article.id}">
+                        <input type="hidden" id="article-id" th:value="${article}">
                         <header class="mb-5">
                             <div class="d-flex">
                                 <h1 class="fw-bolder mb-3" th:utext="${article.title}"></h1>
@@ -46,15 +49,46 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div id="prev-next-card" class="row">
                 <div class="col">
-                    <h2>Commonets</h2>
+                    <a th:if="${prevNextArticle.isPrev}"
+                       class="card w-50 mb-3 link-underline link-underline-opacity-0"
+                       th:href="|/blog/${article.menuName}/${prevNextArticle.prevId}|">
+                        <div class="card-body">
+                            <h5 th:text="${prevNextArticle.prevTitle}"></h5>
+                            <p>이전 글</p>
+                        </div>
+                    </a>
+                    <a th:if="${not prevNextArticle.isPrev}"
+                       class="card w-50 mb-3 link-underline link-underline-opacity-0">
+                        <div class="card-body">
+                            <h5 th:text="${prevNextArticle.prevTitle}"></h5>
+                            <p>이전 글</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a th:if="${prevNextArticle.isNext}"
+                       class="card w-50 mb-3 ms-auto link-underline link-underline-opacity-0"
+                       th:href="|/blog/${article.menuName}/${prevNextArticle.nextId}|">
+                        <div class="card-body">
+                            <h5 th:text="${prevNextArticle.nextTitle}"></h5>
+                            <p>다음 글</p>
+                        </div>
+                    </a>
+                    <a th:if="${not prevNextArticle.isNext}"
+                       class="card w-50 mb-3 ms-auto link-underline link-underline-opacity-0">
+                        <div class="card-body">
+                            <h5 th:text="${prevNextArticle.nextTitle}"></h5>
+                            <p>다음 글</p>
+                        </div>
+                    </a>
                 </div>
             </div>
             <hr/>
             <div class="row">
                 <div class="col">
-                    <h2>Commonets</h2>
+                    <!--                    <h2>Commonets</h2>-->
                 </div>
             </div>
         </div>

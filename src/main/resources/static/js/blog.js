@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
         let scrollPosition = $(window).scrollTop();
         let documentHeight = $(document).height();
         let windowHeight = $(window).height();
-        console.log(isRequesting)
         if (scrollPosition + windowHeight >= documentHeight && !isRequesting) {
             // 스크롤이 페이지의 끝에 도달했을 때 추가적인 동작을 수행할 수 있습니다.
             isRequesting = true;
