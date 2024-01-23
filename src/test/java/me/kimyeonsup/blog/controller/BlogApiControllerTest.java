@@ -15,6 +15,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
+import me.kimyeonsup.blog.article.domain.dto.ArticlePrevNextDto;
 import me.kimyeonsup.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.blog.article.domain.entity.Article;
 import me.kimyeonsup.blog.article.repository.ArticleRepository;
@@ -215,6 +216,29 @@ class BlogApiControllerTest {
 
         assertThat(article.getTitle()).isEqualTo(newTitle);
         assertThat(article.getContent()).isEqualTo(newContent);
+    }
+
+    @DisplayName("이전글 다음글을 조회한다.")
+    @Test
+    void getPrevNextArticle() {
+
+        String menuName = "자바";
+        createDefaultArticle();
+        createDefaultArticle();
+        createDefaultArticle();
+
+        List<Article> all = articleRepository.findAll();
+        Long id = all.get(1).getId();
+
+        ArticlePrevNextDto prevNextArticle = articleRepository.findPrevNextArticle(id, menuName);
+
+        assertThat(all.size()).isEqualTo(3);
+
+        assertThat(prevNextArticle.getId()).isEqualTo(id);
+        assertThat(prevNextArticle.getNextId()).isEqualTo(id + 1);
+        assertThat(prevNextArticle.getPrevTitle()).isEqualTo("title");
+        assertThat(prevNextArticle.getNextId()).isEqualTo(14);
+        assertThat(prevNextArticle.getNextTitle()).isEqualTo("title");
     }
 
     private Article createDefaultArticle() {
