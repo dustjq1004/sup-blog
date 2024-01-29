@@ -1,4 +1,66 @@
-const simpleMDE = new SimpleMDE({element: $("#content")[0]});
+const easyMDE = new EasyMDE({
+    status: ["lines", "words"],
+    spellChecker: false,
+    element: $("#content")[0],
+    promptURLs: true,
+    sideBySideFullscreen: false,
+    toolbarButtonClassPrefix: "mde",
+    imageUploadEndpoint: '/',
+    uploadImage: true,
+    toolbar: [
+        "bold", "italic", "strikethrough", "heading", "|",
+        "code", "quote", "unordered-list", "ordered-list", "table", "|",
+        "upload-image", "link", "|",
+        "preview", "side-by-side"
+    ],
+    theme: "Modern",
+    imageUploadFunction:
+        async (file, onSuccess, onError) => {
+            const result = await getResignedUrl(file.name);
+            const presigendUrl = result.signedUrl;
+            const s3Data = await requestS3PresignedImageUpload(presigendUrl, file.type, file);
+            onSuccess(s3Data.url.split("?")[0]);
+        }
+});
+
+const getResignedUrl = async (fileName) => {
+    const options = {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json"
+        }
+    }
+    const response = await fetch("/api/s3/image?fileName=" + fileName, options);
+    return response.json();
+}
+
+const requestS3PresignedImageUpload = async (presigendUrl, type, file) => {
+    const response = await fetch(presigendUrl, {
+        method: "PUT",
+        body: file,
+        headers: {
+            "Content-type": type
+        }
+    });
+    return response;
+}
+
+// easyMDE.codemirror.on("paste", function () {
+//     var items = (event.clipboardData || event.originalEvent.clipboardData).items;
+//     console.log(JSON.stringify(items));
+//     for (index in items) {
+//         var item = items[index];
+//         if (item.kind === 'file') {
+//             var blob = item.getAsFile();
+//             var reader = new FileReader();
+//             reader.onload = function (event) {
+//                 // data url!
+//                 // console.log(event.target.result)
+//             };
+//             reader.readAsDataURL(blob);
+//         }
+//     }
+// });
 
 // 삭제 기능
 const deleteButton = document.getElementById('delete-btn');
@@ -28,7 +90,7 @@ if (modifyButton) {
     modifyButton.addEventListener('click', event => {
         let params = new URLSearchParams(location.search);
         let id = params.get('id');
-        const content = simpleMDE.value()
+        const content = easyMDE.value()
         ;
         console.log(content);
         body = JSON.stringify({
@@ -57,7 +119,7 @@ const createButton = document.getElementById('create-btn');
 if (createButton) {
     // 등록 버튼을 클릭하면 /api/articles로 요청을 보낸다
     createButton.addEventListener('click', event => {
-        const content = simpleMDE.value();
+        const content = easyMDE.value();
         console.log(content);
         body = JSON.stringify({
             title: document.getElementById('title').value,
