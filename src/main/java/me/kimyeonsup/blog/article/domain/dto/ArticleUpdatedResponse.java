@@ -14,6 +14,7 @@ public class ArticleUpdatedResponse {
     private String content;
     private LocalDateTime createdAt;
     private String author;
+    private String menuName;
 
     public ArticleUpdatedResponse(Article article) {
         this.id = article.getId();
@@ -21,5 +22,6 @@ public class ArticleUpdatedResponse {
         this.content = article.getContent();
         this.createdAt = article.getCreatedAt();
         this.author = article.getAuthor();
+        this.menuName = article.getMenu().getName();
     }
 }
