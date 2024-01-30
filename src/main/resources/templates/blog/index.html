@@ -16,11 +16,13 @@
                 <h1>BLOG</h1>
                 <div class="d-flex ms-auto">
                     <div>
-                        <button type="button" id="create-btn"
-                                th:onclick="|location.href='@{/blog/new-article}'|"
-                                class="btn btn-blog btn-sm ">
-                            <i class="fa-solid fa-pen"></i>
-                        </button>
+                        <th:block sec:authorize="isAuthenticated()">
+                            <button type="button" id="create-btn"
+                                    th:onclick="|location.href='@{/blog/new-article}'|"
+                                    class="btn btn-blog btn-sm ">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                        </th:block>
                     </div>
                 </div>
             </div>
