@@ -37,7 +37,7 @@ public class ArticleService {
     }
 
     public Page<Article> findAllPagenation(int pageNumber, String menuName) {
-        Pageable pageRequest = PageRequest.of(pageNumber, PAGE_SIZE, Sort.by(Direction.DESC, ORDER_CRITERIA));
+        Pageable pageRequest = PageRequest.of(pageNumber, PAGE_SIZE, Sort.by(Direction.ASC, ORDER_CRITERIA));
 
         Page<Article> articles = Optional.ofNullable(menuName)
                 .map(s -> articleRepository.findByMenuName(pageRequest, menuName))
