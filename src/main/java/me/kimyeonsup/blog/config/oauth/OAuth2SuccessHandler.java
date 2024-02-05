@@ -38,15 +38,21 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                                         Authentication authentication) throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         final User user = userService.findByEmail((String) oAuth2User.getAttributes().get("email"));
-        final String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
-        saveRefreshToken(user.getId(), refreshToken);
-        addRefreshTokenToCookie(request, response, refreshToken);
+//        final String refreshToken = tokenProvider.generateToken(user, REFRESH_TOKEN_DURATION);
+//        saveRefreshToken(user.getId(), refreshToken);
+//        addRefreshTokenToCookie(request, response, refreshToken);
 
-        final String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
-        final String targetUrl = getTargetUrl(accessToken);
+//        final String accessToken = tokenProvider.generateToken(user, ACCESS_TOKEN_DURATION);
+        final String targetUrl = getTargetUrl();
 
         clearAuthenticationAttributes(request, response);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
+    }
+
+    private String getTargetUrl() {
+        return UriComponentsBuilder.fromUriString(REDIRECT_PATH)
+                .build()
+                .toUriString();
     }
 
     private String getTargetUrl(String token) {

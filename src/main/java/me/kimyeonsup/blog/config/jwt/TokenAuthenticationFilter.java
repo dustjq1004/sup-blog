@@ -1,4 +1,4 @@
-package me.kimyeonsup.blog.config;
+package me.kimyeonsup.blog.config.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.kimyeonsup.blog.config.jwt.TokenProvider;
 import me.kimyeonsup.blog.config.oauth.OAuth2UserCustomService;
 import me.kimyeonsup.blog.login.domain.dto.SessionUser;
 import org.springframework.security.core.Authentication;
@@ -38,7 +37,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         if (sessionUser != null) {
             // 세션 인증으로 변경
             log.info("sessionUser {}", sessionUser);
-            Authentication authentication = tokenProvider.getAuthenticationSession(sessionUser.getEmail());
+            Authentication authentication = tokenProvider.getAuthentication(sessionUser.getEmail());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 

@@ -60,18 +60,6 @@ public class TokenProvider {
                         , "", authorities), token, authorities);
     }
 
-    /*
-     * 객체 역할 분리 필요한 메서드
-     * Session 기반 인증 토큰을 생성한다.
-     * */
-    public Authentication getAuthenticationSession(String email) {
-        Set<SimpleGrantedAuthority> authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
-        return new UsernamePasswordAuthenticationToken(
-                new org.springframework.security.core.userdetails.User(
-                        email
-                        , "", authorities), email, authorities);
-    }
-
     public Long getUserId(String token) {
         Claims claims = getClaims(token);
         return claims.get("id", Long.class);

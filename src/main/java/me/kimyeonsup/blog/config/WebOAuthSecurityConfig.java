@@ -4,6 +4,7 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import me.kimyeonsup.blog.config.jwt.TokenAuthenticationFilter;
 import me.kimyeonsup.blog.config.jwt.TokenProvider;
 import me.kimyeonsup.blog.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import me.kimyeonsup.blog.config.oauth.OAuth2SuccessHandler;
@@ -19,7 +20,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
@@ -47,12 +47,10 @@ public class WebOAuthSecurityConfig {
 
         http.sessionManagement(
                 sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                        .invalidSessionUrl("/login")
                         .maximumSessions(1)
-                        .expiredUrl("/login")
         );
 
-        http.addFilterAfter(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterAfter(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeHttpRequests(authorization -> authorization
                 .requestMatchers("/api/token").permitAll()
@@ -86,7 +84,7 @@ public class WebOAuthSecurityConfig {
                 userService);
     }
 
-    @Bean
+    //    @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
         return new TokenAuthenticationFilter(tokenProvider, httpSession);
     }
