@@ -1,0 +1,32 @@
+server:
+  shutdown: graceful
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: client-id
+            client-secret: client-secret
+            scope:
+              - email
+              - profile
+jwt:
+  issuer: dustjq1005@gmail.com
+  secret_key: secret-key
+
+cloud:
+  aws:
+    region: ap-northeast-2
+    stack: false
+    credentials:
+      instanceProfile: true
+  s3:
+    bucket: bucket-name
