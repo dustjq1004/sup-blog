@@ -41,3 +41,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### application.yml local 파일
+src/main/resources/yaml/application-local.yml
