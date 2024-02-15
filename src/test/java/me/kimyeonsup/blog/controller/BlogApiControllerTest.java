@@ -94,7 +94,9 @@ class BlogApiControllerTest {
         final String url = "/api/articles";
         final String title = "title";
         final String content = "content";
-        final AddArticleRequest userRequest = new AddArticleRequest(title, content, 1L);
+        List<Menu> menus = menuRepository.findAll();
+        Menu findMenu = menus.get(0);
+        final AddArticleRequest userRequest = new AddArticleRequest(title, content, findMenu.getId());
 
         final String requestBody = objectMapper.writeValueAsString(userRequest);
 
@@ -121,7 +123,7 @@ class BlogApiControllerTest {
     @Test
     public void findAllArticle() throws Exception {
         // given
-        final String url = "/articles";
+        final String url = "/blog";
         Article savedArticle = createDefaultArticle();
 
         // when
@@ -147,13 +149,13 @@ class BlogApiControllerTest {
         }
 
         // when
-        final ResultActions resultActions = mockMvc.perform(get(url)
+        ResultActions resultActions = mockMvc.perform(get(url)
                 .accept(MediaType.APPLICATION_JSON_VALUE));
 
         // then
         resultActions
                 .andExpect(status().isOk())
-                .andExpectAll(jsonPath("$.length()").value(articles.size()));
+                .andExpectAll(jsonPath("$.totalCount").value(articles.size()));
 
     }
 
@@ -170,7 +172,7 @@ class BlogApiControllerTest {
         // then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").value(savedArticle.getContent()))
+                .andExpect(jsonPath("$.content").value("<p>" + savedArticle.getContent() + "</p>\n"))
                 .andExpect(jsonPath("$.title").value(savedArticle.getTitle()));
     }
 
@@ -237,7 +239,7 @@ class BlogApiControllerTest {
         assertThat(prevNextArticle.getId()).isEqualTo(id);
         assertThat(prevNextArticle.getNextId()).isEqualTo(id + 1);
         assertThat(prevNextArticle.getPrevTitle()).isEqualTo("title");
-        assertThat(prevNextArticle.getNextId()).isEqualTo(14);
+        assertThat(prevNextArticle.getPrevId()).isEqualTo(14);
         assertThat(prevNextArticle.getNextTitle()).isEqualTo("title");
     }
 
