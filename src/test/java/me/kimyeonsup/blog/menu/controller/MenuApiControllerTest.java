@@ -7,8 +7,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import me.kimyeonsup.blog.article.repository.ArticleRepository;
 import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.login.repository.UserRepository;
 import me.kimyeonsup.blog.menu.domain.dto.AddMenuRequest;
@@ -21,6 +23,7 @@ import me.kimyeonsup.blog.menu.service.MenuService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -58,6 +61,9 @@ class MenuApiControllerTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ArticleRepository articleRepository;
+
     User user;
 
     Category category;
@@ -79,6 +85,7 @@ class MenuApiControllerTest {
     public void mockMvcSetUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .build();
+        articleRepository.deleteAll();
         menuRepository.deleteAll();
         categoryRepository.deleteAll();
         category = categoryRepository.save(Category.builder()
@@ -89,15 +96,15 @@ class MenuApiControllerTest {
 
     @Test
     @DisplayName("AddMenu : 메뉴를 추가를 성공한다.")
-    void addCategoryTest() throws Exception {
+    void addMenuTest() throws Exception {
         final String url = "/api/menu";
         final String name = "자바";
         final AddMenuRequest request = new AddMenuRequest(category.getId(), name);
 
         final String requestBody = objectMapper.writeValueAsString(request);
 
-//        Principal principal = Mockito.mock(Principal.class);
-//        Mockito.when(principal.getName()).thenReturn("username");
+        Principal principal = Mockito.mock(Principal.class);
+        Mockito.when(principal.getName()).thenReturn("username");
 
         // when
         ResultActions result = mockMvc.perform(post(url)
@@ -115,7 +122,7 @@ class MenuApiControllerTest {
 
     @DisplayName("deleteMenu : 메뉴를 삭제한다.")
     @Test
-    void deleteCategory() throws Exception {
+    void deleteMenu() throws Exception {
         final String url = "/api/menu/{id}";
         Menu savededMenu = savedMenu(category);
 
@@ -131,7 +138,7 @@ class MenuApiControllerTest {
 
     @DisplayName("메뉴 이름을 수정한다.")
     @Test
-    void updateCategory() throws Exception {
+    void updateMenu() throws Exception {
         final String url = "/api/menu/{id}";
         Menu savedMenu = savedMenu(category);
 

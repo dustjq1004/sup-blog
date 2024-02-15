@@ -1,22 +1,28 @@
-package me.kimyeonsup.blog.config;
+package me.kimyeonsup.blog.config.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.blog.config.jwt.TokenProvider;
+import lombok.extern.slf4j.Slf4j;
+import me.kimyeonsup.blog.config.oauth.OAuth2UserCustomService;
+import me.kimyeonsup.blog.login.domain.dto.SessionUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @RequiredArgsConstructor
+@Slf4j
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
-    private final TokenProvider tokenProvider;
 
     private final static String HEADER_AUTHORIZATION = "Authorization";
     private final static String TOKEN_PREFIX = "Bearer ";
+
+    private final TokenProvider tokenProvider;
+    private final HttpSession httpSession;
 
     @Override
     protected void doFilterInternal(
@@ -26,9 +32,12 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
         String token = getAccessToken(authorizationHeader);
+        SessionUser sessionUser = (SessionUser) httpSession.getAttribute(OAuth2UserCustomService.SESSION_USER_KEY);
 
-        if (tokenProvider.validToken(token)) {
-            Authentication authentication = tokenProvider.getAuthentication(token);
+        if (sessionUser != null) {
+            // 세션 인증으로 변경
+            log.info("sessionUser {}", sessionUser);
+            Authentication authentication = tokenProvider.getAuthentication(sessionUser.getEmail());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 

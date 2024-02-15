@@ -2,7 +2,9 @@ package me.kimyeonsup.blog.config;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import me.kimyeonsup.blog.config.jwt.TokenAuthenticationFilter;
 import me.kimyeonsup.blog.config.jwt.TokenProvider;
 import me.kimyeonsup.blog.config.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
 import me.kimyeonsup.blog.config.oauth.OAuth2SuccessHandler;
@@ -18,7 +20,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
@@ -28,6 +29,7 @@ public class WebOAuthSecurityConfig {
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserService userService;
+    private final HttpSession httpSession;
 
     @Bean
     public WebSecurityCustomizer configure() {
@@ -44,20 +46,23 @@ public class WebOAuthSecurityConfig {
                 .logout(logout -> logout.disable());
 
         http.sessionManagement(
-                sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                        .maximumSessions(1)
+        );
 
-        http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterAfter(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeHttpRequests(authorization -> authorization
                 .requestMatchers("/api/token").permitAll()
                 .requestMatchers("/api/**").authenticated()
+                .requestMatchers("/blog/new-article").authenticated()
                 .anyRequest().permitAll());
 
         http.oauth2Login(oAuth2Login -> oAuth2Login
                 .loginPage("/login")
+                .successHandler(oAuth2AuthorizationSuccessHandler())
                 .authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig
                         .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()))
-                .successHandler(oAuth2AuthorizationSuccessHandler())
                 .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                         .userService(oAuth2UserCustomService)));
 
@@ -79,9 +84,9 @@ public class WebOAuthSecurityConfig {
                 userService);
     }
 
-    @Bean
+    //    @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
-        return new TokenAuthenticationFilter(tokenProvider);
+        return new TokenAuthenticationFilter(tokenProvider, httpSession);
     }
 
     @Bean

@@ -23,3 +23,22 @@ a {
     background-color: var(--white) !important;
 }
 
+.CodeMirror-fullscreen {
+    z-index: 2000;
+}
+
+.editor-toolbar.fullscreen {
+    z-index: 2000;
+}
+
+.editor-preview-side {
+    z-index: 2000;
+}
+
+
+/*
+easymde preview CSS
+*/
+.editor-preview-active-side img {
+    width: 100px;
+}

@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:include="layouts/head"></div>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+    <style>
+        .mde-table {
+            width: 30px;
+        }
+    </style>
+</head>
+<div th:insert="~{layouts/head}"></div>
 <body class="bg-light">
-<div th:include="layouts/navigator" th:with="title=Blog"></div>
+<div th:insert="~{layouts/navigator}" th:with="title=Blog"></div>
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-lg-8">
-            <h2 class="mb-4">글 등록</h2>
+        <div class="col">
+            <h2 th:if="${article.id != null}" class="mb-4">글 수정</h2>
+            <h2 th:if="${article.id == null}" class="mb-4">글 등록</h2>
             <article>
                 <input type="hidden" id="article-id" th:value="${article.id}">
+                <input th:if="${article.id}" type="hidden" id="article-menuName" th:value="${article.menuName}">
                 <div class="col-md-5 mb-2">
-                    <select class="form-select" id="menu" required="">
+                    <select class="form-select" id="menu" required="required">
                         <option value="">메뉴 선택</option>
-                        <option th:each="menu : ${menus}" th:text="${menu.name}" th:value="${menu.id}">United States
+                        <option th:each="menu : ${menus}" th:selected="${menu.name.equals(article.menuName)}" th:text="${menu.name}" th:value="${menu.id}">United States
                         </option>
                     </select>
                     <div class="invalid-feedback">
-                        Please select a valid country.
+                        Please select a valid menu.
                     </div>
                 </div>
 
@@ -36,6 +47,10 @@
         </div>
     </div>
 </div>
-<div th:include="layouts/footer"></div>
+<div th:insert="~{layouts/footer}"></div>
 <script src="/js/article.js"></script>
+<script src="/js/easyMDE.js"></script>
+<script th:inline="javascript">
+    const content = /*[[${article.content}]]*/;
+</script>
 </body>

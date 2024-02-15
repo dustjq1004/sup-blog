@@ -12,13 +12,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
+import me.kimyeonsup.blog.article.domain.dto.ArticlePrevNextDto;
 import me.kimyeonsup.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.blog.article.domain.entity.Article;
 import me.kimyeonsup.blog.article.repository.ArticleRepository;
 import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.login.repository.UserRepository;
+import me.kimyeonsup.blog.menu.domain.entity.Menu;
+import me.kimyeonsup.blog.menu.repository.MenuRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -54,7 +58,11 @@ class BlogApiControllerTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    MenuRepository menuRepository;
+
     User user;
+    Menu menu;
 
     @BeforeEach
     void setSecurityContext() {
@@ -62,6 +70,9 @@ class BlogApiControllerTest {
         user = userRepository.save(User.builder()
                 .email("dustjq1005@gmail.com")
                 .password("test")
+                .build());
+        menu = menuRepository.save(Menu.builder()
+                .name("자바")
                 .build());
 
         SecurityContext context = SecurityContextHolder.getContext();
@@ -83,7 +94,9 @@ class BlogApiControllerTest {
         final String url = "/api/articles";
         final String title = "title";
         final String content = "content";
-        final AddArticleRequest userRequest = new AddArticleRequest(title, content, 1L);
+        List<Menu> menus = menuRepository.findAll();
+        Menu findMenu = menus.get(0);
+        final AddArticleRequest userRequest = new AddArticleRequest(title, content, findMenu.getId());
 
         final String requestBody = objectMapper.writeValueAsString(userRequest);
 
@@ -110,7 +123,7 @@ class BlogApiControllerTest {
     @Test
     public void findAllArticle() throws Exception {
         // given
-        final String url = "/articles";
+        final String url = "/blog";
         Article savedArticle = createDefaultArticle();
 
         // when
@@ -122,6 +135,27 @@ class BlogApiControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString(savedArticle.getContent())))
                 .andExpect(content().string(containsString(savedArticle.getTitle())));
+
+    }
+
+    @DisplayName("findAllArticles : 블로그 페이지네이션 조회에 성공한다.")
+    @Test
+    public void findAllArticlePagination() throws Exception {
+        // given
+        final String url = "/articles?pageNumber=0";
+        List<Article> articles = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            articles.add(createDefaultArticle());
+        }
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get(url)
+                .accept(MediaType.APPLICATION_JSON_VALUE));
+
+        // then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpectAll(jsonPath("$.totalCount").value(articles.size()));
 
     }
 
@@ -138,7 +172,7 @@ class BlogApiControllerTest {
         // then
         resultActions
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").value(savedArticle.getContent()))
+                .andExpect(jsonPath("$.content").value("<p>" + savedArticle.getContent() + "</p>\n"))
                 .andExpect(jsonPath("$.title").value(savedArticle.getTitle()));
     }
 
@@ -167,9 +201,10 @@ class BlogApiControllerTest {
         Article savedArticle = createDefaultArticle();
 
         final String newTitle = "new title";
+        final String newSubTitle = "sub Title";
         final String newContent = "new content";
 
-        UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newContent);
+        UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newSubTitle, newContent);
 
         // when
         ResultActions result = mockMvc.perform(put(url, savedArticle.getId())
@@ -185,11 +220,35 @@ class BlogApiControllerTest {
         assertThat(article.getContent()).isEqualTo(newContent);
     }
 
+    @DisplayName("이전글 다음글을 조회한다.")
+    @Test
+    void getPrevNextArticle() {
+
+        String menuName = "자바";
+        createDefaultArticle();
+        createDefaultArticle();
+        createDefaultArticle();
+
+        List<Article> all = articleRepository.findAll();
+        Long id = all.get(1).getId();
+
+        ArticlePrevNextDto prevNextArticle = articleRepository.findPrevNextArticle(id, menuName);
+
+        assertThat(all.size()).isEqualTo(3);
+
+        assertThat(prevNextArticle.getId()).isEqualTo(id);
+        assertThat(prevNextArticle.getNextId()).isEqualTo(id + 1);
+        assertThat(prevNextArticle.getPrevTitle()).isEqualTo("title");
+        assertThat(prevNextArticle.getPrevId()).isEqualTo(14);
+        assertThat(prevNextArticle.getNextTitle()).isEqualTo("title");
+    }
+
     private Article createDefaultArticle() {
         return articleRepository.save(Article.builder()
                 .title("title")
                 .author(user.getUsername())
                 .content("content")
+                .menu(menu)
                 .build());
     }
 }

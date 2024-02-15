@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet" th:href="@{/css/article.css}">
+</head>
+<div th:insert="~{layouts/head}"></div>
+<body class="bg-light">
+<div th:insert="~{layouts/navigator}" th:with="title=Blog"></div>
+
+<div class="container my-5 px-xxl-2 pt-4">
+    <div class="row flex-lg-row-reverse d-lg-grid content">
+        <div class="offcanvas-body p-4 pt-0 p-lg-2" th:insert="~{blog/blogSidebar}"
+             th:with="articles=${articles}"></div>
+        <div class="main">
+            <div class="row mb-3">
+                <div class="col">
+                    <article>
+                        <input type="hidden" id="article-id" th:value="${article}">
+                        <header class="mb-5">
+                            <div class="d-flex">
+                                <h1 class="fw-bolder mb-3" th:utext="${article.title}"></h1>
+                                <div class="d-flex ms-auto">
+                                    <div sec:authorize="isAuthenticated()">
+                                        <button type="button" id="modify-btn"
+                                                th:onclick="|location.href='@{/blog/new-article?id={articleId}(articleId=${article.id})}'|"
+                                                class="btn btn-primary btn-sm">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </button>
+                                        <button type="button" id="delete-btn"
+                                                class="btn btn-secondary btn-sm">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </header>
+                        <section class="mb-5">
+                            <div class="mb-4 article-min-height" th:utext="${article.content}">
+
+                            </div>
+                        </section>
+                        <div class="text-muted ms-auto d-flex justify-content-end"
+                             th:text="|${#temporals.format(article.updateAt, 'yyyy년 MM월 dd일')}|">
+                        </div>
+                        <div class="mb-2 ms-auto d-flex justify-content-end"
+                             th:text="|${article.author}|">
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <div id="prev-next-card" class="row">
+                <div class="col">
+                    <a th:if="${prevNextArticle.isPrev}"
+                       class="card w-50 mb-3 link-underline link-underline-opacity-0"
+                       th:href="|/blog/${article.menuName}/${prevNextArticle.prevId}|">
+                        <div class="card-body">
+                            <h5 th:text="${prevNextArticle.prevTitle}"></h5>
+                            <p>이전 글</p>
+                        </div>
+                    </a>
+                    <a th:if="${not prevNextArticle.isPrev}"
+                       class="card w-50 mb-3 link-underline link-underline-opacity-0">
+                        <div class="card-body">
+                            <h5 th:text="${prevNextArticle.prevTitle}"></h5>
+                            <p>이전 글</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a th:if="${prevNextArticle.isNext}"
+                       class="card w-50 mb-3 ms-auto link-underline link-underline-opacity-0"
+                       th:href="|/blog/${article.menuName}/${prevNextArticle.nextId}|">
+                        <div class="card-body">
+                            <h5 th:text="${prevNextArticle.nextTitle}"></h5>
+                            <p>다음 글</p>
+                        </div>
+                    </a>
+                    <a th:if="${not prevNextArticle.isNext}"
+                       class="card w-50 mb-3 ms-auto link-underline link-underline-opacity-0">
+                        <div class="card-body">
+                            <h5 th:text="${prevNextArticle.nextTitle}"></h5>
+                            <p>다음 글</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col">
+                    <!--                    <h2>Commonets</h2>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="~{layouts/footer}"></div>
+<div th:insert="~{layouts/script}"></div>
+<script src="/js/blog.js"></script>
+</body>

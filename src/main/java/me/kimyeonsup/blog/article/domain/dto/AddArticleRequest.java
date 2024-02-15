@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.kimyeonsup.blog.article.domain.entity.Article;
+import me.kimyeonsup.blog.menu.domain.entity.Menu;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +19,7 @@ public class AddArticleRequest {
         return Article.builder()
                 .title(title)
                 .content(content)
-                .menuId(menuId)
+                .menu(Menu.builder().id(menuId).build())
                 .author(author)
                 .build();
     }
