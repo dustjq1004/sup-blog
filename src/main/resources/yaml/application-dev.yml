@@ -1,6 +1,3 @@
-server:
-  shutdown: graceful
-
 spring:
   config:
     activate:
@@ -18,6 +15,9 @@ spring:
             scope:
               - email
               - profile
+server:
+  shutdown: graceful
+  
 jwt:
   issuer: dustjq1005@gmail.com
   secret_key: secret-key
