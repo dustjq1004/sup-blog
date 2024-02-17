@@ -1,9 +1,6 @@
 package me.kimyeonsup.blog.article.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import me.kimyeonsup.blog.infra.s3.S3PresignedService;
 import me.kimyeonsup.blog.login.domain.entity.User;
@@ -11,6 +8,7 @@ import me.kimyeonsup.blog.login.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,12 +16,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 @SpringBootTest
+@ActiveProfiles("local")
 @AutoConfigureMockMvc
 @Slf4j
 class S3FileControllerTest {
@@ -69,6 +73,7 @@ class S3FileControllerTest {
 
     @DisplayName("getPreSigendUrl : S3에서 preSignedUrl을 가져온다.")
     @Test
+    @DisabledIfEnvironmentVariable(named = "spring.profiles.active", matches = "logging")
     void getPreSigendUrlTest() {
         // given
         String fileName = "aaa.png";

@@ -1,15 +1,7 @@
 package me.kimyeonsup.blog.menu.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
+import me.kimyeonsup.blog.article.repository.ArticleRepository;
 import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.login.repository.UserRepository;
 import me.kimyeonsup.blog.menu.domain.dto.AddCategoryRequest;
@@ -33,6 +25,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -59,6 +59,9 @@ class CategoryApiControllerTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ArticleRepository articleRepository;
+
     User user;
 
     @BeforeEach
@@ -78,6 +81,7 @@ class CategoryApiControllerTest {
     public void mockMvcSetUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .build();
+        articleRepository.deleteAll();
         menuRepository.deleteAll();
         categoryRepository.deleteAll();
     }

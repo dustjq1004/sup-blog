@@ -9,5 +9,5 @@ spring:
     group:
       local: local
       logging: dev, log
-    #    active: logging
+    #active: logging
     active: logging
