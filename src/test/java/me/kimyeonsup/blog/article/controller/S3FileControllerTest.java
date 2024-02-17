@@ -8,7 +8,8 @@ import me.kimyeonsup.blog.login.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -27,7 +27,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SpringBootTest
-@ActiveProfiles("local")
 @AutoConfigureMockMvc
 @Slf4j
 class S3FileControllerTest {
@@ -73,7 +72,8 @@ class S3FileControllerTest {
 
     @DisplayName("getPreSigendUrl : S3에서 preSignedUrl을 가져온다.")
     @Test
-    @DisabledIfEnvironmentVariable(named = "spring.profiles.active", matches = "logging")
+//    @DisabledIfEnvironmentVariable(named = "spring.profiles.active", matches = "logging")
+    @EnabledOnOs(OS.MAC)
     void getPreSigendUrlTest() {
         // given
         String fileName = "aaa.png";
