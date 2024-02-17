@@ -17,7 +17,7 @@ spring:
               - profile
 server:
   shutdown: graceful
-  
+
 jwt:
   issuer: dustjq1005@gmail.com
   secret_key: secret-key
@@ -25,8 +25,9 @@ jwt:
 cloud:
   aws:
     region: ap-northeast-2
-    stack: false
+    stack:
+      auto: false
     credentials:
       instanceProfile: true
   s3:
-    bucket: bucket-name
+    bucket: elasticbeanstalk-ap-northeast-2-205011928457
