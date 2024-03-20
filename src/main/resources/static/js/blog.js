@@ -66,7 +66,7 @@ const getArticlesPagination = async (pageNumber, menuName) => {
     function fail() {
     }
 
-    await ajaxGetRequest('GET', '/articles', data, success, fail);
+    await ajaxGetRequest('GET', '/api/articles', data, success, fail);
 }
 
 function ajaxGetRequest(method, url, data, success, fail) {
