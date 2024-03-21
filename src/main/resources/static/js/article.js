@@ -34,8 +34,10 @@ if (modifyButton) {
         const selectElement = document.getElementById('menu');
         const selectedMenu = selectElement.options[selectElement.selectedIndex];
         const menuName = selectedMenu.text;
+
         body = JSON.stringify({
             title: document.getElementById('title').value,
+            subtitle: document.getElementById('subtitle').value,
             content: content,
             menuId: selectElement.value
         });
@@ -45,9 +47,8 @@ if (modifyButton) {
             location.replace(`/blog/${menuName}/${id}`);
         }
 
-        function fail() {
-            alert('수정 실패했습니다.');
-            location.replace(`/blog/${menuName}/${id}`);
+        function fail(json) {
+            alertValidation(json);
         }
 
         const options = {
@@ -65,10 +66,13 @@ const createButton = document.getElementById('create-btn');
 if (createButton) {
     // 등록 버튼을 클릭하면 /api/articles로 요청을 보낸다
     createButton.addEventListener('click', event => {
+        if (!isValidated()) return
+
         const content = easyMDE.value();
-        console.log(content);
+
         const body = JSON.stringify({
             title: document.getElementById('title').value,
+            subtitle: document.getElementById('subtitle').value,
             content: content,
             menuId: document.getElementById('menu').value
         });
@@ -78,9 +82,8 @@ if (createButton) {
             location.replace('/blog');
         };
 
-        function fail() {
-            alert('등록 실패했습니다.');
-            location.replace('/blog');
+        function fail(json) {
+            alertValidation(json);
         };
 
         const options = {
@@ -92,3 +95,19 @@ if (createButton) {
     });
 }
 
+function isValidated() {
+    const forms = document.querySelectorAll('.needs-validation')
+    for (let i = 0; i < forms.length; i++) {
+        if (!forms[i].checkValidity()) {
+            forms[i].classList.add('was-validated')
+            return false
+        }
+    }
+    return true
+}
+
+function alertValidation(json) {
+    json.errors.forEach(error => {
+        alert(`유효성 검증에 실패하였습니다. ${error.field} : ${error.defaultMessage}`)
+    })
+}

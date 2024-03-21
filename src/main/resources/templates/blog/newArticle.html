@@ -19,30 +19,40 @@
             <h2 th:if="${article.id != null}" class="mb-4">글 수정</h2>
             <h2 th:if="${article.id == null}" class="mb-4">글 등록</h2>
             <article>
-                <input type="hidden" id="article-id" th:value="${article.id}">
-                <input th:if="${article.id}" type="hidden" id="article-menuName" th:value="${article.menuName}">
-                <div class="col-md-5 mb-2">
-                    <select class="form-select" id="menu" required="required">
-                        <option value="">메뉴 선택</option>
-                        <option th:each="menu : ${menus}" th:selected="${menu.name.equals(article.menuName)}" th:text="${menu.name}" th:value="${menu.id}">United States
-                        </option>
-                    </select>
-                    <div class="invalid-feedback">
-                        Please select a valid menu.
+                <form class="needs-validation" novalidate>
+                    <input type="hidden" id="article-id" th:value="${article.id}">
+                    <input th:if="${article.id}" type="hidden" id="article-menuName" th:value="${article.menuName}">
+                    <div class="col-md-5 mb-2">
+                        <select class="form-select" id="menu" required="required">
+                            <option value="">메뉴 선택</option>
+                            <option th:each="menu : ${menus}" th:selected="${menu.name.equals(article.menuName)}" th:text="${menu.name}" th:value="${menu.id}">United States
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">
+                            메뉴를 선택해주세요.
+                        </div>
                     </div>
-                </div>
 
-                <header class="mb-4">
-                    <input type="text" class="form-control" placeholder="제목" id="title" th:value="${article.title}">
-                </header>
-                <section class="mb-5">
-                    <textarea class="form-control h-25" rows="10" placeholder="내용" id="content"
-                              th:text="${article.content}"></textarea>
-                </section>
-                <button th:if="${article.id} != null" type="button" id="modify-btn" class="btn btn-primary btn-sm">수정
-                </button>
-                <button th:if="${article.id} == null" type="button" id="create-btn" class="btn btn-primary btn-sm">등록
-                </button>
+                    <header class="mb-4">
+                        <div class="mb-1">
+                            <input type="text" class="form-control" placeholder="제목" id="title" th:value="${article.title}" required>
+                            <div class="invalid-feedback">
+                                제목은 필수입니다.
+                            </div>
+                        </div>
+                        <div class="mb-0">
+                            <input type="text" class="form-control" placeholder="부제목" id="subTitle" th:value="${article.subTitle}">
+                        </div>
+                    </header>
+                    <section class="mb-5">
+                        <textarea class="form-control h-25" rows="10" placeholder="내용" id="content"
+                                  th:text="${article.content}"></textarea>
+                    </section>
+                    <button th:if="${article.id} != null" type="button" id="modify-btn" class="btn btn-primary btn-sm">수정
+                    </button>
+                    <button th:if="${article.id} == null" type="button" id="create-btn" class="btn btn-primary btn-sm">등록
+                    </button>
+                </form>
             </article>
         </div>
     </div>
