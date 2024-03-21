@@ -1,19 +1,6 @@
-package me.kimyeonsup.blog.controller;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+package me.kimyeonsup.blog.article.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.blog.article.domain.dto.ArticlePrevNextDto;
 import me.kimyeonsup.blog.article.domain.dto.UpdateArticleRequest;
@@ -38,6 +25,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -96,7 +92,7 @@ class BlogApiControllerTest {
         final String content = "content";
         List<Menu> menus = menuRepository.findAll();
         Menu findMenu = menus.get(0);
-        final AddArticleRequest userRequest = new AddArticleRequest(title, content, findMenu.getId());
+        final AddArticleRequest userRequest = new AddArticleRequest(title, "", content, findMenu.getId());
 
         final String requestBody = objectMapper.writeValueAsString(userRequest);
 
@@ -204,7 +200,7 @@ class BlogApiControllerTest {
         final String newSubTitle = "sub Title";
         final String newContent = "new content";
 
-        UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newSubTitle, newContent);
+        UpdateArticleRequest request = new UpdateArticleRequest(newTitle, newSubTitle, newContent, menu.getId());
 
         // when
         ResultActions result = mockMvc.perform(put(url, savedArticle.getId())
