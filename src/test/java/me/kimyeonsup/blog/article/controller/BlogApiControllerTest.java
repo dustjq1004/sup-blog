@@ -138,7 +138,7 @@ class BlogApiControllerTest {
     @Test
     public void findAllArticlePagination() throws Exception {
         // given
-        final String url = "/articles?pageNumber=0";
+        final String url = "/api/articles?pageNumber=0";
         List<Article> articles = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             articles.add(createDefaultArticle());
