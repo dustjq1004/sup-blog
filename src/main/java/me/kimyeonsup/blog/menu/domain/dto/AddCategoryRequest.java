@@ -1,5 +1,6 @@
 package me.kimyeonsup.blog.menu.domain.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import me.kimyeonsup.blog.menu.domain.entity.Category;
 @Getter
 public class AddCategoryRequest {
 
+    @NotBlank
     private String name;
 
     public Category toEntity() {

@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div th:insert="~{layouts/head}"></div>
 <head>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.css"
+          integrity="sha512-twSIkcOWTg8pO2szOkSwXeumnI79JQ0zVRavBB5cdJvhVFhReF9fBlyFM380P6vKIQ4mlD80EPtuZdSPpqYDgQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" th:href="@{/css/article.css}">
 </head>
-<div th:insert="~{layouts/head}"></div>
 <body class="bg-light">
 <div th:insert="~{layouts/navigator}" th:with="title=Blog"></div>
 
@@ -35,7 +39,7 @@
                                 </div>
                             </div>
                         </header>
-                        <section class="mb-5">
+                        <section class="mb-5 markdown-body">
                             <div class="mb-4 article-min-height" th:utext="${article.content}">
 
                             </div>

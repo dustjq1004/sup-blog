@@ -1,13 +1,6 @@
 package me.kimyeonsup.blog.article.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +8,8 @@ import lombok.NoArgsConstructor;
 import me.kimyeonsup.blog.menu.domain.entity.Menu;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -51,9 +46,10 @@ public class Article {
     private Menu menu;
 
     @Builder
-    public Article(String title, String content, String author, Menu menu) {
+    public Article(String title, String content, String subTitle, String author, Menu menu) {
         this.title = title;
         this.content = content;
+        this.subTitle = subTitle;
         this.author = author;
         this.menu = menu;
     }

@@ -1,5 +1,7 @@
 package me.kimyeonsup.blog.menu.domain.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,10 @@ import me.kimyeonsup.blog.menu.domain.entity.Menu;
 @Getter
 public class AddMenuRequest {
 
+    @NotNull
     private Long categoryId;
+
+    @NotBlank
     private String name;
 
     public Menu toEntity(Category category) {
