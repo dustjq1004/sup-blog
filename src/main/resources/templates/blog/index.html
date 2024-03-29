@@ -8,7 +8,7 @@
 <body class="bg-light">
 <div th:insert="~{layouts/navigator}" th:with="title=Blog"></div>
 
-<div class="container my-5 px-xxl-2 pt-4">
+<div class="container my-5 px-xxl-2 pt-4 min-vh-100">
     <div class="row flex-lg-row-reverse d-lg-grid content">
         <div class="offcanvas-body p-4 pt-0 p-lg-2" th:insert="~{blog/blogSidebar}"
              th:with="articles=${articles}"></div>

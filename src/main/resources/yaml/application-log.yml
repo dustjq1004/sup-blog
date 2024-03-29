@@ -11,10 +11,7 @@ spring:
         use_sql_comments: true
     # 테이블 생성 후에 data.sql 실행
     defer-datasource-initialization: true
-  h2:
-    console:
-      enabled: true
-      
+
 logging:
   level:
     org:

@@ -12,7 +12,7 @@
 <body class="bg-light">
 <div th:insert="~{layouts/navigator}" th:with="title=Blog"></div>
 
-<div class="container my-5 px-xxl-2 pt-4">
+<div class="container my-5 px-xxl-2 pt-4 md-5">
     <div class="row flex-lg-row-reverse d-lg-grid content">
         <div class="offcanvas-body p-4 pt-0 p-lg-2" th:insert="~{blog/blogSidebar}"
              th:with="articles=${articles}"></div>
@@ -54,10 +54,10 @@
                 </div>
             </div>
 
-            <div id="prev-next-card" class="row">
+            <div id="prev-next-card" class="row mb-5">
                 <div class="col">
                     <a th:if="${prevNextArticle.isPrev}"
-                       class="card w-50 mb-3 link-underline link-underline-opacity-0"
+                       class="card border-0 shadow w-50 mb-3 link-underline link-underline-opacity-0"
                        th:href="|/blog/${article.menuName}/${prevNextArticle.prevId}|">
                         <div class="card-body">
                             <h5 th:text="${prevNextArticle.prevTitle}"></h5>
@@ -65,7 +65,7 @@
                         </div>
                     </a>
                     <a th:if="${not prevNextArticle.isPrev}"
-                       class="card w-50 mb-3 link-underline link-underline-opacity-0">
+                       class="card border-0 shadow w-50 mb-3 link-underline link-underline-opacity-0">
                         <div class="card-body">
                             <h5 th:text="${prevNextArticle.prevTitle}"></h5>
                             <p>이전 글</p>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="col">
                     <a th:if="${prevNextArticle.isNext}"
-                       class="card w-50 mb-3 ms-auto link-underline link-underline-opacity-0"
+                       class="card border-0 shadow w-50 mb-3 ms-auto link-underline link-underline-opacity-0"
                        th:href="|/blog/${article.menuName}/${prevNextArticle.nextId}|">
                         <div class="card-body">
                             <h5 th:text="${prevNextArticle.nextTitle}"></h5>
@@ -82,7 +82,7 @@
                         </div>
                     </a>
                     <a th:if="${not prevNextArticle.isNext}"
-                       class="card w-50 mb-3 ms-auto link-underline link-underline-opacity-0">
+                       class="card border-0 shadow w-50 mb-3 ms-auto link-underline link-underline-opacity-0">
                         <div class="card-body">
                             <h5 th:text="${prevNextArticle.nextTitle}"></h5>
                             <p>다음 글</p>
@@ -90,11 +90,18 @@
                     </a>
                 </div>
             </div>
-            <hr/>
-            <div class="row">
-                <div class="col">
-                    <!--                    <h2>Commonets</h2>-->
+            <div class="row border-top pt-5">
+                <div class="col md-5">
+                    <h2>Comments</h2>
                 </div>
+                <script src="https://utteranc.es/client.js"
+                        repo="dustjq1004/comments"
+                        issue-term="pathname"
+                        theme="github-light"
+                        label="comments"
+                        crossorigin="anonymous"
+                        async>
+                </script>
             </div>
         </div>
     </div>
