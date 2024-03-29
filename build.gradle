@@ -26,7 +26,7 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
-    implementation 'mysql:mysql-connector-java:8.0.35'
+    implementation 'mysql:mysql-connector-java:8.0.33'
     implementation 'org.commonmark:commonmark:0.21.0'
     implementation 'software.amazon.awssdk:s3:2.17.285'
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
