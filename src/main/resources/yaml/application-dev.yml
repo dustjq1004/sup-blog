@@ -4,8 +4,6 @@ spring:
       on-profile: dev
   lifecycle:
     timeout-per-shutdown-phase: 30s
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
 
   security:
     oauth2:
