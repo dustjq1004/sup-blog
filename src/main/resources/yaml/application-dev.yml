@@ -4,6 +4,13 @@ spring:
       on-profile: dev
   lifecycle:
     timeout-per-shutdown-phase: 30s
+  datasource:
+    url: jdbc:mysql://${rds.hostname}:${rds.port}/${rds.db.name}
+    driver-class-name: ${rds.driver}
+    username: ${rds.username}
+    password: ${rds.password}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
 
   security:
     oauth2:

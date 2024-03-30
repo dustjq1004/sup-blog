@@ -72,7 +72,7 @@ if (createButton) {
 
         const body = JSON.stringify({
             title: document.getElementById('title').value,
-            subtitle: document.getElementById('subtitle').value,
+            subtitle: document.getElementById('subTitle').value,
             content: content,
             menuId: document.getElementById('menu').value
         });
