@@ -25,6 +25,7 @@ spring:
 
 server:
   shutdown: graceful
+  forward-headers-strategy: native
 
 jwt:
   issuer: dustjq1005@gmail.com
