@@ -38,18 +38,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="text-muted ms-auto d-flex justify-content-start">
+                                <span class="username" th:text="|${article.author}|"></span>
+                                <span class="separator">·</span>
+                                <span th:text="|${#temporals.format(article.updateAt, 'yyyy년 MM월 dd일')}|"></span>
+                            </div>
                         </header>
                         <section class="mb-5 markdown-body">
                             <div class="mb-4 article-min-height" th:utext="${article.content}">
 
                             </div>
                         </section>
-                        <div class="text-muted ms-auto d-flex justify-content-end"
-                             th:text="|${#temporals.format(article.updateAt, 'yyyy년 MM월 dd일')}|">
-                        </div>
-                        <div class="mb-2 ms-auto d-flex justify-content-end"
-                             th:text="|${article.author}|">
-                        </div>
                     </article>
                 </div>
             </div>
@@ -57,35 +56,35 @@
             <div id="prev-next-card" class="row mb-5">
                 <div class="col">
                     <a th:if="${prevNextArticle.isPrev}"
-                       class="card border-0 shadow w-50 mb-3 link-underline link-underline-opacity-0"
+                       class="pn-post card border-0 mb-2 link-underline link-underline-opacity-0"
                        th:href="|/blog/${article.menuName}/${prevNextArticle.prevId}|">
                         <div class="card-body">
-                            <h5 th:text="${prevNextArticle.prevTitle}"></h5>
-                            <p>이전 글</p>
+                            <span class="pn-label">이전 글</span>
+                            <h6 th:text="${prevNextArticle.prevTitle}"></h6>
                         </div>
                     </a>
                     <a th:if="${not prevNextArticle.isPrev}"
-                       class="card border-0 shadow w-50 mb-3 link-underline link-underline-opacity-0">
+                       class="pn-post card border-0 mb-2 link-underline link-underline-opacity-0">
                         <div class="card-body">
-                            <h5 th:text="${prevNextArticle.prevTitle}"></h5>
-                            <p>이전 글</p>
+                            <span class="pn-label">이전 글</span>
+                            <h6 th:text="${prevNextArticle.prevTitle}"></h6>
                         </div>
                     </a>
                 </div>
                 <div class="col">
                     <a th:if="${prevNextArticle.isNext}"
-                       class="card border-0 shadow w-50 mb-3 ms-auto link-underline link-underline-opacity-0"
+                       class="pn-post card border-0 mb-2 ms-auto link-underline link-underline-opacity-0"
                        th:href="|/blog/${article.menuName}/${prevNextArticle.nextId}|">
-                        <div class="card-body">
-                            <h5 th:text="${prevNextArticle.nextTitle}"></h5>
-                            <p>다음 글</p>
+                        <div class="card-body ms-auto justify-content-end">
+                            <span class="pn-label">다음 글</span>
+                            <h6 th:text="${prevNextArticle.nextTitle}"></h6>
                         </div>
                     </a>
                     <a th:if="${not prevNextArticle.isNext}"
-                       class="card border-0 shadow w-50 mb-3 ms-auto link-underline link-underline-opacity-0">
-                        <div class="card-body">
-                            <h5 th:text="${prevNextArticle.nextTitle}"></h5>
-                            <p>다음 글</p>
+                       class="pn-post card border-0 mb-1 ms-auto link-underline link-underline-opacity-0">
+                        <div class="card-body ms-auto justify-content-end">
+                            <span class="pn-label">다음 글</span>
+                            <h6 th:text="${prevNextArticle.nextTitle}"></h6>
                         </div>
                     </a>
                 </div>
@@ -109,4 +108,5 @@
 <div th:insert="~{layouts/footer}"></div>
 <div th:insert="~{layouts/script}"></div>
 <script src="/js/blog.js"></script>
+<script src="/js/article.js"></script>
 </body>

@@ -11,8 +11,10 @@ article - list CSS
 
 /*
 article CSS
-글 정보 조회
+글 정보
 */
+
+
 #prev-next-card .card:hover {
     background-color: rgba(112.520718, 44.062154, 249.437846, .1);
     border-color: white;
@@ -20,3 +22,22 @@ article CSS
     transition-duration: 0.5s;
 }
 
+/* Header */
+article header .username {
+    font-weight: bold;
+}
+
+article header .separator {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+/* prev , next post*/
+.pn-label {
+    font-size: 0.80em;
+}
+
+.pn-post {
+    background: #f6f6f6;
+    width: 60% !important;
+}
