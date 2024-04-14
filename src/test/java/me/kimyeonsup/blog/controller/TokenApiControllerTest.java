@@ -1,11 +1,6 @@
 package me.kimyeonsup.blog.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Map;
 import me.kimyeonsup.blog.config.jwt.JwtFactory;
 import me.kimyeonsup.blog.config.jwt.JwtProperties;
 import me.kimyeonsup.blog.login.domain.dto.CreateAccessTokenRequest;
@@ -24,6 +19,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.Map;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest
@@ -64,6 +65,7 @@ class TokenApiControllerTest {
         User testUser = userRepository.save(User.builder()
                 .email("user@gmail.com")
                 .password("test")
+                .role("관리자")
                 .build());
 
         String refreshToekn = JwtFactory.builder()

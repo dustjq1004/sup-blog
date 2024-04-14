@@ -20,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,6 +29,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -66,14 +69,18 @@ public class AddArticleFailTest {
         user = userRepository.save(User.builder()
                 .email("dustjq1005@gmail.com")
                 .password("test")
+                .role("관리자")
                 .build());
         menu = menuRepository.save(Menu.builder()
                 .name("자바")
                 .build());
 
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+
+        authorities.add((GrantedAuthority) () -> user.getRole());
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(new UsernamePasswordAuthenticationToken(user,
-                user.getPassword(), user.getAuthorities()));
+                user.getPassword(), authorities));
     }
 
     @BeforeEach
