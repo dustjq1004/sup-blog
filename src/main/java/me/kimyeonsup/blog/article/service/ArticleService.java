@@ -1,7 +1,5 @@
 package me.kimyeonsup.blog.article.service;
 
-import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.blog.article.domain.dto.ArticlePrevNextDto;
@@ -9,6 +7,7 @@ import me.kimyeonsup.blog.article.domain.dto.ArticlePrevNextResponse;
 import me.kimyeonsup.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.blog.article.domain.entity.Article;
 import me.kimyeonsup.blog.article.repository.ArticleRepository;
+import me.kimyeonsup.blog.config.oauth.PrincipalDetail;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +16,9 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -37,7 +39,7 @@ public class ArticleService {
     }
 
     public Page<Article> findAllPagenation(int pageNumber, String menuName) {
-        Pageable pageRequest = PageRequest.of(pageNumber, PAGE_SIZE, Sort.by(Direction.ASC, ORDER_CRITERIA));
+        Pageable pageRequest = PageRequest.of(pageNumber, PAGE_SIZE, Sort.by(Direction.DESC, ORDER_CRITERIA));
 
         Page<Article> articles = Optional.ofNullable(menuName)
                 .map(s -> articleRepository.findByMenuName(pageRequest, menuName))
@@ -87,8 +89,8 @@ public class ArticleService {
     }
 
     private void authorizeArticleAuthor(Article article) {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!article.getAuthor().equals(userName)) {
+        PrincipalDetail principalDetail = (PrincipalDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!article.getAuthor().equals(principalDetail.getName())) {
             throw new IllegalArgumentException("not authorized");
         }
     }
