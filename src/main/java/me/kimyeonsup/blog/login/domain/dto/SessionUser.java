@@ -1,8 +1,9 @@
 package me.kimyeonsup.blog.login.domain.dto;
 
-import java.io.Serializable;
 import lombok.Getter;
 import me.kimyeonsup.blog.login.domain.entity.User;
+
+import java.io.Serializable;
 
 @Getter
 public class SessionUser implements Serializable {
@@ -12,7 +13,7 @@ public class SessionUser implements Serializable {
     private String picture;
 
     public SessionUser(User user) {
-        this.name = user.getUsername();
+        this.name = user.getNickname();
         this.email = user.getEmail();
         this.picture = user.getPicture();
     }

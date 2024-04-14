@@ -30,11 +30,12 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
         OAuthAttributes oAuthAttributes = OAuthAttributes.of(registrationId, userNameAttributeName,
                 oAuth2User.getAttributes());
+
         User user = saveOrUpdate(oAuthAttributes);
 
         httpSession.setMaxInactiveInterval(INTERVAL_TIME);
         httpSession.setAttribute(SESSION_USER_KEY, new SessionUser(user));
-        return oAuth2User;
+        return new PrincipalDetail(user, oAuthAttributes);
     }
 
     private User saveOrUpdate(OAuthAttributes attributes) {
