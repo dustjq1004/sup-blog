@@ -64,7 +64,10 @@ public class WebOAuthSecurityConfig {
                 .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
                         .userService(oAuth2UserCustomService)));
 
-        http.logout(logout -> logout.logoutSuccessUrl("/login"));
+        // Logout Filter가 내부적으로 세션 만료를 해준다.
+        http.logout(logout ->
+                logout.logoutUrl("/logout")
+                        .logoutSuccessUrl("/blog"));
 
         http.exceptionHandling(exceptionHandler ->
                 exceptionHandler.defaultAuthenticationEntryPointFor(
