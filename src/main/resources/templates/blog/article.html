@@ -23,7 +23,7 @@
                         <input type="hidden" id="article-id" th:value="${article}">
                         <header class="mb-5">
                             <div class="d-flex">
-                                <h1 class="fw-bolder mb-3" th:utext="${article.title}"></h1>
+                                <h1 class="fw-bolder w-90 mb-3" th:utext="${article.title}"></h1>
                                 <div class="d-flex ms-auto">
                                     <div sec:authorize="isAuthenticated()">
                                         <button type="button" id="modify-btn"

@@ -35,6 +35,9 @@ a {
     z-index: 2000;
 }
 
+.w-90 {
+    width: 90% !important;
+}
 
 /*
 easymde preview CSS
