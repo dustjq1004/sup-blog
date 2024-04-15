@@ -1,11 +1,6 @@
 package me.kimyeonsup.blog.config.jwt;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import io.jsonwebtoken.Jwts;
-import java.time.Duration;
-import java.util.Date;
-import java.util.Map;
 import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.login.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.time.Duration;
+import java.util.Date;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class TokenProviderTest {
@@ -32,6 +33,7 @@ class TokenProviderTest {
         User testUser = userRepository.save(User.builder()
                 .email("test@test.com")
                 .password("test")
+                .role("관리자")
                 .build());
 
         //when

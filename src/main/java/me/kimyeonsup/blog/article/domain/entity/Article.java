@@ -5,16 +5,15 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import me.kimyeonsup.blog.global.common.entity.BaseTimeEntity;
 import me.kimyeonsup.blog.menu.domain.entity.Menu;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Article {
+@Slf4j
+public class Article extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,16 +30,11 @@ public class Article {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @CreatedDate
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
     @Column(name = "author", nullable = false)
     private String author;
+
+    @Column(name = "thumbnail_url")
+    private String thumbnailUrl;
 
     @ManyToOne
     private Menu menu;
@@ -52,6 +46,7 @@ public class Article {
         this.subTitle = subTitle;
         this.author = author;
         this.menu = menu;
+        setThumbnailUrl(content);
     }
 
 
@@ -59,4 +54,17 @@ public class Article {
         this.title = title;
         this.content = content;
     }
+
+    private void setThumbnailUrl(String content) {
+        if (content.length() == 0) {
+            return;
+        }
+        final int imgTagStartIndex = content.indexOf("![");
+        if (imgTagStartIndex >= 0) {
+            String imgUrl = content.substring(imgTagStartIndex + 4, content.indexOf(")", imgTagStartIndex + 4));
+            log.debug("imgUrl : ", imgUrl);
+            this.thumbnailUrl = imgUrl;
+        }
+    }
+
 }

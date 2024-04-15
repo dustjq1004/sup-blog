@@ -15,12 +15,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -57,11 +60,15 @@ class S3FileControllerTest {
         user = userRepository.save(User.builder()
                 .email("dustjq1005@gmail.com")
                 .password("test")
+                .role("관리자")
                 .build());
 
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+
+        authorities.add((GrantedAuthority) () -> user.getRole());
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(new UsernamePasswordAuthenticationToken(user,
-                user.getPassword(), user.getAuthorities()));
+                user.getPassword(), authorities));
     }
 
     @BeforeEach
@@ -85,6 +92,6 @@ class S3FileControllerTest {
 
         // then
         assertThat(url).startsWith(
-                "https://elasticbeanstalk-ap-northeast-2-205011928457.s3.ap-northeast-2.amazonaws.com/");
+                "https://s3.ap-northeast-2.amazonaws.com/yeonsup.com/images/yeonsup.com");
     }
 }

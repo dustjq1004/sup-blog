@@ -37,7 +37,7 @@ if (modifyButton) {
 
         body = JSON.stringify({
             title: document.getElementById('title').value,
-            subtitle: document.getElementById('subtitle').value,
+            subTitle: document.getElementById('subTitle').value,
             content: content,
             menuId: selectElement.value
         });
@@ -72,7 +72,7 @@ if (createButton) {
 
         const body = JSON.stringify({
             title: document.getElementById('title').value,
-            subtitle: document.getElementById('subTitle').value,
+            subTitle: document.getElementById('subTitle').value,
             content: content,
             menuId: document.getElementById('menu').value
         });

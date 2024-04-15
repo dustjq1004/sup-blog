@@ -6,6 +6,7 @@ import me.kimyeonsup.blog.article.domain.dto.ArticlePrevNextDto;
 import me.kimyeonsup.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.blog.article.domain.entity.Article;
 import me.kimyeonsup.blog.article.repository.ArticleRepository;
+import me.kimyeonsup.blog.config.oauth.PrincipalDetail;
 import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.login.repository.UserRepository;
 import me.kimyeonsup.blog.menu.domain.entity.Menu;
@@ -18,9 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -28,6 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -57,23 +60,27 @@ class BlogApiControllerTest {
     @Autowired
     MenuRepository menuRepository;
 
-    User user;
+    PrincipalDetail principalDetail;
     Menu menu;
 
     @BeforeEach
     void setSecurityContext() {
         userRepository.deleteAll();
-        user = userRepository.save(User.builder()
+        User user = userRepository.save(User.builder()
                 .email("dustjq1005@gmail.com")
                 .password("test")
+                .role("관리자")
                 .build());
         menu = menuRepository.save(Menu.builder()
                 .name("자바")
                 .build());
+        principalDetail = new PrincipalDetail(user);
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
 
+        authorities.add((GrantedAuthority) () -> user.getRole());
         SecurityContext context = SecurityContextHolder.getContext();
-        context.setAuthentication(new UsernamePasswordAuthenticationToken(user,
-                user.getPassword(), user.getAuthorities()));
+        context.setAuthentication(new OAuth2AuthenticationToken(principalDetail,
+                authorities, "GM"));
     }
 
     @BeforeEach
@@ -242,7 +249,7 @@ class BlogApiControllerTest {
     private Article createDefaultArticle() {
         return articleRepository.save(Article.builder()
                 .title("title")
-                .author(user.getUsername())
+                .author(principalDetail.getName())
                 .content("content")
                 .menu(menu)
                 .build());
