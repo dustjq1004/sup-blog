@@ -1,6 +1,8 @@
 package me.kimyeonsup.blog.login.service;
 
 import lombok.RequiredArgsConstructor;
+import me.kimyeonsup.blog.config.oauth.PrincipalDetail;
+import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.login.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +17,8 @@ public class UserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException((email)));
+        return new PrincipalDetail(user);
     }
 }
