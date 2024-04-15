@@ -39,4 +39,4 @@ cloud:
     credentials:
       instanceProfile: true
   s3:
-    bucket: elasticbeanstalk-ap-northeast-2-205011928457
+    bucket: yeonsup.com
