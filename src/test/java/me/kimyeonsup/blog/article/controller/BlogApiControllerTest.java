@@ -80,7 +80,7 @@ class BlogApiControllerTest {
         authorities.add((GrantedAuthority) () -> user.getRole());
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(new OAuth2AuthenticationToken(principalDetail,
-                authorities, ""));
+                authorities, "GM"));
     }
 
     @BeforeEach

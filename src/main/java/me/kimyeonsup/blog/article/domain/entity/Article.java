@@ -5,12 +5,14 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.kimyeonsup.blog.global.common.entity.BaseTimeEntity;
 import me.kimyeonsup.blog.menu.domain.entity.Menu;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Slf4j
 public class Article extends BaseTimeEntity {
 
     @Id
@@ -31,6 +33,9 @@ public class Article extends BaseTimeEntity {
     @Column(name = "author", nullable = false)
     private String author;
 
+    @Column(name = "thumbnail_url")
+    private String thumbnailUrl;
+
     @ManyToOne
     private Menu menu;
 
@@ -41,12 +46,25 @@ public class Article extends BaseTimeEntity {
         this.subTitle = subTitle;
         this.author = author;
         this.menu = menu;
+        setThumbnailUrl(content);
     }
 
 
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    private void setThumbnailUrl(String content) {
+        if (content.length() == 0) {
+            return;
+        }
+        final int imgTagStartIndex = content.indexOf("![");
+        if (imgTagStartIndex >= 0) {
+            String imgUrl = content.substring(imgTagStartIndex + 4, content.indexOf(")", imgTagStartIndex + 4));
+            log.debug("imgUrl : ", imgUrl);
+            this.thumbnailUrl = imgUrl;
+        }
     }
 
 }
