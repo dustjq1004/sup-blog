@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.blog.article.repository.ArticleRepository;
+import me.kimyeonsup.blog.config.oauth.PrincipalDetail;
 import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.login.repository.UserRepository;
 import me.kimyeonsup.blog.menu.domain.entity.Menu;
@@ -19,10 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -58,7 +59,7 @@ public class AddArticleFailTest {
     @Autowired
     MenuRepository menuRepository;
 
-    User user;
+    PrincipalDetail principalDetail;
     Menu menu;
 
     private static final String url = "/api/articles";
@@ -66,7 +67,7 @@ public class AddArticleFailTest {
     @BeforeEach
     void setSecurityContext() {
         userRepository.deleteAll();
-        user = userRepository.save(User.builder()
+        User user = userRepository.save(User.builder()
                 .email("dustjq1005@gmail.com")
                 .password("test")
                 .role("관리자")
@@ -75,12 +76,13 @@ public class AddArticleFailTest {
                 .name("자바")
                 .build());
 
+        principalDetail = new PrincipalDetail(user);
         Collection<GrantedAuthority> authorities = new ArrayList<>();
 
         authorities.add((GrantedAuthority) () -> user.getRole());
         SecurityContext context = SecurityContextHolder.getContext();
-        context.setAuthentication(new UsernamePasswordAuthenticationToken(user,
-                user.getPassword(), authorities));
+        context.setAuthentication(new OAuth2AuthenticationToken(principalDetail,
+                authorities, "GM"));
     }
 
     @BeforeEach
@@ -94,7 +96,7 @@ public class AddArticleFailTest {
     @ParameterizedTest
     @CsvSource(
             {
-                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, size must be between 0 and 50",
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, size must be between 0 and 100",
                     ",must not be blank"
             }
     )
