@@ -17,6 +17,3 @@ logging:
     org:
       hibernate:
         SQL: debug # logger 방식 로그
-        orm:
-          jdbc:
-            bind: trace
