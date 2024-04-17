@@ -11,4 +11,3 @@ spring:
       local: local
       logging: dev, log
       test: test
-    active: logging
