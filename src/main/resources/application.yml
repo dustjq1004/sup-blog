@@ -8,6 +8,6 @@ spring:
   #      - classpath:/yaml/application-local.yml
   profiles:
     group:
-      # local: local
+      local: local
       logging: dev, log
       test: test
