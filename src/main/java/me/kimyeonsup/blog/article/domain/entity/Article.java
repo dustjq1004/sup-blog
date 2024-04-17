@@ -62,7 +62,6 @@ public class Article extends BaseTimeEntity {
         final int imgTagStartIndex = content.indexOf("![");
         if (imgTagStartIndex >= 0) {
             String imgUrl = content.substring(imgTagStartIndex + 4, content.indexOf(")", imgTagStartIndex + 4));
-            log.debug("imgUrl : ", imgUrl);
             this.thumbnailUrl = imgUrl;
         }
     }

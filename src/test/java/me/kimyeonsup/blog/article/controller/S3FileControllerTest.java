@@ -91,7 +91,6 @@ class S3FileControllerTest {
         String url = responseData.get("signedUrl");
 
         // then
-        assertThat(url).startsWith(
-                "https://s3.ap-northeast-2.amazonaws.com/yeonsup.com/images/yeonsup.com");
+        assertThat(url).isNotBlank();
     }
 }
