@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 public class UpdateArticleRequest {
 
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 100)
     private String title;
 
-    @Size(max = 50)
+    @Size(max = 100)
     private String subTitle;
     private String content;
 

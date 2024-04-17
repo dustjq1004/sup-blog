@@ -15,10 +15,10 @@ import me.kimyeonsup.blog.menu.domain.entity.Menu;
 public class AddArticleRequest {
 
     @NotBlank
-    @Size(max = 50)
+    @Size(max = 100)
     private String title;
 
-    @Size(max = 50)
+    @Size(max = 100)
     private String subTitle;
     private String content;
 

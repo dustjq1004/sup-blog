@@ -76,7 +76,7 @@ public class ArticleService {
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
 
         authorizeArticleAuthor(article);
-        article.update(request.getTitle(), request.getContent());
+        article.update(request.getTitle(), request.getContent(), request.getMenuId());
 
         return article;
     }

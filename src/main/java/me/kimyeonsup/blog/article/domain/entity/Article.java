@@ -50,12 +50,14 @@ public class Article extends BaseTimeEntity {
     }
 
 
-    public void update(String title, String content) {
+    public void update(String title, String content, long menuId) {
         this.title = title;
         this.content = content;
+        setThumbnailUrl(content);
     }
 
     private void setThumbnailUrl(String content) {
+        log.info("content: ${}", content);
         if (content.length() == 0) {
             return;
         }
