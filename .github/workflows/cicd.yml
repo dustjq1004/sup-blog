@@ -19,7 +19,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew -Dspring.profiles.active=logging clean build
+        run: ./gradlew clean build
 
 
       - name: Get current time
@@ -37,8 +37,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: subBlogSpring-webServer
-          environment_name: SubBlogSpring-webServer-env
+          application_name: supblog-Spring
+          environment_name: Supblog-Spring-env
           version_label: github-action-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: ./build/libs/${{env.artifact}}
