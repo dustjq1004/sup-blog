@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.blog.login.domain.dto.SessionUser;
 import me.kimyeonsup.blog.login.domain.entity.User;
 import me.kimyeonsup.blog.login.repository.UserRepository;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Service;
 public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
     public static final String SESSION_USER_KEY = "user";
-    public static final int INTERVAL_TIME = 10 * 60;
+    private static final int INTERVAL_TIME = 10 * 60;
+    private static final String MANAGER_ID = "dustjq1005@gmail.com";
+    private static final String EXCEPTION_MESSAGE = "관리자만 로그인 가능합니다.";
 
     private final UserRepository userRepository;
     private final HttpSession httpSession;
@@ -30,6 +33,11 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
         OAuthAttributes oAuthAttributes = OAuthAttributes.of(registrationId, userNameAttributeName,
                 oAuth2User.getAttributes());
+
+        // 관리자만 로그인 가능
+        if (!MANAGER_ID.equals(oAuthAttributes.getEmail())) {
+            throw new AuthenticationServiceException(EXCEPTION_MESSAGE);
+        }
 
         User user = saveOrUpdate(oAuthAttributes);
 
