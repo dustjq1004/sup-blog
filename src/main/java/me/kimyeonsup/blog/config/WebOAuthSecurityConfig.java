@@ -58,11 +58,12 @@ public class WebOAuthSecurityConfig {
 
         http.oauth2Login(oAuth2Login -> oAuth2Login
                 .loginPage("/login")
-                .successHandler(oAuth2AuthorizationSuccessHandler())
                 .authorizationEndpoint(authorizationEndpointConfig -> authorizationEndpointConfig
                         .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()))
                 .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
-                        .userService(oAuth2UserCustomService)));
+                        .userService(oAuth2UserCustomService))
+                .failureUrl("/login-error")
+                .successHandler(oAuth2AuthorizationSuccessHandler()));
 
         // Logout Filter가 내부적으로 세션 만료를 해준다.
         http.logout(logout ->
