@@ -14,6 +14,8 @@ import me.kimyeonsup.blog.menu.repository.MenuRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -97,10 +99,7 @@ class BlogApiControllerTest {
         final String url = "/api/articles";
         final String title = "title";
         final String content = "content";
-        List<Menu> menus = menuRepository.findAll();
-        Menu findMenu = menus.get(0);
-        final AddArticleRequest userRequest = new AddArticleRequest(title, "", content, findMenu.getId());
-
+        final AddArticleRequest userRequest = new AddArticleRequest(title, "", content, menu.getId());
         final String requestBody = objectMapper.writeValueAsString(userRequest);
 
         Principal principal = Mockito.mock(Principal.class);
@@ -238,12 +237,41 @@ class BlogApiControllerTest {
         ArticlePrevNextDto prevNextArticle = articleRepository.findPrevNextArticle(id, menuName);
 
         assertThat(all.size()).isEqualTo(3);
-
         assertThat(prevNextArticle.getId()).isEqualTo(id);
         assertThat(prevNextArticle.getNextId()).isEqualTo(id + 1);
         assertThat(prevNextArticle.getPrevTitle()).isEqualTo("title");
-        assertThat(prevNextArticle.getPrevId()).isEqualTo(14);
+        assertThat(prevNextArticle.getPrevId()).isEqualTo(16);
         assertThat(prevNextArticle.getNextTitle()).isEqualTo("title");
+    }
+
+    @DisplayName("블로그 글 추가시 썸네일 이미지도 함께 DB에 저장한다.")
+    @ParameterizedTest
+    @CsvSource({"![](https://urlimage.com/images/image.png), https://urlimage.com/images/image.png",
+            "![image](https://urlimage.com/images/image.png), https://urlimage.com/images/image.png"})
+    void saveThumbnailImageUrl(String content, String imageUrl) throws Exception {
+        // given
+        final String url = "/api/articles";
+        final String title = "title";
+        final AddArticleRequest userRequest = new AddArticleRequest(title, "", content, menu.getId());
+        final String requestBody = objectMapper.writeValueAsString(userRequest);
+
+        Principal principal = Mockito.mock(Principal.class);
+        Mockito.when(principal.getName()).thenReturn("username");
+
+        // when
+        ResultActions result = mockMvc.perform(post(url)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .principal(principal)
+                .content(requestBody));
+
+        // then
+        result.andExpect(status().isCreated());
+
+        List<Article> articles = articleRepository.findAll();
+
+        assertThat(articles.size()).isEqualTo(1);
+        assertThat(articles.get(0).getThumbnailUrl()).isNotBlank();
+        assertThat(articles.get(0).getThumbnailUrl()).isEqualTo(imageUrl);
     }
 
     private Article createDefaultArticle() {
