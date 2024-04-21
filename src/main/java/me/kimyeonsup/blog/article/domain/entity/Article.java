@@ -57,27 +57,32 @@ public class Article extends BaseTimeEntity {
     }
 
     private void setThumbnailUrl(String content) {
-        if (content.length() == 0) {
+        if (content.length() == 0 || !isThereImage(content)) {
             return;
         }
 
         int startIndex = getThumbnailStartIndex(content);
 
-        if (startIndex < 0) {
-            return;
-        }
-
         String imgUrl = content.substring(startIndex, content.indexOf(")", startIndex));
         this.thumbnailUrl = imgUrl;
     }
 
-    private int getThumbnailStartIndex(String content) {
-        int startIndex = content.indexOf("![");
-        startIndex = startIndex + content.indexOf("]", startIndex);
-        if (startIndex < 0) {
-            return startIndex;
+    private boolean isThereImage(String content) {
+        int index = content.indexOf("[");
+
+        if (index <= 0 || content.charAt(index - 1) != '!') {
+            return false;
         }
-        return startIndex + 2;
+
+        if (content.indexOf("]", index) < 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private int getThumbnailStartIndex(String content) {
+        return content.indexOf("]", content.indexOf("![")) + 2;
     }
 
 }
