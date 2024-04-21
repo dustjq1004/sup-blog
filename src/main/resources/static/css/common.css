@@ -11,6 +11,10 @@ a {
     cursor: pointer;
 }
 
+image {
+    object-fit: cover;
+}
+
 .nav-scroller {
     position: relative;
     z-index: 2;

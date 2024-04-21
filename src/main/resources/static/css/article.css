@@ -3,7 +3,6 @@ article - list CSS
 글 목록
 */
 #article-list .card:hover {
-    /*background-color: rgba(112.520718, 44.062154, 249.437846, .1);*/
     transform: translateY(-6px);
     transition-duration: 0.5s;
 }
@@ -14,6 +13,10 @@ article CSS
 글 정보
 */
 
+#prev-next-card .card {
+    background: #f6f6f6;
+    width: 55%
+}
 
 #prev-next-card .card:hover {
     background-color: rgba(112.520718, 44.062154, 249.437846, .1);
@@ -37,7 +40,9 @@ article header .separator {
     font-size: 0.80em;
 }
 
-.pn-post {
-    background: #f6f6f6;
-    width: 55% !important;
+/*
+markdown - css
+*/
+.markdown-body pre > code {
+    white-space: pre-wrap;
 }

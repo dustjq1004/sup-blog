@@ -58,7 +58,7 @@
             <div id="prev-next-card" class="row mb-5">
                 <div class="col">
                     <a th:if="${prevNextArticle.isPrev}"
-                       class="pn-post card border-0 mb-2 link-underline link-underline-opacity-0"
+                       class="card border-0 mb-2 link-underline link-underline-opacity-0"
                        th:href="|/blog/${article.menuName}/${prevNextArticle.prevId}|">
                         <div class="card-body">
                             <span class="pn-label">이전 글</span>
@@ -66,7 +66,7 @@
                         </div>
                     </a>
                     <a th:if="${not prevNextArticle.isPrev}"
-                       class="pn-post card border-0 mb-2 link-underline link-underline-opacity-0">
+                       class="card border-0 mb-2 link-underline link-underline-opacity-0">
                         <div class="card-body">
                             <span class="pn-label">이전 글</span>
                             <h6 th:text="${prevNextArticle.prevTitle}"></h6>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="col">
                     <a th:if="${prevNextArticle.isNext}"
-                       class="pn-post card border-0 mb-2 ms-auto link-underline link-underline-opacity-0"
+                       class="card border-0 mb-2 ms-auto link-underline link-underline-opacity-0"
                        th:href="|/blog/${article.menuName}/${prevNextArticle.nextId}|">
                         <div class="card-body ms-auto justify-content-end">
                             <span class="pn-label">다음 글</span>
@@ -83,7 +83,7 @@
                         </div>
                     </a>
                     <a th:if="${not prevNextArticle.isNext}"
-                       class="pn-post card border-0 mb-1 ms-auto link-underline link-underline-opacity-0">
+                       class="card border-0 mb-1 ms-auto link-underline link-underline-opacity-0">
                         <div class="card-body ms-auto justify-content-end">
                             <span class="pn-label">다음 글</span>
                             <h6 th:text="${prevNextArticle.nextTitle}"></h6>
