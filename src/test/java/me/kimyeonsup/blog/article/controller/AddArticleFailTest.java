@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import me.kimyeonsup.blog.article.domain.dto.AddArticleRequest;
+import me.kimyeonsup.blog.article.domain.entity.Article;
 import me.kimyeonsup.blog.article.repository.ArticleRepository;
 import me.kimyeonsup.blog.config.oauth.PrincipalDetail;
 import me.kimyeonsup.blog.login.domain.entity.User;
@@ -32,7 +33,9 @@ import org.springframework.web.context.WebApplicationContext;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -119,6 +122,34 @@ public class AddArticleFailTest {
         result.andExpect(status().isBadRequest());
         Assertions.assertThat(result.andReturn().getResolvedException().getMessage())
                 .contains(errorMessage);
+    }
+
+    @DisplayName("블로그 글 추가시 썸네일 이미지 검증 테스트.")
+    @ParameterizedTest
+    @CsvSource({"[image](https://urlimage.com/images/image.png)",
+            " [image](https://urlimage.com/images/image.png)"})
+    void saveThumbnailImageUrl(String content) throws Exception {
+        // given
+        final String url = "/api/articles";
+        final String title = "title";
+        final AddArticleRequest userRequest = new AddArticleRequest(title, "", content, menu.getId());
+        final String requestBody = objectMapper.writeValueAsString(userRequest);
+
+        Principal principal = Mockito.mock(Principal.class);
+        Mockito.when(principal.getName()).thenReturn("username");
+        // when
+        ResultActions result = mockMvc.perform(post(url)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .principal(principal)
+                .content(requestBody));
+
+        // then
+        result.andExpect(status().isCreated());
+
+        List<Article> articles = articleRepository.findAll();
+
+        assertThat(articles.size()).isEqualTo(1);
+        assertThat(articles.get(0).getThumbnailUrl()).isNull();
     }
 
     private String getRequestBodyByTitle(String title) throws JsonProcessingException {
