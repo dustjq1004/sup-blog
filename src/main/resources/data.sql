@@ -16,4 +16,6 @@ insert into article (title, sub_title, content, author, menu_id, created_at, upd
 insert into article (title, sub_title, content, author, menu_id, created_at, updated_at) values ('제목 8', 'subTitle 예시입니다.', '내용 3', 'user3', 1, NOW(), NOW())
 insert into article (title, sub_title, content, author, menu_id, created_at, updated_at) values ('제목 9', 'subTitle 예시입니다.', '내용 4', 'user1', 1, NOW(), NOW())
 insert into article (title, sub_title, content, author, menu_id, created_at, updated_at) values ('제목 10', 'subTitle 예시입니다.', '내용 5', 'user2', 1, NOW(), NOW())
-insert into article (title, sub_title, content, author, menu_id, created_at, updated_at) values ('제목11', 'subTitle 예시입니다.', '내용 6', 'user3', 1, NOW(), NOW())
+insert into article (title, sub_title, content, author, menu_id, created_at, updated_at) values ('제목11', 'subTitle 예시입니다.', '```
+내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6
+```', 'user3', 1, NOW(), NOW())
