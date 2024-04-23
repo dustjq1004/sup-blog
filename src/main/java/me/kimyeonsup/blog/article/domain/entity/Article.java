@@ -5,14 +5,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import me.kimyeonsup.blog.global.common.entity.BaseTimeEntity;
 import me.kimyeonsup.blog.menu.domain.entity.Menu;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Slf4j
 public class Article extends BaseTimeEntity {
 
     @Id

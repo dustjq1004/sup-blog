@@ -1,7 +1,6 @@
 package me.kimyeonsup.blog.article.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import me.kimyeonsup.blog.article.domain.dto.*;
 import me.kimyeonsup.blog.article.domain.entity.Article;
 import me.kimyeonsup.blog.article.service.ArticleService;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@Slf4j
 public class BlogApiController {
 
     private final ArticleService articleService;
