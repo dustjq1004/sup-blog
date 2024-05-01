@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface DraftRepository extends JpaRepository<DraftArticle, Long> {
 
-    List<DraftArticle> findByAuthorAndDelete(String author, Boolean delete);
+    List<DraftArticle> findByAuthorAndDeleteYn(String author, Boolean delete);
 }

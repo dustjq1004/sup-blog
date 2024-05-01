@@ -17,7 +17,7 @@ public class DraftService {
     private final DraftRepository draftRepository;
 
     public List<DraftArticle> findByAuthorAndDelete(String author) {
-        return draftRepository.findByAuthorAndDelete(author, false);
+        return draftRepository.findByAuthorAndDeleteYn(author, false);
     }
 
     public DraftArticle save(AddDraftArticle addDraftArticle, String author) {
