@@ -1,12 +1,5 @@
 let draftList = {};
 
-const success = (json) => {
-    draftList = json;
-    html = setDraftList(json);
-
-    $('#draft-list').html(html);
-}
-
 function setDraftList(json) {
     let html = "";
     let index = 0;
@@ -36,22 +29,34 @@ function resetForm() {
     $('form').each(function () {
         this.reset();
     });
-
+    $('#draft-id').val("");
     easyMDE.value("");
 }
 
-$(window).bind('beforeunload', function () {
-    if (isDraftSaved)
-        return '페이지를 나가시겠습니까? 기존에 작성한 글은 복구할 수 없습니다.';
-});
+const success = (json) => {
+    draftList = json;
+    html = setDraftList(json);
+
+    $('#draft-list').html(html);
+    isDraftSaved = false;
+}
 
 $(document).ready(function () {
-    $('#draft-button').click((event) => {
+    $("#draft-button").click(async function () {
         const options = {
             method: 'GET'
         };
 
-        httpRequest('/api/draft', options, success, () => {
+        await httpRequest('/api/draft', options, success, () => {
         })
+    })
+
+    $("form :input").on("input", function () {
+        isDraftSaved = true;
+    });
+
+    $(window).bind('beforeunload', function () {
+        if (isDraftSaved)
+            return '페이지를 나가시겠습니까? 기존에 작성한 글은 복구할 수 없습니다.';
     });
 });
