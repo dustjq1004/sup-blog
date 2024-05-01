@@ -5,14 +5,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import me.kimyeonsup.blog.global.common.entity.BaseTimeEntity;
 import me.kimyeonsup.blog.menu.domain.entity.Menu;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Slf4j
 public class Article extends BaseTimeEntity {
 
     @Id
@@ -57,27 +55,32 @@ public class Article extends BaseTimeEntity {
     }
 
     private void setThumbnailUrl(String content) {
-        if (content.length() == 0) {
+        if (content.length() == 0 || !isThereImage(content)) {
             return;
         }
 
         int startIndex = getThumbnailStartIndex(content);
 
-        if (startIndex < 0) {
-            return;
-        }
-
         String imgUrl = content.substring(startIndex, content.indexOf(")", startIndex));
         this.thumbnailUrl = imgUrl;
     }
 
-    private int getThumbnailStartIndex(String content) {
-        int startIndex = content.indexOf("![");
-        startIndex = startIndex + content.indexOf("]", startIndex);
-        if (startIndex < 0) {
-            return startIndex;
+    private boolean isThereImage(String content) {
+        int index = content.indexOf("[");
+
+        if (index <= 0 || content.charAt(index - 1) != '!') {
+            return false;
         }
-        return startIndex + 2;
+
+        if (content.indexOf("]", index) < 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private int getThumbnailStartIndex(String content) {
+        return content.indexOf("]", content.indexOf("![")) + 2;
     }
 
 }

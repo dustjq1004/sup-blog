@@ -240,7 +240,7 @@ class BlogApiControllerTest {
         assertThat(prevNextArticle.getId()).isEqualTo(id);
         assertThat(prevNextArticle.getNextId()).isEqualTo(id + 1);
         assertThat(prevNextArticle.getPrevTitle()).isEqualTo("title");
-        assertThat(prevNextArticle.getPrevId()).isEqualTo(16);
+        assertThat(prevNextArticle.getPrevId()).isEqualTo(id - 1);
         assertThat(prevNextArticle.getNextTitle()).isEqualTo("title");
     }
 
