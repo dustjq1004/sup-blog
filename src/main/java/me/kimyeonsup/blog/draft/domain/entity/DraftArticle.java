@@ -30,8 +30,8 @@ public class DraftArticle extends BaseTimeEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "delete", nullable = false)
-    Boolean delete = false;
+    @Column(name = "delete_yn", nullable = false)
+    Boolean deleteYn = false;
 
     @Column(name = "author", nullable = false)
     String author;
@@ -57,6 +57,6 @@ public class DraftArticle extends BaseTimeEntity {
     }
 
     public void delete() {
-        this.delete = true;
+        this.deleteYn = true;
     }
 }
