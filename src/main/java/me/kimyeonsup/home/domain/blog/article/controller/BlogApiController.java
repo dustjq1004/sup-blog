@@ -1,11 +1,10 @@
 package me.kimyeonsup.home.domain.blog.article.controller;
 
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.home.domain.article.domain.dto.*;
+import me.kimyeonsup.home.config.oauth.PrincipalDetail;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.*;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.domain.blog.article.service.ArticleService;
-import me.kimyeonsup.home.config.oauth.PrincipalDetail;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
