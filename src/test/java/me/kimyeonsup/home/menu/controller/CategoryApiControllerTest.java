@@ -2,14 +2,15 @@ package me.kimyeonsup.home.menu.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.kimyeonsup.home.domain.blog.article.repository.ArticleRepository;
-import me.kimyeonsup.home.login.domain.entity.User;
-import me.kimyeonsup.home.login.repository.UserRepository;
+import me.kimyeonsup.home.domain.blog.draft.repository.DraftRepository;
 import me.kimyeonsup.home.domain.blog.menu.domain.dto.AddCategoryRequest;
 import me.kimyeonsup.home.domain.blog.menu.domain.dto.UpdateCategoryRequest;
 import me.kimyeonsup.home.domain.blog.menu.domain.entity.Category;
 import me.kimyeonsup.home.domain.blog.menu.repository.CategoryRepository;
 import me.kimyeonsup.home.domain.blog.menu.repository.MenuRepository;
 import me.kimyeonsup.home.domain.blog.menu.service.CategoryService;
+import me.kimyeonsup.home.login.domain.entity.User;
+import me.kimyeonsup.home.login.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,6 +65,9 @@ class CategoryApiControllerTest {
     @Autowired
     ArticleRepository articleRepository;
 
+    @Autowired
+    DraftRepository draftRepository;
+
     User user;
 
     @BeforeEach
@@ -88,6 +92,7 @@ class CategoryApiControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .build();
         articleRepository.deleteAll();
+        draftRepository.deleteAll();
         menuRepository.deleteAll();
         categoryRepository.deleteAll();
     }
