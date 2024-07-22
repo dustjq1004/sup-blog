@@ -27,7 +27,7 @@ async function httpRequest(url, options, success, fail) {
     const response = await fetch(url, options);
 
     if (response.status === 200 || response.status === 201) {
-        return success(await response.json());
+        return success(response);
     }
 
     const refresh_token = getCookie('refresh_token');

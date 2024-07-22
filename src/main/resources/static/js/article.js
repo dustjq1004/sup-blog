@@ -134,8 +134,9 @@ function createDraft(data) {
         body: JSON.stringify(data)
     };
 
-    function success(json) {
+    async function success(response) {
         alert('게시글이 임시로 저장되었습니다.');
+        const json = await response.json();
         $('#draft-id').val(json.id);
     };
 
@@ -160,7 +161,7 @@ function updateDraft(data, draftId) {
 
     function fail(json) {
         alertValidation(json);
-    };
+    }
 
     httpRequest('/api/draft', options, success, fail)
 }
