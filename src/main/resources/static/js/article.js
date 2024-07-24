@@ -54,8 +54,13 @@ if (modifyButton) {
             location.replace(`/blog/${menuName}/${id}`);
         }
 
-        function fail(json) {
-            alertValidation(json);
+        function fail(error) {
+            if (error.status == 400) {
+                alertValidation(error);
+                return
+            }
+
+            alert(`서버 에러. ${error.message} : ${error.trace}`)
         }
 
         const options = {

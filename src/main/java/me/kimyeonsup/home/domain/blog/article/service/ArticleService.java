@@ -1,13 +1,13 @@
 package me.kimyeonsup.home.domain.blog.article.service;
 
 import lombok.RequiredArgsConstructor;
+import me.kimyeonsup.home.config.oauth.PrincipalDetail;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlePrevNextDto;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlePrevNextResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.domain.blog.article.repository.ArticleRepository;
-import me.kimyeonsup.home.config.oauth.PrincipalDetail;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -76,7 +76,7 @@ public class ArticleService {
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
 
         authorizeArticleAuthor(article);
-        article.update(request.getTitle(), request.getContent(), request.getMenuId());
+        article.update(request.getTitle(), request.getSubTitle(), request.getContent(), request.getMenuId());
 
         return article;
     }
