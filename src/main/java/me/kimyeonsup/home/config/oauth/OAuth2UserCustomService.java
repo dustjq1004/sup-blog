@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
     public static final String SESSION_USER_KEY = "user";
-    private static final int INTERVAL_TIME = 10 * 60;
+    private static final int INTERVAL_TIME = 30 * 60;
     private static final String MANAGER_ID = "dustjq1005@gmail.com";
     private static final String EXCEPTION_MESSAGE = "관리자만 로그인 가능합니다.";
 
