@@ -5,8 +5,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.kimyeonsup.home.global.common.entity.BaseTimeEntity;
 import me.kimyeonsup.home.domain.blog.menu.domain.entity.Menu;
+import me.kimyeonsup.home.global.common.entity.BaseTimeEntity;
 
 @Entity
 @Getter
@@ -48,8 +48,9 @@ public class Article extends BaseTimeEntity {
     }
 
 
-    public void update(String title, String content, long menuId) {
+    public void update(String title, String subTitle, String content, long menuId) {
         this.title = title;
+        this.subTitle = subTitle;
         this.content = content;
         setThumbnailUrl(content);
     }
