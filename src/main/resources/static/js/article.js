@@ -86,7 +86,8 @@ if (createButton) {
             title: document.getElementById('title').value,
             subTitle: document.getElementById('subTitle').value,
             content: content,
-            menuId: document.getElementById('menu').value
+            menuId: document.getElementById('menu').value,
+            draftId: document.getElementById('draft-id').value
         });
 
         function success() {

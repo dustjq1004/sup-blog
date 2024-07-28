@@ -23,6 +23,8 @@ function loadDraft(index) {
     $('#title').val(draft.title);
     $('#subTitle').val(draft.subTitle);
     easyMDE.value(draft.content);
+
+
 }
 
 function resetForm() {
@@ -33,9 +35,9 @@ function resetForm() {
     easyMDE.value("");
 }
 
-const success = (json) => {
-    draftList = json;
-    html = setDraftList(json);
+const success = async (body) => {
+    draftList = await body.json();
+    html = setDraftList(draftList);
 
     $('#draft-list').html(html);
     isDraftSaved = false;
