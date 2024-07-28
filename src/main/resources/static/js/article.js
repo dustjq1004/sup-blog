@@ -54,8 +54,13 @@ if (modifyButton) {
             location.replace(`/blog/${menuName}/${id}`);
         }
 
-        function fail(json) {
-            alertValidation(json);
+        function fail(error) {
+            if (error.status == 400) {
+                alertValidation(error);
+                return
+            }
+
+            alert(`서버 에러. ${error.message} : ${error.trace}`)
         }
 
         const options = {
@@ -81,7 +86,8 @@ if (createButton) {
             title: document.getElementById('title').value,
             subTitle: document.getElementById('subTitle').value,
             content: content,
-            menuId: document.getElementById('menu').value
+            menuId: document.getElementById('menu').value,
+            draftId: document.getElementById('draft-id').value
         });
 
         function success() {
@@ -134,8 +140,9 @@ function createDraft(data) {
         body: JSON.stringify(data)
     };
 
-    function success(json) {
+    async function success(response) {
         alert('게시글이 임시로 저장되었습니다.');
+        const json = await response.json();
         $('#draft-id').val(json.id);
     };
 
@@ -160,7 +167,7 @@ function updateDraft(data, draftId) {
 
     function fail(json) {
         alertValidation(json);
-    };
+    }
 
     httpRequest('/api/draft', options, success, fail)
 }

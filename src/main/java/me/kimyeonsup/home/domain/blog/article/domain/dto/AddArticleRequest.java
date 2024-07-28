@@ -25,6 +25,8 @@ public class AddArticleRequest {
     @NotNull
     private Long menuId;
 
+    private Long draftId;
+
     public Article toEntity(String author) {
         return Article.builder()
                 .title(title)

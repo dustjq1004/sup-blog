@@ -5,6 +5,7 @@ import me.kimyeonsup.home.config.oauth.PrincipalDetail;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.*;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.domain.blog.article.service.ArticleService;
+import me.kimyeonsup.home.domain.blog.draft.service.DraftService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +13,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RequiredArgsConstructor
 @RestController
 public class BlogApiController {
 
     private final ArticleService articleService;
+    private final DraftService draftService;
 
     @GetMapping("/api/articles")
     public ResponseEntity<PaginationResponse<ArticleListViewResponse>> findArticles(
@@ -38,7 +42,6 @@ public class BlogApiController {
     @GetMapping("/api/articles/{id}")
     public ResponseEntity<ArticleResponse> findArticle(@PathVariable long id) {
         Article article = articleService.findById(id);
-
         return ResponseEntity.ok()
                 .body(new ArticleResponse(article));
     }
@@ -46,6 +49,10 @@ public class BlogApiController {
     @PostMapping("/api/articles")
     public ResponseEntity<ArticleResponse> addArticle(@Validated @RequestBody AddArticleRequest request, @AuthenticationPrincipal PrincipalDetail user) {
         Article savedArticle = articleService.save(request, user.getName());
+        Long draftId = request.getDraftId();
+        if (!Objects.isNull(draftId)) {
+            draftService.delete(draftId);
+        }
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ArticleResponse(savedArticle));
     }
