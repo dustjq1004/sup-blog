@@ -8,10 +8,15 @@ import lombok.NoArgsConstructor;
 import me.kimyeonsup.home.domain.blog.menu.domain.entity.Menu;
 import me.kimyeonsup.home.global.common.entity.BaseTimeEntity;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Article extends BaseTimeEntity {
+    private static final Pattern IMG_TAG_PATTERN = Pattern.compile("(?i)<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
+    private static final Pattern MD_IMG_TAG_PATTERN = Pattern.compile("^!\\[[a-zA-Z0-9]*\\]\\(([\\w:.\\/-]*)");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,7 +49,7 @@ public class Article extends BaseTimeEntity {
         this.subTitle = subTitle;
         this.author = author;
         this.menu = menu;
-        setThumbnailUrl(content);
+        this.thumbnailUrl = getThumbnailUrl(content);
     }
 
 
@@ -52,36 +57,25 @@ public class Article extends BaseTimeEntity {
         this.title = title;
         this.subTitle = subTitle;
         this.content = content;
-        setThumbnailUrl(content);
+        this.thumbnailUrl = getThumbnailUrl(content);
     }
 
-    private void setThumbnailUrl(String content) {
-        if (content.length() == 0 || !isThereImage(content)) {
-            return;
+    // 1. img 태그 or ![]()
+
+    private String getThumbnailUrl(String content) {
+        if (content.isEmpty()) {
+            return "";
         }
 
-        int startIndex = getThumbnailStartIndex(content);
-
-        String imgUrl = content.substring(startIndex, content.indexOf(")", startIndex));
-        this.thumbnailUrl = imgUrl;
-    }
-
-    private boolean isThereImage(String content) {
-        int index = content.indexOf("[");
-
-        if (index <= 0 || content.charAt(index - 1) != '!') {
-            return false;
+        Matcher match = IMG_TAG_PATTERN.matcher(content);
+        if (match.find()) {
+            return match.group(1);
         }
 
-        if (content.indexOf("]", index) < 0) {
-            return false;
+        match = MD_IMG_TAG_PATTERN.matcher(content);
+        if (match.find()) {
+            return match.group(1);
         }
-
-        return true;
+        return "";
     }
-
-    private int getThumbnailStartIndex(String content) {
-        return content.indexOf("]", content.indexOf("![")) + 2;
-    }
-
 }
