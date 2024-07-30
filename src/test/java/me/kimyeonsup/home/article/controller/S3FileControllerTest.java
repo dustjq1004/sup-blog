@@ -87,7 +87,6 @@ class S3FileControllerTest {
 
         // when
         Map<String, String> responseData = s3PresignedService.getPresignedUrl(bucketName, fileName);
-//        log.info("responseData : {}", responseData);
         String url = responseData.get("signedUrl");
 
         // then

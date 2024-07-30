@@ -1,16 +1,16 @@
 package me.kimyeonsup.home.article.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.kimyeonsup.home.config.oauth.PrincipalDetail;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlePrevNextDto;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.domain.blog.article.repository.ArticleRepository;
-import me.kimyeonsup.home.config.oauth.PrincipalDetail;
-import me.kimyeonsup.home.login.domain.entity.User;
-import me.kimyeonsup.home.login.repository.UserRepository;
 import me.kimyeonsup.home.domain.blog.menu.domain.entity.Menu;
 import me.kimyeonsup.home.domain.blog.menu.repository.MenuRepository;
+import me.kimyeonsup.home.login.domain.entity.User;
+import me.kimyeonsup.home.login.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -99,7 +99,7 @@ class BlogApiControllerTest {
         final String url = "/api/articles";
         final String title = "title";
         final String content = "content";
-        final AddArticleRequest userRequest = new AddArticleRequest(title, "", content, menu.getId());
+        final AddArticleRequest userRequest = new AddArticleRequest(title, "", content, menu.getId(), null);
         final String requestBody = objectMapper.writeValueAsString(userRequest);
 
         Principal principal = Mockito.mock(Principal.class);
@@ -252,7 +252,7 @@ class BlogApiControllerTest {
         // given
         final String url = "/api/articles";
         final String title = "title";
-        final AddArticleRequest userRequest = new AddArticleRequest(title, "", content, menu.getId());
+        final AddArticleRequest userRequest = new AddArticleRequest(title, "", content, menu.getId(), null);
         final String requestBody = objectMapper.writeValueAsString(userRequest);
 
         Principal principal = Mockito.mock(Principal.class);
