@@ -47,7 +47,8 @@ public class PrincipalDetail implements UserDetails, OAuth2User {
 
     @Override
     public String getUsername() {
-        return user.getNickname();
+        String nickname = user.getNickname();
+        return nickname.substring(0, nickname.indexOf("@"));
     }
 
     @Override
