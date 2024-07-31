@@ -25,7 +25,8 @@ public class PrincipalDetail implements UserDetails, OAuth2User {
 
     @Override
     public String getName() {
-        return user.getEmail();
+        String email = user.getEmail();
+        return email.substring(0, email.indexOf("@"));
     }
 
     @Override
@@ -47,8 +48,7 @@ public class PrincipalDetail implements UserDetails, OAuth2User {
 
     @Override
     public String getUsername() {
-        String nickname = user.getNickname();
-        return nickname.substring(0, nickname.indexOf("@"));
+        return user.getNickname();
     }
 
     @Override
