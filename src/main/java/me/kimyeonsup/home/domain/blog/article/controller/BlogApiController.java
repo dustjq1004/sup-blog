@@ -48,7 +48,7 @@ public class BlogApiController {
 
     @PostMapping("/api/articles")
     public ResponseEntity<ArticleResponse> addArticle(@Validated @RequestBody AddArticleRequest request, @AuthenticationPrincipal PrincipalDetail user) {
-        Article savedArticle = articleService.save(request, user.getUsername());
+        Article savedArticle = articleService.save(request, user.getName());
         Long draftId = request.getDraftId();
         if (!Objects.isNull(draftId)) {
             draftService.delete(draftId);
