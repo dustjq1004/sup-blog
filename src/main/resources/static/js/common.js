@@ -37,7 +37,7 @@ async function httpRequest(url, options, success, fail) {
             httpRequest(method, url, body, success, fail);
         }
     } else {
-        return fail(await response.json());
+        return fail(response);
     }
 }
 

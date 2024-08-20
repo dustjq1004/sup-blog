@@ -57,3 +57,10 @@ easymde preview CSS
 .editor-preview-active-side img {
     width: 100px;
 }
+
+/*
+size
+*/
+.min-vh-75 {
+    min-height: 75vh !important;
+}

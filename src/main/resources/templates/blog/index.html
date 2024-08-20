@@ -9,50 +9,55 @@
     <link rel="stylesheet" th:href="@{/css/article.css}">
 </head>
 <body>
-<div class="row flex-lg-row-reverse d-lg-grid content">
-    <div class="offcanvas-body p-4 pt-0 p-lg-2" th:insert="~{blog/blogSidebar}"
-         th:with="articles=${articles}"></div>
-    <div id="main" class="main">
-        <div class="d-flex mb-4">
-            <h1>BLOG</h1>
-            <div class="d-flex ms-auto">
-                <div sec:authorize="isAuthenticated()">
-                    <button type="button" id="create-btn"
-                            th:onclick="|location.href='@{/blog/new-article}'|"
-                            class="btn btn-blog btn-sm ">
-                        <i class="fa-solid fa-pen"></i>
-                    </button>
+<div class="container my-5 px-xxl-2 pt-4 min-vh-100">
+
+    <div class="row flex-lg-row-reverse d-lg-grid content">
+        <div class="offcanvas-body p-4 pt-0 p-lg-2" th:insert="~{blog/blogSidebar}"
+             th:with="articles=${articles}"></div>
+        <div id="main" class="main">
+            <div class="d-flex mb-4">
+                <h1>BLOG</h1>
+                <div class="d-flex ms-auto">
+                    <div sec:authorize="isAuthenticated()">
+                        <button type="button" id="create-btn"
+                                th:onclick="|location.href='@{/blog/new-article}'|"
+                                class="btn btn-blog btn-sm ">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="article-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xxl-4 gy-3 gx-0">
-            <div class="col" th:each="item : ${articles}">
-                <a th:href="@{/blog/{menuName}/{id}(id=${item.id},menuName=${item.menuName})}"
-                   class="link-offset-2 link-underline link-underline-opacity-0">
-                    <div class="card border border-0 p-2 rounded-4">
-                        <svg class="bd-placeholder-img card-img-top rounded-4" width="100%" height="180"
-                             xmlns="http://www.w3.org/2000/svg" role="img"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <image th:if="${item.getThumbnailUrl() != null}" height="100%" width="100%"
-                                   preserveAspectRatio="none"
-                                   th:href="@{${item.getThumbnailUrl()}}"></image>
-                            <image th:if="${item.getThumbnailUrl() == null}" height="100%" width="100%"
-                                   preserveAspectRatio="none"
-                                   th:href="@{/img/noimage01.png}"></image>
-                            </text>
-                        </svg>
-                        <div class="card-body">
-                            <div class="mb-2">
+            <div id="article-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xxl-4 gy-3 gx-0">
+                <div class="col" th:each="item : ${articles}">
+                    <a th:href="@{/blog/{menuName}/{id}(id=${item.id},menuName=${item.menuName})}"
+                       class="link-offset-2 link-underline link-underline-opacity-0">
+                        <div class="card border border-0 p-2 rounded-4">
+                            <svg class="bd-placeholder-img card-img-top rounded-4" width="100%" height="180"
+                                 xmlns="http://www.w3.org/2000/svg" role="img"
+                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                                <image th:if="${item.getThumbnailUrl() != null || #strings.isEmpty(item.getThumbnailUrl())}"
+                                       height="100%" width="100%"
+                                       preserveAspectRatio="none"
+                                       th:href="@{${item.getThumbnailUrl()}}"></image>
+                                <image th:if="${item.getThumbnailUrl() == null || #strings.isEmpty(item.getThumbnailUrl())}"
+                                       height="100%" width="100%"
+                                       preserveAspectRatio="none"
+                                       th:href="@{/img/noimage01.png}"></image>
+
+                            </svg>
+                            <div class="card-body">
+                                <div class="mb-2">
                                     <span class="text-secondary fs-7"
                                           th:text="|${#temporals.format(item.updatedAt, 'yyyy.MM.dd')}|"></span>
+                                </div>
+                                <h5 class="mb-1 text-truncate" th:text="${item.title}">title</h5>
+                                <p class="card-text text-body-tertiary fs-6 text-truncate" th:utext="${item.subTitle}">
+                                    sub Title
+                                </p>
                             </div>
-                            <h5 class="mb-1 text-truncate" th:text="${item.title}">title</h5>
-                            <p class="card-text text-body-tertiary fs-6 text-truncate" th:utext="${item.subTitle}">
-                                sub Title
-                            </p>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

@@ -54,9 +54,9 @@ if (modifyButton) {
             location.replace(`/blog/${menuName}/${id}`);
         }
 
-        function fail(error) {
-            if (error.status == 400) {
-                alertValidation(error);
+        async function fail(response) {
+            if (response.status == 400) {
+                alertValidation(await response.json());
                 return
             }
 
@@ -96,8 +96,8 @@ if (createButton) {
             location.replace('/blog');
         }
 
-        function fail(json) {
-            alertValidation(json);
+        async function fail(response) {
+            alertValidation(await response.json());
         }
 
         const options = {
@@ -146,8 +146,8 @@ function createDraft(data) {
         $('#draft-id').val(json.id);
     };
 
-    function fail(json) {
-        alertValidation(json);
+    async function fail(response) {
+        alertValidation(await response.json());
     };
 
     httpRequest('/api/draft', options, success, fail)
