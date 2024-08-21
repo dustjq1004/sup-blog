@@ -1,3 +1,14 @@
+const inputField = document.getElementById('search-input');
+const parentDiv = inputField.parentElement;
+
+inputField.addEventListener('focus', function () {
+    parentDiv.classList.add('focused');
+});
+
+inputField.addEventListener('blur', function () {
+    parentDiv.classList.remove('focused');
+});
+
 $(document).ready(() => {
     getLatestArticles();
 })

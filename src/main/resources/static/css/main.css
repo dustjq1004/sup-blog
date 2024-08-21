@@ -4,3 +4,34 @@
     width: 500px;
     margin: 0 auto;
 }
+
+.input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px 5px;
+    width: 500px;
+    transition: border-color 0.3s;
+}
+
+.input-container input {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 5px;
+}
+
+.input-container img {
+    width: 20px;
+    height: 20px;
+}
+
+.input-container.focused {
+    border-color: blue;
+}
+
+.search-input-control:focus {
+    outline: none; /* 파란색 테두리 제거 */
+    box-shadow: none; /* 추가된 그림자 제거 */
+}
