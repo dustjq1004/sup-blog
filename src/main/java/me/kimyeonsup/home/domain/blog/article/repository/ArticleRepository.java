@@ -1,5 +1,6 @@
 package me.kimyeonsup.home.domain.blog.article.repository;
 
+import jakarta.validation.constraints.NotBlank;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlePrevNextDto;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import org.springframework.data.domain.Page;
@@ -49,4 +50,5 @@ FROM QUESTION
 
     List<Article> findTop6ByOrderByCreatedAtDesc();
 
+    List<Article> findByTitle(@NotBlank String titleParam);
 }
