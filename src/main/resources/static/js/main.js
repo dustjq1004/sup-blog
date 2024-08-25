@@ -15,7 +15,15 @@ $(document).ready(() => {
 
 const getLatestArticles = async () => {
     const success = async (response) => {
-        console.log(await response.json());
+        const json = await response.json();
+        const latestArticles = json.articles;
+        console.log(latestArticles);
+
+        let latestArticlesHTML = '';
+        for (const item of Object.entries(latestArticles)) {
+            latestArticlesHTML += latestArticlesTemplate(item);
+        }
+        $("#article-list").html(latestArticlesHTML);
     }
 
     const fail = async (data) => {

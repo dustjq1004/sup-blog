@@ -3,7 +3,7 @@ package me.kimyeonsup.home.domain.main.domain.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleResponse;
+import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleListViewResponse;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 public class LatestArticles {
 
-    List<ArticleResponse> articles;
+    List<ArticleListViewResponse> articles;
 
-    public LatestArticles(List<ArticleResponse> articles) {
+    public LatestArticles(List<ArticleListViewResponse> articles) {
         this.articles = articles;
     }
 }
