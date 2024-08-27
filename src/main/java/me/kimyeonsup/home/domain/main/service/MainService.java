@@ -17,14 +17,14 @@ public class MainService {
     public LatestArticles getLatestArticles() {
 
         return new LatestArticles(articleRepository
-                .findTop6ByOrderByCreatedAtDesc()
+                .findTop8ByOrderByCreatedAtDesc()
                 .stream()
                 .map(ArticleListViewResponse::new)
                 .toList());
     }
 
     public SearchedArticles getArticlesByTitle(@NotBlank String titleParam) {
-        return new SearchedArticles(articleRepository.findByTitle(titleParam)
+        return new SearchedArticles(articleRepository.findByTitleContains(titleParam)
                 .stream()
                 .map(ArticleListViewResponse::new)
                 .toList());

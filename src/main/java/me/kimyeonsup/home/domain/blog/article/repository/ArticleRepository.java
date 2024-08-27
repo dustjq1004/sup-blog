@@ -48,7 +48,7 @@ FROM QUESTION
     ArticlePrevNextDto findPrevNextArticle(Long id, String menuName);
 
 
-    List<Article> findTop6ByOrderByCreatedAtDesc();
+    List<Article> findTop8ByOrderByCreatedAtDesc();
 
-    List<Article> findByTitle(@NotBlank String titleParam);
+    List<Article> findByTitleContains(@NotBlank String titleParam);
 }

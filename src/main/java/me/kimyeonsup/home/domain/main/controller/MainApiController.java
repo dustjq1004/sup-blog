@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/main")
@@ -25,8 +27,13 @@ public class MainApiController {
     }
 
     @GetMapping("/articles/search")
-    public ResponseEntity<SearchedArticles> getSearchedArticles(@RequestParam SearchParams searchParams) {
+    public ResponseEntity<SearchedArticles> getSearchedArticles(@RequestParam("titleParam") SearchParams searchParams) {
+        String titleParam = searchParams.getTitleParam();
+        if (titleParam.isEmpty()) {
+            return ResponseEntity.ok()
+                    .body(new SearchedArticles(Collections.emptyList()));
+        }
         return ResponseEntity.ok()
-                .body(mainService.getArticlesByTitle(searchParams.getTitleParam()));
+                .body(mainService.getArticlesByTitle(titleParam));
     }
 }
