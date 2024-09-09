@@ -1,7 +1,6 @@
 const latestArticlesTemplate = (item) => {
     const thumbnailUrl = item.thumbnailUrl ? item.thumbnailUrl : '/img/noimage01.png';
     const updatedAt = dayjs(item.updatedAt);
-    console.log(item);
     return `
     <div class="col">
         <a href="/blog/${item.menuName}/${item.id}"
@@ -30,4 +29,9 @@ const latestArticlesTemplate = (item) => {
         </a>
     </div>
     `
+}
+
+const searchedArticlesTemplate = (item) => {
+    console.log(item);
+    return `<li><a class="dropdown-item " href="/blog/${item.menuName}/${item.id}">${item.title}</a></li>`
 }

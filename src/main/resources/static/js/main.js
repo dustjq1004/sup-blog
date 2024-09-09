@@ -3,11 +3,17 @@ const parentDiv = inputField.parentElement;
 
 inputField.addEventListener('focus', function () {
     parentDiv.classList.add('focused');
-});
+})
 
 inputField.addEventListener('blur', function () {
     parentDiv.classList.remove('focused');
-});
+    // $(".dropdown-menu").hide();
+})
+
+inputField.addEventListener('keyup', (e) => {
+    getSearchedArticles(e.target.value);
+    $(".dropdown-menu").show();
+})
 
 $(document).ready(() => {
     getLatestArticles();
@@ -17,11 +23,10 @@ const getLatestArticles = async () => {
     const success = async (response) => {
         const json = await response.json();
         const latestArticles = json.articles;
-        console.log(latestArticles);
 
         let latestArticlesHTML = '';
         for (const item of Object.entries(latestArticles)) {
-            latestArticlesHTML += latestArticlesTemplate(item);
+            latestArticlesHTML += latestArticlesTemplate(item[1]);
         }
         $("#article-list").html(latestArticlesHTML);
     }
@@ -36,9 +41,32 @@ const getLatestArticles = async () => {
     httpRequest('/api/main/articles/latest', options, success, fail)
 }
 
-const searchButton = document.getElementById('search-button');
+const getSearchedArticles = async (searchParam) => {
+    const success = async (response) => {
+        const json = await response.json();
+        const searchedArticles = json.articles;
+        let searchedArticlesHtml = '';
+        for (const article of Object.entries(searchedArticles)) {
+            searchedArticlesHtml += searchedArticlesTemplate(article[1]);
+        }
 
-searchButton.addEventListener('click', event => {
-    $("#search-input").css("display", "block");
-    $("#search-input").focus();
-});
+        $("#searched-list").html(searchedArticlesHtml);
+    }
+
+    const fail = async (data) => {
+
+    }
+
+    const options = {
+        method: "GET"
+    }
+
+    const params = {
+        "titleParam": searchParam
+    }
+
+    const queryString = new URLSearchParams(params).toString();
+
+
+    httpRequest(`/api/main/articles/search?${queryString}`, options, success, fail)
+}
