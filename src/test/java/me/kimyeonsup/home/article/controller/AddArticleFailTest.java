@@ -127,7 +127,7 @@ public class AddArticleFailTest {
     @DisplayName("블로그 글 추가시 썸네일 이미지 검증 테스트.")
     @ParameterizedTest
     @CsvSource({"[image](https://urlimage.com/images/image.png)",
-            " [image](https://urlimage.com/images/image.png)"})
+            "[image](https://urlimage.com/images/image.png)"})
     void saveThumbnailImageUrl(String content) throws Exception {
         // given
         final String url = "/api/articles";
@@ -149,7 +149,7 @@ public class AddArticleFailTest {
         List<Article> articles = articleRepository.findAll();
 
         assertThat(articles.size()).isEqualTo(1);
-        assertThat(articles.get(0).getThumbnailUrl()).isNull();
+        assertThat(articles.get(0).getThumbnailUrl().contains("noimage")).isTrue();
     }
 
     private String getRequestBodyByTitle(String title) throws JsonProcessingException {

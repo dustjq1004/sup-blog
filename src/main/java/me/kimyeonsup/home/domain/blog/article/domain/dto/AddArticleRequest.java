@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
+import me.kimyeonsup.home.domain.blog.article.domain.vo.Thumbnail;
 import me.kimyeonsup.home.domain.blog.menu.domain.entity.Menu;
 
 @NoArgsConstructor
@@ -33,6 +34,7 @@ public class AddArticleRequest {
                 .content(content)
                 .subTitle(subTitle)
                 .menu(Menu.builder().id(menuId).build())
+                .thumbnailUrl(Thumbnail.of(content))
                 .author(author)
                 .build();
     }
