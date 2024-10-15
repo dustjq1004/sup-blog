@@ -7,12 +7,15 @@ inputField.addEventListener('focus', function () {
 
 inputField.addEventListener('blur', function () {
     parentDiv.classList.remove('focused');
-    // $(".dropdown-menu").hide();
 })
 
 inputField.addEventListener('keyup', (e) => {
     getSearchedArticles(e.target.value);
     $(".dropdown-menu").show();
+})
+
+$('#search-cancel-button').on('click', () => {
+    $(".dropdown-menu").hide();
 })
 
 $(document).ready(() => {
@@ -41,16 +44,29 @@ const getLatestArticles = async () => {
     httpRequest('/api/main/articles/latest', options, success, fail)
 }
 
+function setArticlesHtml(searchedArticles) {
+    let searchedArticlesHtml = '';
+    for (const article of Object.entries(searchedArticles)) {
+        searchedArticlesHtml += searchedArticlesTemplate(article[1]);
+    }
+    return searchedArticlesHtml;
+}
+
 const getSearchedArticles = async (searchParam) => {
     const success = async (response) => {
         const json = await response.json();
         const searchedArticles = json.articles;
-        let searchedArticlesHtml = '';
-        for (const article of Object.entries(searchedArticles)) {
-            searchedArticlesHtml += searchedArticlesTemplate(article[1]);
+
+        if (searchedArticles.length == 0) {
+            $("#searched-list").hide();
+            $("#searched-list").html("");
+            return
         }
 
-        $("#searched-list").html(searchedArticlesHtml);
+        const html = await setArticlesHtml(searchedArticles);
+        $("#searched-list").html(html);
+        $("#no-search").hide();
+        $("#searched-list").show();
     }
 
     const fail = async (data) => {

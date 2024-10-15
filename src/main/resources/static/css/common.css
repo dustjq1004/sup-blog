@@ -1,4 +1,11 @@
+:root {
+    --primary-white: white;
+}
+
 body {
+    font-family: "Noto Sans KR", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
     /*padding-top: 56px;*/
 
 }
