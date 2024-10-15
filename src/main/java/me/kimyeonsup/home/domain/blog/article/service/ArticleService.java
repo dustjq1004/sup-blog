@@ -7,7 +7,10 @@ import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlePrevNextDto;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlePrevNextResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
+import me.kimyeonsup.home.domain.blog.article.domain.vo.Thumbnail;
 import me.kimyeonsup.home.domain.blog.article.repository.ArticleRepository;
+import me.kimyeonsup.home.domain.blog.menu.domain.entity.Menu;
+import me.kimyeonsup.home.domain.blog.menu.repository.MenuRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +31,7 @@ public class ArticleService {
     private static final String ORDER_CRITERIA = "createdAt";
 
     private final ArticleRepository articleRepository;
+    private final MenuRepository menuRepository;
 
     public Article save(AddArticleRequest request, String userName) {
         Article savedArticle = articleRepository.save(request.toEntity(userName));
@@ -75,8 +79,11 @@ public class ArticleService {
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + id));
 
+        Menu menu = menuRepository.findById(request.getMenuId())
+                .orElseThrow(() -> new IllegalArgumentException("not found Menu: " + id));
+
         authorizeArticleAuthor(article);
-        article.update(request.getTitle(), request.getSubTitle(), request.getContent(), request.getMenuId());
+        article.update(request.getTitle(), request.getSubTitle(), request.getContent(), Thumbnail.of(article.getContent()), menu);
 
         return article;
     }
