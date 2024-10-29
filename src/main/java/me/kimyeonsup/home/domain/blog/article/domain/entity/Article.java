@@ -51,7 +51,6 @@ public class Article extends BaseTimeEntity {
         this.thumbnailUrl = thumbnailUrl;
     }
 
-
     public void update(String title, String subTitle, String content, Thumbnail thumbnailUrl, Menu menu) {
         this.title = title;
         this.subTitle = subTitle;

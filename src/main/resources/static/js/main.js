@@ -22,6 +22,21 @@ $(document).ready(() => {
     getLatestArticles();
 })
 
+document.addEventListener("DOMContentLoaded", function () {
+    const titles = document.querySelectorAll('.title-word');
+    const titleCount = titles.length;
+    const displayTime = 2; // 각 타이틀이 표시되는 시간 (초)
+
+    // 전체 애니메이션 시간 설정
+    const totalDuration = titleCount * displayTime + 1;
+    document.documentElement.style.setProperty('--animation-duration', `${totalDuration}s`);
+
+    // 각 타이틀에 지연 시간 적용
+    titles.forEach((title, index) => {
+        title.style.animationDelay = `${index * displayTime}s`;
+    });
+});
+
 const getLatestArticles = async () => {
     const success = async (response) => {
         const json = await response.json();

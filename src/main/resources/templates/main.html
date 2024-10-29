@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{/index}"
-        layout:fragment="content">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/index}"
+      layout:fragment="content">
 <head>
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.7/dayjs.min.js"></script>
@@ -22,9 +22,12 @@
         <div class="carousel-item min-vh-100 background active">
             <div class="main-title-box mx-auto">
                 <h1 class="main-title">SUBLAB</h1>
+                <div class="sliding-titles">
+                    <h1 class="title-word" th:each="word : ${titleWords}" th:text="${word.getTitle()}"></h1>
+                </div>
             </div>
             <div class="bd-search" id="blog-search" data-bd-docs-version="5.3">
-                <div class="mx-auto mt-5 search-bar input-container mb-3">
+                <div class="mx-auto mt-6 search-bar input-container mb-3">
                     <button id="search-button" type="button" class="btn">
                         <i class="fas fa-search"></i>
                     </button>

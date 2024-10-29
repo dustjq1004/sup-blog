@@ -1,3 +1,8 @@
+:root {
+    --animation-duration: 13s;
+    --delay-interval: 2s;
+}
+
 /*
 메인 페이지 타이틀
 */
@@ -5,13 +10,59 @@
 .carousel-item .main-title-box {
     position: relative;
     z-index: 10;
-    top: 135px;
-    width: 800px;
+    top: 200px;
+    width: 700px;
+    text-align: center;
+    border-bottom: 2px solid white;
+    padding-bottom: 10px;
 }
 
 .main-title {
     color: white;
     font-size: 4rem;
+    display: inline-block;
+}
+
+.main-dots {
+    color: white;
+    font-size: 3rem;
+    display: inline-block;
+}
+
+/* 애니메이션 키프레임 정의 */
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    15%, 30% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    30% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+}
+
+.sliding-titles {
+    position: relative;
+    margin-left: 2rem;
+    height: 4.1em;
+    overflow: hidden;
+    width: 50%;
+    display: inline-block;
+    text-align: left;
+}
+
+.title-word {
+    display: inline-block;
+    font-size: 4rem;
+    color: #ffff7c;
+    position: absolute;
+    opacity: 0;
+    transform: translateY(100%);
+    animation: slideUp var(--animation-duration) ease-out infinite; /* 무한 반복 */
 }
 
 /*

@@ -55,6 +55,10 @@ common
     gap: 2rem;
 }
 
+.mt-6 {
+    margin-top: 5rem !important;
+}
+
 /*
 common
 - tag style
