@@ -68,6 +68,8 @@ function setArticlesHtml(searchedArticles) {
 }
 
 const getSearchedArticles = async (searchParam) => {
+    $("#loading-spinner").show();
+    $("#no-search").hide();
     const success = async (response) => {
         const json = await response.json();
         const searchedArticles = json.articles;
@@ -75,6 +77,7 @@ const getSearchedArticles = async (searchParam) => {
         if (searchedArticles.length == 0) {
             $("#searched-list").hide();
             $("#searched-list").html("");
+            $("#no-search").show();
             return
         }
 
@@ -98,6 +101,7 @@ const getSearchedArticles = async (searchParam) => {
 
     const queryString = new URLSearchParams(params).toString();
 
-
-    httpRequest(`/api/main/articles/search?${queryString}`, options, success, fail)
+    
+    await httpRequest(`/api/main/articles/search?${queryString}`, options, success, fail)
+    $("#loading-spinner").hide();
 }

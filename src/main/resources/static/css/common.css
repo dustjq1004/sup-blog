@@ -71,3 +71,18 @@ size
 .min-vh-75 {
     min-height: 75vh !important;
 }
+
+
+/*
+ 로딩 스피너 Style
+*/
+
+.spinner-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 90%;
+    z-index: -1; /* 화면 전체 높이 */
+}

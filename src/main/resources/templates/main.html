@@ -13,14 +13,16 @@
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
                 aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
+        <!--        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"-->
+        <!--                aria-label="Slide 2"></button>-->
+        <!--        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"-->
+        <!--                aria-label="Slide 3"></button>-->
     </div>
     <div class="carousel-inner">
         <div class="carousel-item min-vh-100 background active">
             <div class="main-title-box mx-auto">
+                <!--                <h6 class="caption">Start where you are. &nbsp;&nbsp;&nbsp;&nbsp;Use what you have. &nbsp;&nbsp;&nbsp;&nbsp;Do-->
+                <!--                    what you can.</h6>-->
                 <h1 class="main-title">SUBLAB</h1>
                 <div class="sliding-titles">
                     <h1 class="title-word" th:each="word : ${titleWords}" th:text="${word.getTitle()}"></h1>
@@ -42,12 +44,20 @@
                             <i class="fas fa-x"></i>
                         </button>
                     </li>
+                    <div class="spinner-container">
+                        <div id="loading-spinner" class="spinner-border text-secondary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
                     <div id="searched-list" class="search-list-container">
 
                     </div>
                     <div id="no-search" class="no-search-container">
                         <p>검색 결과가 없습니다.</p>
                     </div>
+                    <li class="dropdown-footer-box">
+                        <span class="dropdown-footer">SubLab </span>
+                    </li>
                 </ul>
             </div>
         </div>

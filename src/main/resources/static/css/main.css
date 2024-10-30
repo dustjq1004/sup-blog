@@ -13,8 +13,16 @@
     top: 200px;
     width: 700px;
     text-align: center;
-    border-bottom: 2px solid white;
     padding-bottom: 10px;
+}
+
+.main-title-box::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background: white;
+    width: 88%;
 }
 
 .main-title {
@@ -23,10 +31,11 @@
     display: inline-block;
 }
 
-.main-dots {
-    color: white;
-    font-size: 3rem;
-    display: inline-block;
+.caption {
+    position: absolute;
+    width: 100%;
+    top: -20px;
+    color: rgba(255, 255, 255, 0.82);
 }
 
 /* 애니메이션 키프레임 정의 */
@@ -37,7 +46,7 @@
     }
     15%, 30% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(-20%);
     }
     30% {
         opacity: 0;
@@ -48,7 +57,7 @@
 .sliding-titles {
     position: relative;
     margin-left: 2rem;
-    height: 4.1em;
+    height: 3em;
     overflow: hidden;
     width: 50%;
     display: inline-block;
@@ -115,7 +124,7 @@ Search List 박스 style
 */
 .dropdown-menu {
     width: 100%;
-    height: 420px;
+    height: 435px;
     padding-top: 0;
     background: #f3f3f3;
     top: 50px;
@@ -178,6 +187,24 @@ Search List 박스 style
 .search-list-container a:hover {
     color: var(--primary-white);
     background: #712cf9;
+}
+
+.dropdown-footer-box {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    padding: 3px 10px;
+    background-color: white;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.dropdown-footer-box span {
+    font-size: 0.8rem;
+    color: #712cf9;
 }
 
 /*
