@@ -5,18 +5,16 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.kimyeonsup.home.domain.blog.article.domain.vo.Thumbnail;
 import me.kimyeonsup.home.domain.blog.menu.domain.entity.Menu;
 import me.kimyeonsup.home.global.common.entity.BaseTimeEntity;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Objects;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Article extends BaseTimeEntity {
-    private static final Pattern IMG_TAG_PATTERN = Pattern.compile("(?i)<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
-    private static final Pattern MD_IMG_TAG_PATTERN = Pattern.compile("^!\\[[a-zA-Z0-9]*\\]\\(([\\w:.\\/-]*)");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,46 +34,34 @@ public class Article extends BaseTimeEntity {
     @Column(name = "author", nullable = false)
     private String author;
 
+    @Embedded
     @Column(name = "thumbnail_url")
-    private String thumbnailUrl;
+    private Thumbnail thumbnailUrl;
 
     @ManyToOne
     private Menu menu;
 
     @Builder
-    public Article(String title, String content, String subTitle, String author, Menu menu) {
+    public Article(String title, String content, Thumbnail thumbnailUrl, String subTitle, String author, Menu menu) {
         this.title = title;
         this.content = content;
         this.subTitle = subTitle;
         this.author = author;
         this.menu = menu;
-        this.thumbnailUrl = getThumbnailUrl(content);
+        this.thumbnailUrl = thumbnailUrl;
     }
 
-
-    public void update(String title, String subTitle, String content, long menuId) {
+    public void update(String title, String subTitle, String content, Thumbnail thumbnailUrl, Menu menu) {
         this.title = title;
         this.subTitle = subTitle;
         this.content = content;
-        this.thumbnailUrl = getThumbnailUrl(content);
+        this.thumbnailUrl = thumbnailUrl;
     }
 
-    // 1. img 태그 or ![]()
-
-    private String getThumbnailUrl(String content) {
-        if (content.isEmpty()) {
-            return "";
+    public String getThumbnailUrl() {
+        if (Objects.isNull(thumbnailUrl)) {
+            return new Thumbnail("").getUrl();
         }
-
-        Matcher match = IMG_TAG_PATTERN.matcher(content);
-        if (match.find()) {
-            return match.group(1);
-        }
-
-        match = MD_IMG_TAG_PATTERN.matcher(content);
-        if (match.find()) {
-            return match.group(1);
-        }
-        return "";
+        return thumbnailUrl.getUrl();
     }
 }

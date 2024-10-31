@@ -1,7 +1,6 @@
 :root {
     --background-white: #ffffff;
     --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-
     --bs-body-color: #212529;
     --bd-sidebar-link-bg: rgba(var(--bd-violet-rgb), .1);
 }
@@ -54,6 +53,10 @@ common
 .content {
     grid-template-columns: 0.6fr 3fr;
     gap: 2rem;
+}
+
+.mt-6 {
+    margin-top: 5rem !important;
 }
 
 /*

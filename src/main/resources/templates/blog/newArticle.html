@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{index}"
+      layout:fragment="content">
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
     <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
@@ -9,11 +12,9 @@
         }
     </style>
 </head>
-<head th:insert="~{layouts/head}"></head>
 <body class="bg-light">
-<div th:insert="~{layouts/navigator}" th:with="title=Blog"></div>
 
-<div class="container mt-5">
+<div class="container my-5 px-xxl-2 pt-4 min-vh-100">
     <div class="row">
         <div class="col">
             <h2 th:if="${article.id != null}" class="mb-4">글 수정</h2>
@@ -39,7 +40,7 @@
                             </button>
                             <button class="btn btn-primary dropdown-toggle" type="button" id="draft-button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                임시 저장
+                                임시 저장 목록
                             </button>
                             <ul id="draft-list" class="px-3 dropdown-menu" aria-labelledby="draft-button">
                             </ul>
@@ -73,7 +74,6 @@
         </div>
     </div>
 </div>
-<div th:insert="~{layouts/footer}"></div>
 <script src="/js/article.js"></script>
 <script src="/js/newArticle.js"></script>
 <script src="/js/easyMDE.js"></script>

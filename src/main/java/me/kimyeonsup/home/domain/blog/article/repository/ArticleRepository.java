@@ -1,13 +1,14 @@
 package me.kimyeonsup.home.domain.blog.article.repository;
 
-import java.util.List;
-
+import jakarta.validation.constraints.NotBlank;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlePrevNextDto;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
@@ -46,4 +47,8 @@ FROM QUESTION
                     + "FROM Article a LEFT JOIN a.menu m WHERE m.name = :menuName) b WHERE b.id = :id")
     ArticlePrevNextDto findPrevNextArticle(Long id, String menuName);
 
+
+    List<Article> findTop8ByOrderByCreatedAtDesc();
+
+    List<Article> findByTitleContains(@NotBlank String titleParam);
 }

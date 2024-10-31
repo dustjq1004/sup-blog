@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<div th:insert="~{layouts/head}"></div>
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{index}"
+      layout:fragment="content">
 <head>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.css"
@@ -9,11 +11,8 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" th:href="@{/css/article.css}">
 </head>
-<head th:insert="~{layouts/head}"></head>
 <body class="bg-light">
-<div th:insert="~{layouts/navigator}" th:with="title=Blog"></div>
-
-<div class="container my-5 px-xxl-2 pt-4 md-5">
+<div class="container my-5 px-xxl-2 pt-4 min-vh-100">
     <div class="row flex-lg-row-reverse d-lg-grid content">
         <div class="offcanvas-body p-4 pt-0 p-lg-2" th:insert="~{blog/blogSidebar}"
              th:with="articles=${articles}"></div>
@@ -24,7 +23,7 @@
                         <input type="hidden" id="article-id" th:value="${article.id}">
                         <header class="mb-5">
                             <div class="d-flex">
-                                <h1 class="fw-bolder w-90 mb-3" th:utext="${article.title}"></h1>
+                                <h1 class="fw-bolder w-90 mb-3 text-wrap" th:utext="${article.title}"></h1>
                                 <div class="d-flex ms-auto">
                                     <div sec:authorize="isAuthenticated()">
                                         <button type="button" id="modify-btn"
@@ -48,7 +47,7 @@
                         </header>
                         <section class="mb-5 markdown-body">
                             <div class="mb-4 article-min-height" th:utext="${article.content}">
-
+                                
                             </div>
                         </section>
                     </article>
@@ -107,8 +106,7 @@
         </div>
     </div>
 </div>
-<div th:insert="~{layouts/footer}"></div>
-<div th:insert="~{layouts/script}"></div>
+
 <script src="/js/blog.js"></script>
 <script src="/js/article.js"></script>
 </body>

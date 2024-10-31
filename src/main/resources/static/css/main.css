@@ -1,0 +1,257 @@
+:root {
+    --animation-duration: 13s;
+    --delay-interval: 2s;
+}
+
+/*
+메인 페이지 타이틀
+*/
+
+.carousel-item .main-title-box {
+    position: relative;
+    z-index: 10;
+    top: 200px;
+    width: 700px;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.main-title-box::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background: white;
+    width: 88%;
+}
+
+.main-title {
+    color: white;
+    font-size: 4rem;
+    display: inline-block;
+}
+
+.caption {
+    position: absolute;
+    width: 100%;
+    top: -20px;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+/* 애니메이션 키프레임 정의 */
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    15%, 30% {
+        opacity: 1;
+        transform: translateY(-20%);
+    }
+    30% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+}
+
+.sliding-titles {
+    position: relative;
+    margin-left: 2rem;
+    height: 3em;
+    overflow: hidden;
+    width: 50%;
+    display: inline-block;
+    text-align: left;
+}
+
+.title-word {
+    display: inline-block;
+    font-size: 4rem;
+    color: #ffff7c;
+    position: absolute;
+    opacity: 0;
+    transform: translateY(100%);
+    animation: slideUp var(--animation-duration) ease-out infinite; /* 무한 반복 */
+}
+
+/*
+메인 페이지 검색
+*/
+.bd-search {
+    position: relative;
+    top: 10.875rem;
+    width: 500px;
+    margin: 0 auto;
+    z-index: 2;
+    background: var(--primary-white);;
+    border-radius: 10px;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px 5px;
+    width: 500px;
+    box-shadow: 0rem 0rem 3rem rgba(0, 0, 0, 15.15), inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    transition: border-color 1s;
+}
+
+.input-container input {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 5px;
+}
+
+.input-container img {
+    width: 20px;
+    height: 20px;
+}
+
+.input-container.focused {
+    border-color: blue;
+}
+
+.search-input-control:focus {
+    outline: none; /* 파란색 테두리 제거 */
+    box-shadow: none; /* 추가된 그림자 제거 */
+}
+
+/*
+Search List 박스 style
+*/
+.dropdown-menu {
+    width: 100%;
+    height: 435px;
+    padding-top: 0;
+    background: #f3f3f3;
+    top: 50px;
+}
+
+.dropdown-header-box {
+    border-radius: 5px 5px 0 0;
+    padding: 5px 3px;
+}
+
+.dropdown-header {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #712cf9;
+}
+
+.search-cancel-button {
+    float: right;
+    font-size: 0.9rem;
+}
+
+.search-cancel-button:hover {
+    color: #712cf9;
+    transition: color 0.5ms;
+}
+
+.search-list-container {
+    margin: 0 20px;
+    margin-bottom: 15px;
+    height: 330px;
+    background: var(--primary-white);
+    border-radius: 10px;
+    border: 1px solid #e3e3e3;
+    overflow: scroll;
+}
+
+.search-list-container li:first-child a {
+    border-radius: 5px 5px 0 0;
+}
+
+.search-list-container li:last-child a {
+    border-radius: 0 0 5px 5px;
+}
+
+.search-list-container li:hover {
+    color: #cccccc;
+    transition: color 0.5ms;
+}
+
+.search-list-container a {
+    padding: 8px 1rem;
+}
+
+.dropdown-menu .sub-title {
+    text-after-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.search-list-container a:hover {
+    color: var(--primary-white);
+    background: #712cf9;
+}
+
+.dropdown-footer-box {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    padding: 3px 10px;
+    background-color: white;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.dropdown-footer-box span {
+    font-size: 0.8rem;
+    color: #712cf9;
+}
+
+/*
+검색 결과 없음
+*/
+.no-search-container {
+    margin: 0 20px;
+    margin-bottom: 15px;
+    padding-top: 1rem;
+    text-align: center;
+}
+
+.arrow-right-icon {
+    color: var(--primary-white);;
+    line-height: 25px;
+}
+
+/*
+    card
+*/
+
+#article-list .card:hover {
+    transform: translateY(-6px);
+    transition-duration: 0.5s;
+}
+
+/*
+캐러셀 이미지
+*/
+
+.background {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url('../img/main-carousel-02.png'); /* 배경 이미지 */
+    background-size: cover;
+    background-position: center;
+}
+
+/* 검정색 오버레이 추가 */
+.background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 50% 투명도 검정색 */
+    z-index: 1;
+}

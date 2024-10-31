@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/index}"
+      layout:fragment="content">
+<head>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.7/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.7/locale/ko.min.js"></script> <!-- 필요한 경우 로케일 추가 -->
+</head>
+<body>
+<div id="carouselExampleIndicators" class="carousel carousel-white slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+        <!--        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"-->
+        <!--                aria-label="Slide 2"></button>-->
+        <!--        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"-->
+        <!--                aria-label="Slide 3"></button>-->
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item min-vh-100 background active">
+            <div class="main-title-box mx-auto">
+                <!--                <h6 class="caption">Start where you are. &nbsp;&nbsp;&nbsp;&nbsp;Use what you have. &nbsp;&nbsp;&nbsp;&nbsp;Do-->
+                <!--                    what you can.</h6>-->
+                <h1 class="main-title">SUBLAB</h1>
+                <div class="sliding-titles">
+                    <h1 class="title-word" th:each="word : ${titleWords}" th:text="${word.getTitle()}"></h1>
+                </div>
+            </div>
+            <div class="bd-search" id="blog-search" data-bd-docs-version="5.3">
+                <div class="mx-auto mt-6 search-bar input-container mb-3">
+                    <button id="search-button" type="button" class="btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <input id="search-input" name="q" type="text" class="form-control search-input-control"
+                           placeholder="블로그 검색"
+                           aria-label="Recipient's username" aria-describedby="button-addon2">
+                </div>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header-box">
+                        <h4 class="dropdown-header">블로그 검색</h4>
+                        <button id="search-cancel-button" type="button" class="btn search-cancel-button">
+                            <i class="fas fa-x"></i>
+                        </button>
+                    </li>
+                    <div class="spinner-container">
+                        <div id="loading-spinner" class="spinner-border text-secondary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <div id="searched-list" class="search-list-container">
+
+                    </div>
+                    <div id="no-search" class="no-search-container">
+                        <p>검색 결과가 없습니다.</p>
+                    </div>
+                    <li class="dropdown-footer-box">
+                        <span class="dropdown-footer">SubLab </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--        <div class="carousel-item min-vh-75">-->
+
+        <!--        </div>-->
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<div class="container my-5 px-xxl-5 pt-4 h-75">
+    <h1 class="mb-5 text-center">최신글</h1>
+    <div id="article-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xxl-4 gy-3 gx-1">
+
+    </div>
+</div>
+
+<script src="/js/templates/main-templates.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>
