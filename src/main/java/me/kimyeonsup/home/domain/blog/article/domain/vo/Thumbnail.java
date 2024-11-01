@@ -20,7 +20,6 @@ public class Thumbnail {
     private String url;
 
     public Thumbnail() {
-        this.url = "";
     }
 
     public Thumbnail(String content) {
