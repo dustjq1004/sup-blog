@@ -1,5 +1,6 @@
 package me.kimyeonsup.home.domain.blog.article.domain.vo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 
@@ -17,6 +18,7 @@ public class Thumbnail {
     private static final List<String> noImages = List.of("noimage01.png", "noimage02.png");
     private static final String NO_IMAGE_PREFIX = "/img/";
 
+    @Column(name = "thumbnail_url")
     private String url;
 
     public Thumbnail() {
