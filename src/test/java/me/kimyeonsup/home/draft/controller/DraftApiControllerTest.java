@@ -23,6 +23,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -41,6 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
 @Slf4j
@@ -92,7 +94,7 @@ class DraftApiControllerTest {
         final String title = "title";
         final String subTitle = "subTitle";
         final String content = "content";
-        final String author = "dustjq1005@gmail.com";
+        final String author = "dustjq1005";
 
         List<AddDraftArticle> draftArticles = saveDraftArticles(title, subTitle, content, author);
 
@@ -137,7 +139,7 @@ class DraftApiControllerTest {
         resultActions
                 .andExpect(status().isCreated())
                 .andExpect(content().string(containsString(title)))
-                .andExpect(content().string(containsString("dustjq1005@gmail.com")));
+                .andExpect(content().string(containsString("dustjq1005")));
     }
 
     @ParameterizedTest
