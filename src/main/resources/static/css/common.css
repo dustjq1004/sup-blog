@@ -1,5 +1,12 @@
 :root {
     --primary-white: white;
+    --signature-color: #6a11cb;
+
+    --draft-modal-background-color: #f0f1f3;
+    --draft-item-background-color: white;
+    --draft-item-container-color: black;
+    --draft-item-height: 50px;
+    --draft-list-result-label-color: #712cf9;
 }
 
 body {
