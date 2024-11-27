@@ -3,10 +3,6 @@
 
 }
 
-.draft-item {
-    list-style: none;
-}
-
 .draft-modal {
     margin-top: 15vh;
     max-width: 600px;
@@ -38,6 +34,10 @@
     border-bottom-right-radius: 5px;
 }
 
+.draft-item {
+    list-style: none;
+}
+
 .draft-item a {
     text-decoration: none;
 }
@@ -52,6 +52,11 @@
     background-color: var(--draft-item-background-color);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 1px 8px 0px;
     /*padding: 0 var(--docsearch-spacing) 0 0;*/
+}
+
+.draft-item-container:hover {
+    background-color: var(--signature-color);
+    color: var(--primary-white);
 }
 
 .draft-item-wrapper {
@@ -88,4 +93,14 @@
     position: sticky;
     top: 0;
     z-index: 10;
+}
+
+.draft-no-item-box {
+    text-align: center;
+}
+
+.dropdown-no-item-text {
+    list-style: none;
+    font-size: 1rem;
+    color: var(--draft-no-item-color);
 }

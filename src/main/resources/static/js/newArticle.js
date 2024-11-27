@@ -4,7 +4,7 @@ function setDraftList(json) {
     let html = "";
     let index = 0;
     console.log(json)
-    if (json.length <= 0) return html = `<li><span class="dropdown-item-text">임시로 저장된 게시글이 없습니다.</span></li>`
+    if (json.length <= 0) return html = `<li class="draft-item"><div class="draft-no-item-box"><span class="dropdown-no-item-text">임시로 저장된 게시글이 없습니다.</span></div></li>`
 
     for (let draft of json) {
         html +=
