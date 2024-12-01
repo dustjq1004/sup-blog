@@ -9,8 +9,8 @@ import me.kimyeonsup.home.domain.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.domain.blog.article.domain.vo.Thumbnail;
 import me.kimyeonsup.home.domain.blog.article.repository.ArticleRepository;
-import me.kimyeonsup.home.domain.blog.menu.domain.entity.Menu;
-import me.kimyeonsup.home.domain.blog.menu.repository.MenuRepository;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
+import me.kimyeonsup.home.domain.blog.admin.menu.repository.MenuRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -83,7 +83,8 @@ public class ArticleService {
                 .orElseThrow(() -> new IllegalArgumentException("not found Menu: " + id));
 
         authorizeArticleAuthor(article);
-        article.update(request.getTitle(), request.getSubTitle(), request.getContent(), Thumbnail.of(article.getContent()), menu);
+        article.update(request.getTitle(), request.getSubTitle(), request.getContent(),
+                Thumbnail.of(article.getContent()), menu);
 
         return article;
     }
@@ -96,7 +97,8 @@ public class ArticleService {
     }
 
     private void authorizeArticleAuthor(Article article) {
-        PrincipalDetail principalDetail = (PrincipalDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        PrincipalDetail principalDetail = (PrincipalDetail) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
         if (!article.getAuthor().equals(principalDetail.getName())) {
             throw new IllegalArgumentException("not authorized");
         }

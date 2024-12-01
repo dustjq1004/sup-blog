@@ -1,15 +1,15 @@
-package me.kimyeonsup.home.domain.blog.menu.service;
+package me.kimyeonsup.home.domain.blog.admin.menu.service;
 
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.home.domain.blog.menu.domain.dto.AddMenuRequest;
-import me.kimyeonsup.home.domain.blog.menu.domain.dto.UpdateMenuRequest;
-import me.kimyeonsup.home.domain.blog.menu.domain.dto.MenuResponse;
-import me.kimyeonsup.home.domain.blog.menu.domain.entity.Category;
-import me.kimyeonsup.home.domain.blog.menu.domain.entity.Menu;
-import me.kimyeonsup.home.domain.blog.menu.repository.CategoryRepository;
-import me.kimyeonsup.home.domain.blog.menu.repository.MenuRepository;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.MenuResponse;
+import me.kimyeonsup.home.domain.blog.admin.menu.repository.CategoryRepository;
+import me.kimyeonsup.home.domain.blog.admin.menu.repository.MenuRepository;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.AddMenuRequest;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.UpdateMenuRequest;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Category;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

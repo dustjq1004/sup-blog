@@ -1,10 +1,10 @@
-package me.kimyeonsup.home.domain.blog.menu.controller;
+package me.kimyeonsup.home.domain.blog.admin.menu.controller;
 
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.home.domain.blog.menu.domain.dto.AddMenuRequest;
-import me.kimyeonsup.home.domain.blog.menu.domain.dto.UpdateMenuRequest;
-import me.kimyeonsup.home.domain.blog.menu.domain.dto.MenuResponse;
-import me.kimyeonsup.home.domain.blog.menu.service.MenuService;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.MenuResponse;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.AddMenuRequest;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.UpdateMenuRequest;
+import me.kimyeonsup.home.domain.blog.admin.menu.service.MenuService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

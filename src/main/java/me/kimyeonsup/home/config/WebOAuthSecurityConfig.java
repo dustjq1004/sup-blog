@@ -56,6 +56,7 @@ public class WebOAuthSecurityConfig {
                 .requestMatchers("/api/token").permitAll()
                 .requestMatchers("/api/main/**").permitAll()
                 .requestMatchers("/api/**").authenticated()
+                .requestMatchers("/admin/**").authenticated()
                 .requestMatchers("/blog/new-article").authenticated()
                 .anyRequest().permitAll());
 
@@ -74,9 +75,9 @@ public class WebOAuthSecurityConfig {
                         .logoutSuccessUrl("/blog"));
 
         http.exceptionHandling(exceptionHandler ->
-                exceptionHandler.defaultAuthenticationEntryPointFor(
-                        new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
-                        new AntPathRequestMatcher("/api/**")));
+                exceptionHandler.defaultAuthenticationEntryPointFor( // -> 특정 조건에 대해 기본 AuthenticationEntryPoint를 설정
+                        new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED), // -> 응답 코드
+                        new AntPathRequestMatcher("/api/**"))); //-> 요청 대상
 
         return http.build();
     }

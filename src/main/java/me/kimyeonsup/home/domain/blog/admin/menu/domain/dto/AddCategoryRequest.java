@@ -1,10 +1,10 @@
-package me.kimyeonsup.home.domain.blog.menu.domain.dto;
+package me.kimyeonsup.home.domain.blog.admin.menu.domain.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.kimyeonsup.home.domain.blog.menu.domain.entity.Category;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Category;
 
 @NoArgsConstructor
 @AllArgsConstructor

@@ -3,7 +3,7 @@ package me.kimyeonsup.home.domain.blog.draft.domain.dto;
 
 import lombok.Getter;
 import me.kimyeonsup.home.domain.blog.draft.domain.entity.DraftArticle;
-import me.kimyeonsup.home.domain.blog.menu.domain.entity.Menu;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
 
 @Getter
 public class UpdateDraftArticle {

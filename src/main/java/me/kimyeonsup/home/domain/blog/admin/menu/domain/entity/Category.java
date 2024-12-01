@@ -1,12 +1,14 @@
-package me.kimyeonsup.home.domain.blog.menu.domain.entity;
+package me.kimyeonsup.home.domain.blog.admin.menu.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,29 +16,26 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @Getter
 @RequiredArgsConstructor
-public class Menu {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @OneToMany(mappedBy = "category")
+    private List<Menu> menus;
 
     @Builder
-    public Menu(Long id, Category category, String name) {
-        this.id = id;
-        this.category = category;
+    public Category(String name, List<Menu> menus) {
         this.name = name;
+        this.menus = menus;
     }
 
-    public void update(String name, Category category) {
+    public void update(String name) {
         this.name = name;
-        this.category = category;
     }
 }

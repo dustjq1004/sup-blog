@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.kimyeonsup.home.domain.blog.article.domain.vo.Thumbnail;
-import me.kimyeonsup.home.domain.blog.menu.domain.entity.Menu;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
 import me.kimyeonsup.home.global.common.entity.BaseTimeEntity;
 
 import java.util.Objects;

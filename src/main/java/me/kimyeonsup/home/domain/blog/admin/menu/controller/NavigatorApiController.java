@@ -1,10 +1,10 @@
-package me.kimyeonsup.home.domain.blog.menu.controller;
+package me.kimyeonsup.home.domain.blog.admin.menu.controller;
 
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.home.domain.blog.menu.domain.dto.CategoryResponse;
-import me.kimyeonsup.home.domain.blog.menu.service.CategoryService;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.CategoryResponse;
+import me.kimyeonsup.home.domain.blog.admin.menu.service.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,11 +1,11 @@
-package me.kimyeonsup.home.domain.blog.menu.domain.dto;
+package me.kimyeonsup.home.domain.blog.admin.menu.domain.dto;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import lombok.Getter;
-import me.kimyeonsup.home.domain.blog.menu.domain.entity.Category;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Category;
 
 @Getter
 public class CategoryResponse {

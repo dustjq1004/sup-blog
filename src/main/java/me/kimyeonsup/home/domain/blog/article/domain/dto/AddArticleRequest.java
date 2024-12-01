@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.domain.blog.article.domain.vo.Thumbnail;
-import me.kimyeonsup.home.domain.blog.menu.domain.entity.Menu;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
 
 @NoArgsConstructor
 @AllArgsConstructor
