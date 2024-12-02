@@ -23,8 +23,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
 @Configuration
-@Profile("dev")
-public class WebOAuthSecurityConfig {
+@Profile("local")
+public class LocalWebOAuthSecurityConfig {
     private final OAuth2UserCustomService oAuth2UserCustomService;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -56,7 +56,7 @@ public class WebOAuthSecurityConfig {
                 .requestMatchers("/api/token").permitAll()
                 .requestMatchers("/api/main/**").permitAll()
                 .requestMatchers("/api/**").authenticated()
-                .requestMatchers("/blog/new-article").authenticated()
+                .requestMatchers("/blog/new-article").permitAll()
                 .anyRequest().permitAll());
 
         http.oauth2Login(oAuth2Login -> oAuth2Login

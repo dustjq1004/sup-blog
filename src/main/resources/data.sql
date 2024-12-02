@@ -19,3 +19,5 @@ insert into article (title, sub_title, content, author, menu_id, created_at, upd
 insert into article (title, sub_title, content, author, menu_id, created_at, updated_at) values ('제목11', 'subTitle 예시입니다.', '```
 내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6내용 6
 ```', 'user3', 1, NOW(), NOW())
+
+insert into draft_article (title, sub_title, content, author, delete_yn, menu_id, created_at, updated_at) values ('제목 10', 'subTitle 예시입니다.', '내용 5', 'dustjq1005', false, 1, NOW(), NOW())
