@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{blog/admin/index}"
+        layout:fragment="content">
+<head>
+
+</head>
+<body>
+<div class="container my-5 px-xxl-2 pt-4 min-vh-100">
+    <div class="row flex-lg-row-reverse d-lg-grid content">
+        <div class="offcanvas-body admin-sidebar-container p-4 pt-0 p-lg-2">
+            <ul class="bd-links-nav list-unstyled ms-3 pb-1 pe-lg-2">
+                <li class="bd-links-group py-1">
+                    <a class="bd-links-link d-inline-block rounded" aria-current="page">
+                        카테고리 관리
+                    </a>
+                </li>
+                <li class="bd-links-group py-1">
+                    <a class="bd-links-link d-inline-block rounded" aria-current="page">
+                        메뉴 관리
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
