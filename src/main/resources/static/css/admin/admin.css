@@ -2,9 +2,19 @@ ul {
     margin-bottom: 0rem;
 }
 
+.admin-content {
+    gap: 3rem;
+}
+
+.admin-content-container {
+    overflow: visible;
+}
+
 .admin-sidebar-container {
-    width: 200px;
-    height: auto;
-    box-shadow: rgba(136, 165, 191, 0.48) 2px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
-    border-radius: 10px;
+    margin: 0 auto;
+    border-right: 1px solid rgba(187, 185, 185, 0.6);
+}
+
+.main {
+    min-height: 100vh;
 }
