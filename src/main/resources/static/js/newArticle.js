@@ -3,7 +3,6 @@ let draftList = {};
 function setDraftList(json) {
     let html = "";
     let index = 0;
-    console.log(json)
     if (json.length <= 0) return html = `<li class="draft-item"><div class="draft-no-item-box"><span class="dropdown-no-item-text">임시로 저장된 게시글이 없습니다.</span></div></li>`
 
     for (let draft of json) {
@@ -19,7 +18,7 @@ function setDraftList(json) {
                         </svg>
                     </div>
                     <div class="draft-item-wrapper">
-                        <span class="draft-item-title">
+                        <span class="draft-item-title" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" title="${draft.title}">
                             ${draft.title}
                         </span>
                     </div>
@@ -39,7 +38,9 @@ function setDraftList(json) {
 
 function loadDraft(index) {
     const draft = draftList[index];
-    if (!confirm(`임시저장한 게시글 ${draft.title}을 불러오시겠습니까?`)) return
+    if (!confirm(`"${draft.title}" \n을 불러오시겠습니까?`)) {
+        return false;
+    }
 
     resetForm();
 
@@ -64,6 +65,9 @@ const success = async (body) => {
 
     $('#draft-list').html(html);
     isDraftSaved = false;
+
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }
 
 $(document).ready(function () {

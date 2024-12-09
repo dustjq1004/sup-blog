@@ -7,7 +7,9 @@
     --draft-item-container-color: black;
     --draft-item-height: 50px;
     --draft-list-result-label-color: #712cf9;
-    --draft-no-item-color: #6c6c6c
+    --draft-no-item-color: #6c6c6c;
+
+    --draft-title-tooltip-background: rgba(0, 0, 0, 0.84);
 }
 
 body {
