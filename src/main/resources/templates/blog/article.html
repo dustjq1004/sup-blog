@@ -25,7 +25,8 @@
                             <div class="d-flex">
                                 <h1 class="fw-bolder w-90 mb-3 text-wrap" th:utext="${article.title}"></h1>
                                 <div class="d-flex ms-auto">
-                                    <div sec:authorize="isAuthenticated()">
+                                    <div sec:authorize="isAuthenticated()"
+                                         th:if="${#authentication.principal.getName().equals(article.getAuthor())} ">>
                                         <button type="button" id="modify-btn"
                                                 th:onclick="|location.href='@{/blog/new-article?id={articleId}(articleId=${article.id})}'|"
                                                 class="btn btn-primary btn-sm">
@@ -47,7 +48,7 @@
                         </header>
                         <section class="mb-5 markdown-body">
                             <div class="mb-4 article-min-height" th:utext="${article.content}">
-                                
+
                             </div>
                         </section>
                     </article>
