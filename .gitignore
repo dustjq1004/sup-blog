@@ -45,6 +45,4 @@ bin/
 ### application.yml local 파일
 src/main/resources/yaml/application-local.yml
 
-### application.yml
-src/main/resources/application.yml
 
