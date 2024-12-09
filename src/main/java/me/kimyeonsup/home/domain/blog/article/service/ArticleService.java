@@ -1,7 +1,12 @@
 package me.kimyeonsup.home.domain.blog.article.service;
 
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.kimyeonsup.home.config.oauth.PrincipalDetail;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
+import me.kimyeonsup.home.domain.blog.admin.menu.repository.MenuRepository;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlePrevNextDto;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlePrevNextResponse;
@@ -9,8 +14,6 @@ import me.kimyeonsup.home.domain.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.domain.blog.article.domain.vo.Thumbnail;
 import me.kimyeonsup.home.domain.blog.article.repository.ArticleRepository;
-import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
-import me.kimyeonsup.home.domain.blog.admin.menu.repository.MenuRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,11 +23,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class ArticleService {
 
     private static final int PAGE_SIZE = 12;

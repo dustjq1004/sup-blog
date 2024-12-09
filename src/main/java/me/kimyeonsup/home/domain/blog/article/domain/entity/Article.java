@@ -1,15 +1,21 @@
 package me.kimyeonsup.home.domain.blog.article.domain.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.kimyeonsup.home.domain.blog.article.domain.vo.Thumbnail;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
+import me.kimyeonsup.home.domain.blog.article.domain.vo.Thumbnail;
 import me.kimyeonsup.home.global.common.entity.BaseTimeEntity;
-
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -56,6 +62,7 @@ public class Article extends BaseTimeEntity {
         this.subTitle = subTitle;
         this.content = content;
         this.thumbnailUrl = thumbnailUrl;
+        this.menu = menu;
     }
 
     public String getThumbnailUrl() {
