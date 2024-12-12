@@ -24,6 +24,11 @@
     background-color: var(--primary-white);
 }
 
+.draft-modal-body {
+    overflow: scroll;
+    height: 400px;
+}
+
 #draft-list:first-child .draft-item-container {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -113,4 +118,12 @@
     --bs-tooltip-max-width: 300px;
     --bs-tooltip-bg: var(--draft-title-tooltip-background);
     --bs-tooltip-color: var(--primary-white);
+}
+
+.init-button {
+    height: 40px;
+}
+
+.draft-items-button {
+    height: 40px;
 }
