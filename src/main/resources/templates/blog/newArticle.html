@@ -37,9 +37,10 @@
                             </div>
                         </div>
                         <div th:if="${article.id} == null" id="draft-box" class="col-md-7 dropdown justify-content-end list-unstyled d-flex">
-                            <button type="button" id="reset-button" onclick="!confirm(`새 글을 작성 하시겠습니까?`) || resetForm()" class="btn btn-secondary btn-sm me-2">새글 작성하기
+                            <button type="button" id="reset-button" class="btn btn-secondary btn-sm me-2 init-button" onclick="!confirm(`새 글을 작성 하시겠습니까?`) || resetForm()">
+                                새글 작성하기
                             </button>
-                            <button id="draft-button" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#draftModal">
+                            <button id="draft-button" class="btn btn-primary draft-items-button" type="button" data-bs-toggle="modal" data-bs-target="#draftModal">
                                 임시 저장 목록
                             </button>
                         </div>
