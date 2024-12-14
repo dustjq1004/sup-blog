@@ -12,9 +12,9 @@ import me.kimyeonsup.home.login.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -32,13 +32,6 @@ public class WebOAuthSecurityConfig {
     private final HttpSession httpSession;
 
     @Bean
-    public WebSecurityCustomizer configure() {
-        return (web) -> web.ignoring()
-//                .requestMatchers(toH2Console())
-                .requestMatchers("/img/**", "/css/**", "/js/**");
-    }
-
-    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .httpBasic(httpBasic -> httpBasic.disable())
@@ -53,8 +46,10 @@ public class WebOAuthSecurityConfig {
 //        http.addFilterAfter(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeHttpRequests(authorization -> authorization
+                .requestMatchers("/static/**").permitAll()
                 .requestMatchers("/api/token").permitAll()
                 .requestMatchers("/api/main/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/articles").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .requestMatchers("/blog/new-article").authenticated()
                 .anyRequest().permitAll());
