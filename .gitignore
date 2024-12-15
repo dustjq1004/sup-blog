@@ -43,7 +43,12 @@ bin/
 .DS_Store
 
 ### application.yml local 파일
-src/main/resources/yaml/application-local.yml
+# .env 적용으로 주석처리
+# src/main/resources/yaml/application-local.yml
+
+### .env 파일
+*.env
+
 
 
 *.env
