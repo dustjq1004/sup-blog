@@ -50,7 +50,7 @@ public class LocalWebOAuthSecurityConfig {
                 .requestMatchers("/api/token").permitAll()
                 .requestMatchers("/api/main/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/articles").permitAll()
-                .requestMatchers("/api/**").authenticated()
+                .requestMatchers("/api/**").permitAll()
                 .requestMatchers("/blog/new-article").permitAll()
                 .anyRequest().permitAll());
 

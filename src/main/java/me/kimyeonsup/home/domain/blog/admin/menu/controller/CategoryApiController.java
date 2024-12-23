@@ -1,11 +1,10 @@
 package me.kimyeonsup.home.domain.blog.admin.menu.controller;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.AddCategoryRequest;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.CategoriesResponse;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.CategoryResponse;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.UpdateCategoryRequest;
-import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Category;
 import me.kimyeonsup.home.domain.blog.admin.menu.service.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +26,10 @@ public class CategoryApiController {
     private final CategoryService categoryService;
 
     @GetMapping("/categories")
-    public ResponseEntity<List<Category>> findCategories() {
+    public ResponseEntity<CategoriesResponse> findCategories() {
+        CategoriesResponse response = CategoriesResponse.ofNotContainsMenu(categoryService.findAll());
         return ResponseEntity.status(HttpStatus.OK)
-                .body(categoryService.findAll());
+                .body(response);
     }
 
     @PostMapping("/category")
@@ -50,7 +50,6 @@ public class CategoryApiController {
     public ResponseEntity<CategoryResponse> updateCategory(@PathVariable long id,
                                                            @RequestBody UpdateCategoryRequest request) {
         CategoryResponse updatedCategory = categoryService.update(id, request);
-
         return ResponseEntity.ok()
                 .body(updatedCategory);
     }

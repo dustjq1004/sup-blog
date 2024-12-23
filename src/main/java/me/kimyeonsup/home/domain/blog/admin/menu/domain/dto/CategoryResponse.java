@@ -3,7 +3,7 @@ package me.kimyeonsup.home.domain.blog.admin.menu.domain.dto;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
+import lombok.Builder;
 import lombok.Getter;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Category;
 
@@ -22,5 +22,12 @@ public class CategoryResponse {
                 .stream()
                 .map(MenuResponse::new)
                 .toList();
+    }
+
+    @Builder
+    public CategoryResponse(Long id, String name, List<MenuResponse> menus) {
+        this.id = id;
+        this.name = name;
+        this.menus = menus;
     }
 }
