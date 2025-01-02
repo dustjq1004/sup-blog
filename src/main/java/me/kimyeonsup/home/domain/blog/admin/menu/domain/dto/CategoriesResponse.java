@@ -22,6 +22,8 @@ public class CategoriesResponse {
                 .map(category -> CategoryResponse.builder()
                         .id(category.getId())
                         .name(category.getName())
+                        .createAt(category.getCreatedAt())
+                        .updateAt(category.getUpdatedAt())
                         .build())
                 .toList();
         return new CategoriesResponse(categoriesDto);

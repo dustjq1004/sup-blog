@@ -13,6 +13,7 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import me.kimyeonsup.home.global.common.entity.BaseTimeEntity;
 
 @Entity
 @Getter
@@ -21,7 +22,7 @@ import lombok.RequiredArgsConstructor;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id"
 )
-public class Category {
+public class Category extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
