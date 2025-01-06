@@ -31,6 +31,12 @@ public class Menu {
     @Column
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "emoji")
+    private String emoji;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
