@@ -22,8 +22,9 @@ public class CategoriesResponse {
                 .map(category -> CategoryResponse.builder()
                         .id(category.getId())
                         .name(category.getName())
-                        .createAt(category.getCreatedAt())
-                        .updateAt(category.getUpdatedAt())
+                        .emoji(category.getEmoji())
+                        .createdAt(category.getCreatedAt())
+                        .updatedAt(category.getUpdatedAt())
                         .build())
                 .toList();
         return new CategoriesResponse(categoriesDto);

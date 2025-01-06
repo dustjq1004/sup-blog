@@ -14,4 +14,9 @@ public class AdminViewController {
 
         return "blog/admin/main";
     }
+
+    @GetMapping("/frag/categories")
+    public String getCategoriesFragment(Model model) {
+        return "fragments :: categoriesFragment";
+    }
 }

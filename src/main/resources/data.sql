@@ -1,4 +1,4 @@
-insert into category (name, created_at, updated_at) values ('🛬 언어', now(), now())
+insert into category (name, emoji, created_at, updated_at) values ('언어', '🛬', now(), now())
 insert into category (name, created_at, updated_at) values ('부트캠프', now(), now())
 
 insert into menu (name, category_id) values ('자바', 1)

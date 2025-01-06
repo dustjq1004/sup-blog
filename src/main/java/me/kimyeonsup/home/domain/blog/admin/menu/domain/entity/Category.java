@@ -32,6 +32,9 @@ public class Category extends BaseTimeEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "emoji")
+    private String emoji;
+
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Menu> menus;
 

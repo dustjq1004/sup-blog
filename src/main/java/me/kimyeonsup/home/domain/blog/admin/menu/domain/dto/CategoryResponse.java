@@ -13,13 +13,15 @@ public class CategoryResponse {
 
     private Long id;
     private String name;
+    private String emoji;
     private List<MenuResponse> menus;
-    private LocalDateTime createAt;
-    private LocalDateTime updateAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public CategoryResponse(Category category) {
         this.id = category.getId();
         this.name = category.getName();
+        this.emoji = category.getEmoji();
         this.menus = Optional.ofNullable(category.getMenus())
                 .orElseGet(Collections::emptyList)
                 .stream()
@@ -28,12 +30,13 @@ public class CategoryResponse {
     }
 
     @Builder
-    public CategoryResponse(Long id, String name, List<MenuResponse> menus, LocalDateTime createAt,
-                            LocalDateTime updateAt) {
+    public CategoryResponse(Long id, String name, String emoji, List<MenuResponse> menus, LocalDateTime createdAt,
+                            LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.menus = menus;
-        this.createAt = createAt;
-        this.updateAt = updateAt;
+        this.emoji = emoji;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }
