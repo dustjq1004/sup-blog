@@ -7,6 +7,7 @@ import java.util.Optional;
 import lombok.Builder;
 import lombok.Getter;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Category;
+import me.kimyeonsup.home.util.DateTimeFormat;
 
 @Getter
 public class CategoryResponse {
@@ -15,8 +16,8 @@ public class CategoryResponse {
     private String name;
     private String emoji;
     private List<MenuResponse> menus;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String createdAt;
+    private String updatedAt;
 
     public CategoryResponse(Category category) {
         this.id = category.getId();
@@ -36,7 +37,7 @@ public class CategoryResponse {
         this.name = name;
         this.menus = menus;
         this.emoji = emoji;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = DateTimeFormat.diffDateFromNow(createdAt);
+        this.updatedAt = DateTimeFormat.diffDateFromNow(updatedAt);
     }
 }
