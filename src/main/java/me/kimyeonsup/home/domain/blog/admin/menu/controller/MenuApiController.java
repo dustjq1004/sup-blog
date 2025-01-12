@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.AddMenuRequest;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.MenuResponse;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.MenusResponse;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.UpdateMenuRequest;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
 import me.kimyeonsup.home.domain.blog.admin.menu.service.MenuService;
@@ -27,9 +28,15 @@ public class MenuApiController {
     private final MenuService menuService;
 
     @GetMapping("/menus")
-    public ResponseEntity<List<Menu>> findCategories() {
+    public ResponseEntity<List<Menu>> findMenus() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(menuService.findAll());
+    }
+
+    @GetMapping("/menus/{categoryId}")
+    public ResponseEntity<MenusResponse> findMenusByCategoryId(@PathVariable long categoryId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(menuService.findByCategory(categoryId));
     }
 
     @PostMapping("/menu")

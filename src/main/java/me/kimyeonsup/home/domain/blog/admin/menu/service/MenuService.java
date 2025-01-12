@@ -1,15 +1,15 @@
 package me.kimyeonsup.home.domain.blog.admin.menu.service;
 
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
-import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.MenuResponse;
-import me.kimyeonsup.home.domain.blog.admin.menu.repository.CategoryRepository;
-import me.kimyeonsup.home.domain.blog.admin.menu.repository.MenuRepository;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.AddMenuRequest;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.MenuResponse;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.MenusResponse;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.UpdateMenuRequest;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Category;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
+import me.kimyeonsup.home.domain.blog.admin.menu.repository.CategoryRepository;
+import me.kimyeonsup.home.domain.blog.admin.menu.repository.MenuRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +28,20 @@ public class MenuService {
 
     public List<Menu> findAll() {
         return menuRepository.findAll();
+    }
+
+    public MenusResponse findByCategory(Long categoryId) {
+        List<Menu> menus = menuRepository.findByCategoryId(categoryId);
+        return MenusResponse.builder()
+                .menus(menus.stream().map(menu -> MenuResponse.builder()
+                                .id(menu.getId())
+                                .name(menu.getName())
+                                .description(menu.getDescription())
+                                .createdAt(menu.getCreatedAt())
+                                .updatedAt(menu.getUpdatedAt())
+                                .build())
+                        .toList())
+                .build();
     }
 
     public void delete(long id) {

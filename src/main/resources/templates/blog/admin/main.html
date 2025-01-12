@@ -4,7 +4,6 @@
         layout:decorate="~{blog/admin/index}"
         layout:fragment="content">
 <head>
-
 </head>
 <body>
 <div class="min-vh-100 container my-5 px-xxl-2 pt-4">
@@ -15,15 +14,11 @@
                     <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold mb-1 fs-4">
                         블로그 관리
                     </strong>
-                    <ul class="side-link list-unstyled fw-normal pb-2 ms-4 big">
+                    <ul class="side-link list-unstyled fw-normal pb-2 big">
                         <li class="bd-links-group py-1 ms-3">
-                            <a class="bd-links-link d-inline-block rounded" aria-current="page" onclick="">
+                            <a class="bd-links-link d-inline-block rounded" aria-current="page"
+                               onclick="loadCategoriesFragment()">
                                 카테고리 관리
-                            </a>
-                        </li>
-                        <li class="bd-links-group py-1 ms-3">
-                            <a class="bd-links-link d-inline-block rounded" aria-current="page" onclick="">
-                                메뉴 관리
                             </a>
                         </li>
                     </ul>
@@ -32,10 +27,14 @@
         </div>
 
         <div id="main" class="main">
+            <div id="admin-content" class="container">
 
+            </div>
         </div>
     </div>
 
 </div>
 </body>
+<script src="/js/admin/admin.js"></script>
+<script src="/js/templates/admin-templates.js"></script>
 </html>
