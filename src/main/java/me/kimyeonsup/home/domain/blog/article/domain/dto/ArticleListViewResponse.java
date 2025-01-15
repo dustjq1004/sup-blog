@@ -2,9 +2,8 @@ package me.kimyeonsup.home.domain.blog.article.domain.dto;
 
 import lombok.Getter;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
+import me.kimyeonsup.home.util.DateTimeFormat;
 import me.kimyeonsup.home.util.StringUtils;
-
-import java.time.LocalDateTime;
 
 @Getter
 public class ArticleListViewResponse {
@@ -15,7 +14,7 @@ public class ArticleListViewResponse {
     private final String content;
     private final String thumbnailUrl;
     private final String menuName;
-    private final LocalDateTime updatedAt;
+    private final String updatedAt;
 
     public ArticleListViewResponse(Article article) {
         this.id = article.getId();
@@ -24,6 +23,6 @@ public class ArticleListViewResponse {
         this.content = StringUtils.replaceAllSpecialCharacter(article.getContent());
         this.thumbnailUrl = article.getThumbnailUrl();
         this.menuName = article.getMenu().getName();
-        this.updatedAt = article.getUpdatedAt();
+        this.updatedAt = DateTimeFormat.diffDateFromNow(article.getUpdatedAt());
     }
 }
