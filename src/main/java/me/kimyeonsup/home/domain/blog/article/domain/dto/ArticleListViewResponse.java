@@ -1,8 +1,9 @@
 package me.kimyeonsup.home.domain.blog.article.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
-import me.kimyeonsup.home.util.DateTimeFormat;
 import me.kimyeonsup.home.util.StringUtils;
 
 @Getter
@@ -14,7 +15,9 @@ public class ArticleListViewResponse {
     private final String content;
     private final String thumbnailUrl;
     private final String menuName;
-    private final String updatedAt;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
+    private final LocalDateTime updatedAt;
 
     public ArticleListViewResponse(Article article) {
         this.id = article.getId();
@@ -23,6 +26,6 @@ public class ArticleListViewResponse {
         this.content = StringUtils.replaceAllSpecialCharacter(article.getContent());
         this.thumbnailUrl = article.getThumbnailUrl();
         this.menuName = article.getMenu().getName();
-        this.updatedAt = DateTimeFormat.diffDateFromNow(article.getUpdatedAt());
+        this.updatedAt = article.getUpdatedAt();
     }
 }
