@@ -13,6 +13,7 @@ public class MenuResponse {
 
     private Long id;
     private Long categoryId;
+    private String emoji;
     private String name;
     private String description;
     private String createdAt;
@@ -25,10 +26,12 @@ public class MenuResponse {
     }
 
     @Builder
-    public MenuResponse(Long id, Long categoryId, String name, String description, LocalDateTime createdAt,
+    public MenuResponse(Long id, Long categoryId, String emoji, String name, String description,
+                        LocalDateTime createdAt,
                         LocalDateTime updatedAt) {
         this.id = id;
         this.categoryId = categoryId;
+        this.emoji = emoji;
         this.name = name;
         this.description = description;
         this.createdAt = DateTimeFormat.diffDateFromNow(createdAt);

@@ -35,6 +35,7 @@ public class MenuService {
         return MenusResponse.builder()
                 .menus(menus.stream().map(menu -> MenuResponse.builder()
                                 .id(menu.getId())
+                                .emoji(menu.getEmoji())
                                 .name(menu.getName())
                                 .description(menu.getDescription())
                                 .createdAt(menu.getCreatedAt())
@@ -58,5 +59,17 @@ public class MenuService {
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + request.getCategoryId()));
         menu.update(request.getName(), category);
         return new MenuResponse(menu);
+    }
+
+    public MenuResponse findById(long menuId) {
+        Menu menu = menuRepository.findById(menuId).get();
+        return MenuResponse.builder()
+                .id(menu.getId())
+                .emoji(menu.getEmoji())
+                .name(menu.getName())
+                .description(menu.getDescription())
+                .createdAt(menu.getCreatedAt())
+                .updatedAt(menu.getUpdatedAt())
+                .build();
     }
 }

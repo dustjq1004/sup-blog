@@ -39,6 +39,12 @@ public class MenuApiController {
                 .body(menuService.findByCategory(categoryId));
     }
 
+    @GetMapping("/menu/{menuId}")
+    public ResponseEntity<MenuResponse> findById(@PathVariable long menuId) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(menuService.findById(menuId));
+    }
+
     @PostMapping("/menu")
     public ResponseEntity<MenuResponse> addMenu(@Validated @RequestBody AddMenuRequest request) {
         MenuResponse savedCategory = menuService.save(request);
