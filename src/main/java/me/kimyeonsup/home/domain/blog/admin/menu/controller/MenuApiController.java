@@ -59,10 +59,9 @@ public class MenuApiController {
                 .build();
     }
 
-    @PutMapping("/menu/{id}")
-    public ResponseEntity<MenuResponse> updateMenu(@PathVariable long id,
-                                                   @RequestBody UpdateMenuRequest request) {
-        MenuResponse updatedCategory = menuService.update(id, request);
+    @PutMapping("/menu/update")
+    public ResponseEntity<MenuResponse> updateMenu(@RequestBody UpdateMenuRequest request) {
+        MenuResponse updatedCategory = menuService.update(request);
 
         return ResponseEntity.ok()
                 .body(updatedCategory);
