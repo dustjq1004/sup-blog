@@ -12,28 +12,37 @@ import me.kimyeonsup.home.util.DateTimeFormat;
 public class MenuResponse {
 
     private Long id;
-    private Long categoryId;
     private String emoji;
     private String name;
     private String description;
     private String createdAt;
     private String updatedAt;
 
+    private Long categoryId;
+    private String categoryEmoji;
+    private String categoryName;
+
+
     public MenuResponse(Menu menu) {
         this.id = menu.getId();
-        this.categoryId = menu.getCategory().getId();
         this.name = menu.getName();
+        this.categoryId = menu.getCategory().getId();
+        this.categoryEmoji = menu.getCategory().getEmoji();
+        this.categoryName = menu.getCategory().getName();
     }
 
     @Builder
-    public MenuResponse(Long id, Long categoryId, String emoji, String name, String description,
+    public MenuResponse(Long id, String emoji, String name, String description,
+                        Long categoryId, String categoryEmoji, String categoryName,
                         LocalDateTime createdAt,
                         LocalDateTime updatedAt) {
         this.id = id;
-        this.categoryId = categoryId;
         this.emoji = emoji;
         this.name = name;
         this.description = description;
+        this.categoryId = categoryId;
+        this.categoryEmoji = categoryEmoji;
+        this.categoryName = categoryName;
         this.createdAt = DateTimeFormat.diffDateFromNow(createdAt);
         this.updatedAt = DateTimeFormat.diffDateFromNow(updatedAt);
     }
