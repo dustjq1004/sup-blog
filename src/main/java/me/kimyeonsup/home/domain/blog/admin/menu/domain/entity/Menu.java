@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.UpdateMenuRequest;
 import me.kimyeonsup.home.global.common.entity.BaseTimeEntity;
 
 @Entity
@@ -43,8 +44,9 @@ public class Menu extends BaseTimeEntity {
         this.name = name;
     }
 
-    public void update(String name, Category category) {
-        this.name = name;
+    public void update(UpdateMenuRequest menuRequest, Category category) {
+        this.name = menuRequest.getName();
+        this.description = menuRequest.getDescription();
         this.category = category;
     }
 }
