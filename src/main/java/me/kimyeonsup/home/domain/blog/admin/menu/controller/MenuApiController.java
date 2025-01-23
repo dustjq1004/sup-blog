@@ -3,6 +3,7 @@ package me.kimyeonsup.home.domain.blog.admin.menu.controller;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.AddMenuRequest;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.DeleteMenuRequest;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.MenuResponse;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.MenusResponse;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.UpdateMenuRequest;
@@ -52,18 +53,19 @@ public class MenuApiController {
                 .body(savedCategory);
     }
 
-    @DeleteMapping("/menu/{id}")
-    public ResponseEntity<Void> deleteMenu(@PathVariable long id) {
-        menuService.delete(id);
+    @DeleteMapping("/menu/delete")
+    public ResponseEntity<MenuResponse> deleteMenu(@RequestBody DeleteMenuRequest request) {
+        long menuId = request.getMenuId();
+        MenuResponse deleteMenu = menuService.delete(menuId);
         return ResponseEntity.ok()
-                .build();
+                .body(deleteMenu);
     }
 
     @PutMapping("/menu/update")
     public ResponseEntity<MenuResponse> updateMenu(@RequestBody UpdateMenuRequest request) {
-        MenuResponse updatedCategory = menuService.update(request);
+        MenuResponse updatedMenu = menuService.update(request);
 
         return ResponseEntity.ok()
-                .body(updatedCategory);
+                .body(updatedMenu);
     }
 }

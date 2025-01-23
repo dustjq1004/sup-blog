@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class UpdateMenuRequest {
+    private long id;
     private Long categoryId;
+    private String emoji;
     private String name;
+    private String description;
 }
