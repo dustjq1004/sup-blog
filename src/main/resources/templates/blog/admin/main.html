@@ -16,8 +16,8 @@
                     </strong>
                     <ul class="side-link list-unstyled fw-normal pb-2 big">
                         <li class="bd-links-group py-1 ms-3">
-                            <a class="bd-links-link d-inline-block rounded" aria-current="page"
-                               onclick="loadCategoriesFragment()">
+                            <a class="admin-nav bd-links-link d-inline-block rounded" aria-current="page"
+                               onclick="loadCategoriesFragment(this)">
                                 카테고리 관리
                             </a>
                         </li>
@@ -33,6 +33,40 @@
         </div>
     </div>
 
+</div>
+
+<!-- Modal - category Add -->
+<div class="modal fade" id="categoryAddDetail" tabindex="-1" aria-labelledby="categoryAddLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="category-Add-modal" class="modal-content">
+        </div>
+    </div>
+</div>
+
+<!-- Modal - category Update -->
+<div class="modal fade" id="categoryUpdateDetail" tabindex="-1" aria-labelledby="categoryUpdateLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="category-update-modal" class="modal-content">
+        </div>
+    </div>
+</div>
+
+<!-- Modal - Menu Detail -->
+<div class="modal fade" id="menuDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="menu-detail-modal" class="modal-content">
+        </div>
+    </div>
+</div>
+
+<!-- Modal - Menu Update -->
+<div class="modal fade" id="menuUpdateDetail" tabindex="-1" aria-labelledby="menuUpdateLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="menu-update-modal" class="modal-content">
+        </div>
+    </div>
 </div>
 </body>
 <script src="/js/admin/admin.js"></script>

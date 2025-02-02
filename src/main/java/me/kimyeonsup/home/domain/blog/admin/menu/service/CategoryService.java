@@ -20,21 +20,43 @@ public class CategoryService {
         return new CategoryResponse(categoryRepository.save(request.toEntity()));
     }
 
+    public CategoryResponse findById(long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not find By id : " + id));
+        return CategoryResponse.builder()
+                .id(category.getId())
+                .emoji(category.getEmoji())
+                .name(category.getName())
+                .build();
+    }
+
     public List<Category> findAll() {
         return categoryRepository.findAll();
     }
 
+    @Transactional
     public void delete(long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+
+        if (category.hasNoMenus()) {
+            throw new IllegalArgumentException("empty menus : " + id);
+        }
+
         categoryRepository.delete(category);
     }
 
     @Transactional
-    public CategoryResponse update(long id, UpdateCategoryRequest request) {
+    public CategoryResponse update(UpdateCategoryRequest request) {
+        long id = request.getId();
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
         category.update(request.getName());
-        return new CategoryResponse(category);
+        return CategoryResponse.builder()
+                .id(id)
+                .emoji(category.getEmoji())
+                .name(category.getName())
+                .updatedAt(category.getUpdatedAt())
+                .build();
     }
 }

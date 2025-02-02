@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class UpdateCategoryRequest {
+    private long id;
     private String name;
 }

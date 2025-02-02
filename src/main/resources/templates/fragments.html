@@ -2,7 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="categoriesFragment()" class="row">
-    <div id="categories-content" class="col-md-3">
+    <div id="categories-container" class="col-md-5">
+        <ul id="categories-content" class="list-group">
+
+        </ul>
+        <div class="d-grid gap-2 mt-3 p-1">
+            <button type="button" class="btn btn-primary" onclick="showCategoryAddModal()">
+                <i class="bi bi-plus-square-fill"></i>
+            </button>
+        </div>
     </div>
     <div id="menus-content" class="col">
     </div>
