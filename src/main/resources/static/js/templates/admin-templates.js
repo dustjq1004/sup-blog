@@ -4,7 +4,7 @@ const categoriesTemplate = (categories) => {
     const tableBody = categories.categories.map(category => `
         <li class="list-group-item" data-active="${category.id}">
             <div class="d-flex flex-row">
-                <a class="py-3 lh-sm w-100 text-decoration-none" 
+                <a class="p-3 lh-sm w-100 text-decoration-none" 
                     onclick="callGetMenus(${category.id})">
                     <div class="d-flex align-items-center">
                       <strong class="mb-1">${!category.emoji || category.emoji.length === 0 ? '' : category.emoji}${category.name}</strong>
@@ -31,9 +31,9 @@ const categoriesTemplate = (categories) => {
 const menusTemplate = (menus) => {
     // 테이블 바디 생성 (반복문으로 JSON 데이터 추가)
     const tableBody = menus.menus.map(menu => `
-        <div class="list-group list-group-flush border-bottom scrollarea">
-            <div class="list-group-item list-group-item-action py-3 lh-sm d-flex w-100 align-items-center justify-content-between">
-                <a onclick="callMenuDetails(${menu.id})" aria-current="true" class="d-flex w-100 align-items-center 
+        <li class="list-group-item list-group-item-action">
+            <div class="d-flex flex-row">
+                <a onclick="callMenuDetails(${menu.id})" aria-current="true" class="p-3 d-flex w-100 align-items-center
                  mx-2 text-decoration-none link-dark"
                     data-bs-toggle="modal" data-bs-target="#menuDetailModal">    
                     <strong class="mb-1">${menu.name}</strong>
@@ -46,7 +46,7 @@ const menusTemplate = (menus) => {
                     </svg>
                 </button>
             </div>
-        </div>
+        </li>
     `).join("");
 
     // 최종 테이블 조합
