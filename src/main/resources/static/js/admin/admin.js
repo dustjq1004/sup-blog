@@ -67,7 +67,31 @@ const callGetCategories = async () => {
 }
 
 const sendSaveCategoryRequest = () => {
-    const jsonFormData = $('#categoryForm').serializeFormToJSON();
+    const jsonFormData = $('#categoryAddForm').serializeFormToJSON();
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(jsonFormData)
+    }
+
+    async function success(response) {
+        alert("카테고리 정보가 추가 됐습니다.")
+        bootstrap.Modal.getInstance($('#categoryAddDetail')).hide()
+        $('.modal-backdrop').remove();
+
+        $("#categoryAddForm")[0].reset();
+
+        callGetCategories()
+    }
+
+
+    function fail(json) {
+    }
+
+    httpRequest(`/api/category`, options, success, fail)
+}
+
+const sendModifyCategoryRequest = () => {
+    const jsonFormData = $('#categoryModifyForm').serializeFormToJSON();
     const options = {
         method: 'PUT',
         body: JSON.stringify(jsonFormData)
@@ -101,7 +125,6 @@ const sendDeleteCategoryRequest = (categoryId) => {
     async function success(response) {
         alert("카테고리가 삭제 됐습니다.")
 
-        await response.json()
         callGetCategories()
     }
 

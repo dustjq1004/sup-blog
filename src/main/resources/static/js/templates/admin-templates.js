@@ -100,7 +100,7 @@ const menuDetailUpdateTemplate = (menu, categories) => {
                 <input name="id" type="hidden" value="${menu.id}"/>
                 <input name="categoryId" type="hidden" value="${menu.categoryId}"/>
                 <div class="mb-3">
-                    <label for="menu-name" class="col-form-label">카테고리 : </label>
+                    <label for="category-name" class="col-form-label">카테고리 : </label>
                     ${categoriesSelectTemplate}
                 </div>
                 <div class="mb-3">
@@ -127,17 +127,17 @@ const categoryDetailUpdateTemplate = (category) => {
             <h1 class="modal-title fs-5" id="menuUpdateLabel">카테고리 정보</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div id="menuUpdateContent" class="modal-body">
-            <form id="categoryForm">
+        <div id="categoryUpdateContent" class="modal-body">
+            <form id="categoryModifyForm">
                 <input name="id" type="hidden" value="${category.id}"/>
                 <div class="mb-3">
-                    <label for="menu-name" class="col-form-label">이름 : </label>
-                    <input name="name" type="text" class="form-control" id="menu-name" value="${category.name}"/>
+                    <label for="category-name" class="col-form-label">이름 : </label>
+                    <input name="name" type="text" class="form-control" id="category-name" value="${category.name}"/>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button onclick="sendSaveCategoryRequest()" type="button" class="btn btn-primary">수정</button>
+            <button onclick="sendModifyCategoryRequest()" type="button" class="btn btn-primary">수정</button>
         </div>
     `
     return template;

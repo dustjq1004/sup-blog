@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.AddCategoryRequest;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.CategoriesResponse;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.CategoryResponse;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.DeleteCategoryRequest;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.UpdateCategoryRequest;
 import me.kimyeonsup.home.domain.blog.admin.menu.service.CategoryService;
 import org.springframework.http.HttpStatus;
@@ -47,8 +48,8 @@ public class CategoryApiController {
     }
 
     @DeleteMapping("/category/delete")
-    public ResponseEntity<Void> deleteCategory(@RequestBody long id) {
-        categoryService.delete(id);
+    public ResponseEntity<Void> deleteCategory(@RequestBody DeleteCategoryRequest request) {
+        categoryService.delete(request.getCategoryId());
         return ResponseEntity.ok()
                 .build();
     }

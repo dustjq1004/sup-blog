@@ -39,7 +39,22 @@
 <div class="modal fade" id="categoryAddDetail" tabindex="-1" aria-labelledby="categoryAddLabel"
      aria-hidden="true">
     <div class="modal-dialog">
-        <div id="category-Add-modal" class="modal-content">
+        <div id="category-add-modal" class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="menuUpdateLabel">카테고리 정보</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="categoryAddContent" class="modal-body">
+                <form id="categoryAddForm">
+                    <div class="mb-3">
+                        <label for="menu-name" class="col-form-label">이름 : </label>
+                        <input name="name" type="text" class="form-control" id="category-name" value=""/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="sendSaveCategoryRequest()" type="button" class="btn btn-primary">추가</button>
+            </div>
         </div>
     </div>
 </div>
