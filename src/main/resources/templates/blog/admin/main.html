@@ -41,13 +41,13 @@
     <div class="modal-dialog">
         <div id="category-add-modal" class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="menuUpdateLabel">카테고리 정보</h1>
+                <h1 class="modal-title fs-5" id="menuAddLabel">카테고리 정보</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div id="categoryAddContent" class="modal-body">
                 <form id="categoryAddForm">
                     <div class="mb-3">
-                        <label for="menu-name" class="col-form-label">이름 : </label>
+                        <label for="category-name" class="col-form-label">이름 : </label>
                         <input name="name" type="text" class="form-control" id="category-name" value=""/>
                     </div>
                 </form>
@@ -76,6 +76,40 @@
     </div>
 </div>
 
+<!-- Modal - Menu Add -->
+<div class="modal fade" id="menuAddDetail" tabindex="-1" aria-labelledby="menuAddLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="menu-add-modal" class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="menuUpdateLabel">메뉴 정보</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="menuUpdateContent" class="modal-body">
+                <form id="menuAddForm">
+                    <div class="mb-3">
+                        <label for="category-add-name" class="col-form-label">카테고리 : </label>
+                        <input name="categoryName" type="text" class="form-control" id="category-add-name"
+                               value=""/>
+                    </div>
+                    <div class="mb-3">
+                        <input name="categoryId" type="hidden" id="category-add-id" value="">
+                        <label for="menu-name" class="col-form-label">이름 : </label>
+                        <input name="name" type="text" class="form-control" id="menu-name" value=""/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="menu-description" class="col-form-label">설명 : </label>
+                        <input name="description" type="text" class="form-control" id="menu-description" value=""/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="sendSaveMenuRequest()" type="button" class="btn btn-primary">추가</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal - Menu Update -->
 <div class="modal fade" id="menuUpdateDetail" tabindex="-1" aria-labelledby="menuUpdateLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -83,6 +117,7 @@
         </div>
     </div>
 </div>
+
 </body>
 <script src="/js/admin/admin.js"></script>
 <script src="/js/templates/admin-templates.js"></script>

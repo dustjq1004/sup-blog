@@ -96,7 +96,7 @@ const menuDetailUpdateTemplate = (menu, categories) => {
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div id="menuUpdateContent" class="modal-body">
-            <form id="menuForm">
+            <form id="menuUpdateForm">
                 <input name="id" type="hidden" value="${menu.id}"/>
                 <input name="categoryId" type="hidden" value="${menu.categoryId}"/>
                 <div class="mb-3">
@@ -115,11 +115,12 @@ const menuDetailUpdateTemplate = (menu, categories) => {
 
         </div>
         <div class="modal-footer">
-            <button onclick="sendSaveMenuRequest()" type="button" class="btn btn-primary">수정</button>
+            <button onclick="sendUpdateMenuRequest()" type="button" class="btn btn-primary">수정</button>
         </div>
     `
     return template;
 }
+
 
 const categoryDetailUpdateTemplate = (category) => {
     const template = `

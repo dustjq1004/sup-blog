@@ -1,3 +1,14 @@
+function initializeCategoriesTemplate(categories) {
+    // 대상 요소 선택
+    const template = categoriesTemplate(categories)
+    $('#categories-content').html(template)
+
+    $("#categories-content .list-group-item").click(function () {
+        $("#categories-content .list-group-item").removeClass("active"); // 모든 항목에서 active 제거
+        $(this).addClass("active"); // 클릭한 항목에 active 추가
+    });
+}
+
 /* 카테고리 Function */
 const loadCategoriesFragment = (element) => {
     const options = {
@@ -8,7 +19,9 @@ const loadCategoriesFragment = (element) => {
         const fragment = await response.text();
         $('#admin-content').html(fragment);
 
-        callGetCategories();
+        const categories = await callGetCategories();
+
+        initializeCategoriesTemplate(categories);
     }
 
 
@@ -18,10 +31,6 @@ const loadCategoriesFragment = (element) => {
     httpRequest('/admin/frag/categories', options, success, fail)
     $('.admin-nav.active').removeClass('active');
     $(element).addClass('active')
-}
-
-const showCategoryAddModal = () => {
-
 }
 
 const showCategoryUpdateModal = (categoryId) => {
@@ -43,27 +52,25 @@ const showCategoryUpdateModal = (categoryId) => {
 }
 
 const callGetCategories = async () => {
+    let categories = {};
+
     const options = {
         method: 'GET'
     };
 
     async function success(response) {
         const items = await response.json()
-        // 대상 요소 선택
-        const template = categoriesTemplate(items)
-        $('#categories-content').html(template)
+        categories = items;
 
-        $("#categories-content .list-group-item").click(function () {
-            $("#categories-content .list-group-item").removeClass("active"); // 모든 항목에서 active 제거
-            $(this).addClass("active"); // 클릭한 항목에 active 추가
-        });
     }
 
 
     function fail(json) {
     }
 
-    httpRequest('/api/categories', options, success, fail)
+    await httpRequest('/api/categories', options, success, fail)
+
+    return categories;
 }
 
 const sendSaveCategoryRequest = () => {
@@ -80,7 +87,9 @@ const sendSaveCategoryRequest = () => {
 
         $("#categoryAddForm")[0].reset();
 
-        callGetCategories()
+        const categories = await callGetCategories();
+
+        initializeCategoriesTemplate(categories);
     }
 
 
@@ -102,7 +111,9 @@ const sendModifyCategoryRequest = () => {
         bootstrap.Modal.getInstance($('#categoryUpdateDetail')).hide()
         $('.modal-backdrop').remove();
         const jsonData = await response.json()
-        callGetCategories()
+        const categories = await callGetCategories();
+
+        initializeCategoriesTemplate(categories);
     }
 
 
@@ -125,7 +136,9 @@ const sendDeleteCategoryRequest = (categoryId) => {
     async function success(response) {
         alert("카테고리가 삭제 됐습니다.")
 
-        callGetCategories()
+        const categories = await callGetCategories()
+
+        initializeCategoriesTemplate(categories)
     }
 
 
@@ -149,10 +162,13 @@ function getMenus(categoryId) {
 
     function getSuccess() {
         return async (response) => {
-            const item = await response.json();
-            const template = menusTemplate(item);
-            $('#menus-content').html(template);
-        };
+            const item = await response.json()
+            const template = menusTemplate(item)
+            $('#menus-content').html(template)
+            console.log(item);
+            $('#category-add-id').val(item[0].categoryId)
+            $('#category-add-name').val((item[0].categoryEmoji + item[0].categoryName));
+        }
     }
 
     function fail(json) {
@@ -181,8 +197,8 @@ const callMenuDetails = (menuId) => {
     httpRequest(`/api/menu/${menuId}`, options, getSuccess(), fail)
 }
 
-const sendSaveMenuRequest = () => {
-    const jsonFormData = $('#menuForm').serializeFormToJSON();
+const sendUpdateMenuRequest = () => {
+    const jsonFormData = $('#menuUpdateForm').serializeFormToJSON();
     const options = {
         method: 'PUT',
         body: JSON.stringify(jsonFormData)
@@ -256,6 +272,54 @@ const initializeUpdateModalEvent = (menu) => {
         const secondModal = new bootstrap.Modal($('#menuUpdateDetail'))
         secondModal.show()
     })
+}
+
+const showMenuAddModal = async () => {
+
+    // const categories = await callGetCategories()
+    // const noSelect = `<option value="">카테고리를 선택해 주세요.</option>`
+    // const selectOptions = categories.categories.map(category => `
+    //     <option value="${category.id}">${category.name}</option>
+    // `)
+    //
+    // $('#select-category').html(noSelect.concat(selectOptions));
+}
+
+function verifyFormInput(jsonFormData) {
+    const categoryId = jsonFormData['categoryId'];
+    if (categoryId == null || categoryId == 'undefined') {
+        alert("카테고리를 선택해주세요.");
+        return false;
+    }
+
+    return true;
+}
+
+const sendSaveMenuRequest = () => {
+    const jsonFormData = $('#menuAddForm').serializeFormToJSON();
+
+    if (!verifyFormInput(jsonFormData)) {
+        return false;
+    }
+
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(jsonFormData)
+    }
+
+    async function success(response) {
+        alert("메뉴 정보가 추가 됐습니다.")
+        bootstrap.Modal.getInstance($('#menuAddDetail')).hide()
+
+        const jsonData = await response.json()
+        callGetMenus(jsonData.categoryId)
+    }
+
+
+    function fail(json) {
+    }
+
+    httpRequest(`/api/menu`, options, success, fail)
 }
 
 
