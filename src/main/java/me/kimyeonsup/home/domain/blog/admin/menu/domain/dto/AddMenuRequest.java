@@ -16,12 +16,18 @@ public class AddMenuRequest {
     @NotNull
     private Long categoryId;
 
+    private String emoji;
+
     @NotBlank
     private String name;
 
+    private String description;
+
     public Menu toEntity(Category category) {
         return Menu.builder()
+                .emoji(emoji)
                 .name(name)
+                .description(description)
                 .category(category)
                 .build();
     }

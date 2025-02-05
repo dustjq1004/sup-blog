@@ -38,11 +38,14 @@ public class Menu extends BaseTimeEntity {
     private Category category;
 
     @Builder
-    public Menu(Long id, Category category, String name) {
+    public Menu(Long id, String name, String description, String emoji, Category category) {
         this.id = id;
-        this.category = category;
         this.name = name;
+        this.description = description;
+        this.emoji = emoji;
+        this.category = category;
     }
+
 
     public void update(UpdateMenuRequest menuRequest, Category category) {
         this.name = menuRequest.getName();

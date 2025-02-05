@@ -340,7 +340,7 @@ const sendSaveMenuRequest = () => {
     async function success(response) {
         alert("메뉴 정보가 추가 됐습니다.")
         bootstrap.Modal.getInstance($('#menuAddDetail')).hide()
-
+        $('#menuAddForm')[0].reset();
         const jsonData = await response.json()
         callGetMenus(jsonData.categoryId)
     }
