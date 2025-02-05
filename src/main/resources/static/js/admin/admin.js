@@ -7,6 +7,9 @@ function initializeCategoriesTemplate(categories) {
         $("#categories-content .list-group-item").removeClass("active"); // 모든 항목에서 active 제거
         $(this).addClass("active"); // 클릭한 항목에 active 추가
     });
+
+    $('#category-add-id').val("")
+    $('#category-add-name').val("")
 }
 
 /* 카테고리 Function */
@@ -49,6 +52,25 @@ const showCategoryUpdateModal = (categoryId) => {
     }
 
     httpRequest(`/api/category?categoryId=${categoryId}`, options, success, fail)
+}
+
+const callGetCategory = async (categoryId) => {
+    let category = {};
+    const options = {
+        method: 'GET'
+    }
+
+    async function success(response) {
+        category = await response.json();
+    }
+
+
+    function fail(json) {
+    }
+
+    await httpRequest(`/api/category?categoryId=${categoryId}`, options, success, fail)
+
+    return category;
 }
 
 const callGetCategories = async () => {
@@ -165,9 +187,10 @@ function getMenus(categoryId) {
             const item = await response.json()
             const template = menusTemplate(item)
             $('#menus-content').html(template)
-            console.log(item);
-            $('#category-add-id').val(item[0].categoryId)
-            $('#category-add-name').val((item[0].categoryEmoji + item[0].categoryName));
+
+            const category = await callGetCategory(categoryId);
+            $('#category-add-id').val(categoryId)
+            $('#category-add-name').val(category.emoji + category.name);
         }
     }
 
@@ -275,7 +298,14 @@ const initializeUpdateModalEvent = (menu) => {
 }
 
 const showMenuAddModal = async () => {
+    const categoryId = $('#category-add-id').val()
+    if (!categoryId) {
+        alert("카테고리를 선택해주세요.")
+        return false
+    }
 
+    const modal = new bootstrap.Modal($('#menuAddDetail'));
+    modal.show();
     // const categories = await callGetCategories()
     // const noSelect = `<option value="">카테고리를 선택해 주세요.</option>`
     // const selectOptions = categories.categories.map(category => `

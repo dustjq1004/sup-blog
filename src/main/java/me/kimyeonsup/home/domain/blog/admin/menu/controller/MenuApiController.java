@@ -1,13 +1,11 @@
 package me.kimyeonsup.home.domain.blog.admin.menu.controller;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.AddMenuRequest;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.DeleteMenuRequest;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.MenuResponse;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.MenusResponse;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.UpdateMenuRequest;
-import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
 import me.kimyeonsup.home.domain.blog.admin.menu.service.MenuService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +27,7 @@ public class MenuApiController {
     private final MenuService menuService;
 
     @GetMapping("/menus")
-    public ResponseEntity<List<Menu>> findMenus() {
+    public ResponseEntity<MenusResponse> findMenus() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(menuService.findAll());
     }

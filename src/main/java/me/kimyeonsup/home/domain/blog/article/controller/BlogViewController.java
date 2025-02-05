@@ -3,7 +3,6 @@ package me.kimyeonsup.home.domain.blog.article.controller;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.CategoryResponse;
-import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.MenuResponse;
 import me.kimyeonsup.home.domain.blog.admin.menu.service.CategoryService;
 import me.kimyeonsup.home.domain.blog.admin.menu.service.MenuService;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleListViewResponse;
@@ -86,9 +85,7 @@ public class BlogViewController {
         }
 
         model.addAttribute("menus",
-                menuService.findAll().stream()
-                        .map(MenuResponse::new)
-                        .toList());
+                menuService.findAll());
 
         return "blog/newArticle";
     }

@@ -26,8 +26,18 @@ public class MenuService {
         return new MenuResponse(menuRepository.save(request.toEntity(category)));
     }
 
-    public List<Menu> findAll() {
-        return menuRepository.findAll();
+    public MenusResponse findAll() {
+        List<MenuResponse> menus = menuRepository.findAll().stream().map(menu ->
+                MenuResponse.builder()
+                        .id(menu.getId())
+                        .emoji(menu.getEmoji())
+                        .name(menu.getName())
+                        .description(menu.getDescription())
+                        .categoryId(menu.getCategory().getId())
+                        .updatedAt(menu.getUpdatedAt())
+                        .build()
+        ).toList();
+        return new MenusResponse(menus);
     }
 
     public MenusResponse findByCategory(Long categoryId) {
@@ -38,6 +48,7 @@ public class MenuService {
                                 .emoji(menu.getEmoji())
                                 .name(menu.getName())
                                 .description(menu.getDescription())
+                                .categoryId(menu.getCategory().getId())
                                 .createdAt(menu.getCreatedAt())
                                 .updatedAt(menu.getUpdatedAt())
                                 .build())
