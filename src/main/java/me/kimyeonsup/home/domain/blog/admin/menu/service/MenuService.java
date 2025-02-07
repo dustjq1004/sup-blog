@@ -77,13 +77,14 @@ public class MenuService {
 
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + request.getCategoryId()));
-        
+
         menu.update(request, category);
         return new MenuResponse(menu);
     }
 
     public MenuResponse findById(long menuId) {
-        Menu menu = menuRepository.findById(menuId).get();
+        Menu menu = menuRepository.findById(menuId)
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + menuId));
         return MenuResponse.builder()
                 .id(menu.getId())
                 .emoji(menu.getEmoji())
