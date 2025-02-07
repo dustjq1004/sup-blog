@@ -56,9 +56,15 @@ public class MenuService {
                 .build();
     }
 
+    @Transactional
     public MenuResponse delete(long id) {
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+
+        if (menu.hasArticles()) {
+            throw new IllegalStateException("has articles, id : " + id);
+        }
+
         menuRepository.delete(menu);
         return new MenuResponse(menu);
     }
@@ -68,8 +74,10 @@ public class MenuService {
         long id = request.getId();
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
+
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + request.getCategoryId()));
+        
         menu.update(request, category);
         return new MenuResponse(menu);
     }

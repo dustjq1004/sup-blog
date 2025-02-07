@@ -261,6 +261,7 @@ const sendDeleteMenuRequest = (menuId) => {
 
 
     function fail(json) {
+        alert("메뉴를 삭제할 수 없습니다.")
     }
 
     httpRequest(`/api/menu/delete`, options, success, fail)
