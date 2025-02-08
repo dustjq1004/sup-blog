@@ -1,14 +1,25 @@
 package me.kimyeonsup.home.menu.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
-import me.kimyeonsup.home.domain.blog.article.repository.ArticleRepository;
-import me.kimyeonsup.home.domain.blog.draft.repository.DraftRepository;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.AddCategoryRequest;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.DeleteCategoryRequest;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.UpdateCategoryRequest;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Category;
 import me.kimyeonsup.home.domain.blog.admin.menu.repository.CategoryRepository;
 import me.kimyeonsup.home.domain.blog.admin.menu.repository.MenuRepository;
 import me.kimyeonsup.home.domain.blog.admin.menu.service.CategoryService;
+import me.kimyeonsup.home.domain.blog.article.repository.ArticleRepository;
+import me.kimyeonsup.home.domain.blog.draft.repository.DraftRepository;
 import me.kimyeonsup.home.login.domain.entity.User;
 import me.kimyeonsup.home.login.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,15 +38,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -127,11 +129,15 @@ class CategoryApiControllerTest {
     @DisplayName("deleteArticle : 카테고리를 삭제한다.")
     @Test
     void deleteCategory() throws Exception {
-        final String url = "/api/category/{id}";
-        Category savedCategory = savedCategory();
+        final String url = "/api/category/delete";
+        Category savedCategory = savedCategory("부트캠프");
+
+        DeleteCategoryRequest request = new DeleteCategoryRequest(savedCategory.getId());
 
         //when
-        mockMvc.perform(delete(url, savedCategory.getId()))
+        mockMvc.perform(delete(url)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk());
 
         //then
@@ -143,12 +149,12 @@ class CategoryApiControllerTest {
     @DisplayName("카테고리 이름을 수정한다.")
     @Test
     void updateCategory() throws Exception {
-        final String url = "/api/category/{id}";
-        Category savedCategory = savedCategory();
+        final String url = "/api/category/update";
+        Category savedCategory = savedCategory("언어");
 
         final String newName = "인프라";
 
-        UpdateCategoryRequest request = new UpdateCategoryRequest(newName);
+        UpdateCategoryRequest request = new UpdateCategoryRequest(savedCategory.getId(), newName);
 
         //when
         ResultActions result = mockMvc.perform(put(url, savedCategory.getId())
@@ -163,9 +169,9 @@ class CategoryApiControllerTest {
         assertThat(category.getName()).isEqualTo(newName);
     }
 
-    private Category savedCategory() {
+    private Category savedCategory(String name) {
         return categoryRepository.save(Category.builder()
-                .name("언어")
+                .name(name)
                 .menus(new ArrayList<>())
                 .build());
     }

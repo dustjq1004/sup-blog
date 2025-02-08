@@ -39,8 +39,8 @@ public class CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
 
-        if (category.hasNoMenus()) {
-            throw new IllegalArgumentException("empty menus : " + id);
+        if (category.hasMenus()) {
+            throw new IllegalArgumentException("has menus : " + id);
         }
 
         categoryRepository.delete(category);

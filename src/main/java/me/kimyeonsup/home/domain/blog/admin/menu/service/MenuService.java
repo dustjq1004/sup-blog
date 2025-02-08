@@ -33,7 +33,6 @@ public class MenuService {
                         .emoji(menu.getEmoji())
                         .name(menu.getName())
                         .description(menu.getDescription())
-                        .categoryId(menu.getCategory().getId())
                         .updatedAt(menu.getUpdatedAt())
                         .build()
         ).toList();

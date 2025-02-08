@@ -48,7 +48,7 @@ public class Category extends BaseTimeEntity {
         this.name = name;
     }
 
-    public boolean hasNoMenus() {
+    public boolean hasMenus() {
         return menus.size() > 0;
     }
 }

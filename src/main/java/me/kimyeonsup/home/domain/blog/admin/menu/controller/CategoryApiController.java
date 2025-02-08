@@ -50,6 +50,7 @@ public class CategoryApiController {
     @DeleteMapping("/category/delete")
     public ResponseEntity<Void> deleteCategory(@RequestBody DeleteCategoryRequest request) {
         categoryService.delete(request.getCategoryId());
+
         return ResponseEntity.ok()
                 .build();
     }

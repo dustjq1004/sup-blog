@@ -1,26 +1,22 @@
 package me.kimyeonsup.home.domain.blog.draft.domain.dto;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import me.kimyeonsup.home.domain.blog.draft.domain.entity.DraftArticle;
+import lombok.NoArgsConstructor;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
+import me.kimyeonsup.home.domain.blog.draft.domain.entity.DraftArticle;
 
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AddDraftArticle {
 
-    private final Long id;
-    private final String title;
-    private final String subTitle;
-    private final String content;
-    private final Long menuId;
-
-    public AddDraftArticle(Long id, String title, String subTitle, String content, Long menuId) {
-        this.id = id;
-        this.title = title;
-        this.subTitle = subTitle;
-        this.content = content;
-        this.menuId = menuId;
-    }
+    private Long id;
+    private String title;
+    private String subTitle;
+    private String content;
+    private Long menuId;
 
     public DraftArticle toEntity(String author) {
         return DraftArticle.builder()
