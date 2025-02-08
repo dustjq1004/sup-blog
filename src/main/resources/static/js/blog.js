@@ -47,13 +47,21 @@ const getArticlesPagination = async (pageNumber, menuName) => {
                 <div class="col">
                     <a href="/blog/${article.menuName}/${article.id}" class="link-offset-2 link-underline link-underline-opacity-0">
                         <div class="card border border-0 p-2 rounded-4">
-                            <svg class="bd-placeholder-img card-img-top rounded-4" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder:" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                                <rect width="100%" height="100%" fill="#55595c"></rect>
-                                <text x="40%" y="50%" fill="#eceeef" dy=".3em">images</text>
+                            <svg class="bd-placeholder-img card-img-top rounded-4" width="100%" height="180"
+                                 xmlns="http://www.w3.org/2000/svg" role="img"
+                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                                <image height="100%" width="100%"
+                                       preserveAspectRatio="xMidYMid slice"
+                                       href="${article.thumbnailUrl}"></image>
+
                             </svg>
                             <div class="card-body">
-                                <h5 class="mb-1">${article.title}</h5>
-                                <p class="card-text text-body-tertiary fs-6">${article.subTitle}</p>
+                                <div class="mb-2">
+                                    <span class="text-secondary fs-7"
+                                          text="${moment(article.updatedAt).format("YYYY.MM.DD")}"></span>
+                                </div>
+                                <h5 class="mb-1 text-truncate">${article.title}</h5>
+                                <p class="card-text text-body-tertiary fs-6 text-truncate">${article.subTitle}</p>
                             </div>
                         </div>
                     </a>
