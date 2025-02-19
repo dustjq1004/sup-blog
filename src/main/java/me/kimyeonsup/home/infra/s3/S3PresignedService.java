@@ -1,16 +1,17 @@
 package me.kimyeonsup.home.infra.s3;
 
+import java.time.Duration;
+import java.util.Map;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedPutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 
-import java.time.Duration;
-import java.util.Map;
-import java.util.UUID;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class S3PresignedService {
@@ -20,7 +21,6 @@ public class S3PresignedService {
     public Map<String, String> getPresignedUrl(String bucketName, String fileName) {
         final String regExp = "^(jpeg|png|gif|bmp)$";
         final String keyName = "images/" + bucketName + "%s-%s".formatted(UUID.randomUUID().toString(), fileName);
-
         try {
 
             String[] splitFileName = fileName.split("\\.");
