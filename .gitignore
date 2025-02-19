@@ -45,6 +45,8 @@ bin/
 ### application.yml local 파일
 # src/main/resources/yaml/application-local.yml
 
-.env
+src/main/resources/.env
+
+Dockerfile
 
 
