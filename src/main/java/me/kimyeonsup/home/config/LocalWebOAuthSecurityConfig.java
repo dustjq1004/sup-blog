@@ -52,6 +52,7 @@ public class LocalWebOAuthSecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/articles").permitAll()
                 .requestMatchers("/api/**").authenticated()
                 .requestMatchers("/blog/new-article").permitAll()
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .anyRequest().permitAll());
 
         http.oauth2Login(oAuth2Login -> oAuth2Login
