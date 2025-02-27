@@ -33,7 +33,6 @@ const loadCategoriesFragment = (element) => {
 
     httpRequest('/admin/frag/categories', options, success, fail)
     $('.admin-nav.active').removeClass('active');
-    $(element).addClass('active')
 }
 
 const showCategoryUpdateModal = (categoryId) => {
@@ -353,8 +352,19 @@ const sendSaveMenuRequest = () => {
     httpRequest(`/api/menu`, options, success, fail)
 }
 
+/* Article Transaction */
+const loadArticlesFragment = async () => {
+    $('#admin-content').html("")
+}
+
 
 /* document.ready  */
 $(document).ready(function () {
+    $(document).on("click", ".admin-nav", (event) => {
+        $(".admin-nav").each((index, element) => {
+            $(element).removeClass("active")
+        })
+        $(event.currentTarget).addClass("active")
+    })
 })
 
