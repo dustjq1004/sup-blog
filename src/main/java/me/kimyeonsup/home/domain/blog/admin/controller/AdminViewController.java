@@ -19,4 +19,9 @@ public class AdminViewController {
     public String getCategoriesFragment(Model model) {
         return "fragments :: categoriesFragment";
     }
+
+    @GetMapping("/frag/articles")
+    public String getArticlesFragment(Model model) {
+        return "fragments :: articlesFragment";
+    }
 }

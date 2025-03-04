@@ -1,30 +1,26 @@
-function initializeCategoriesTemplate(categories) {
-    // 대상 요소 선택
-    const template = categoriesTemplate(categories)
-    $('#categories-content').html(template)
-
-    $("#categories-content .list-group-item").click(function () {
-        $("#categories-content .list-group-item").removeClass("active"); // 모든 항목에서 active 제거
-        $(this).addClass("active"); // 클릭한 항목에 active 추가
-    });
-
-    $('#category-add-id').val("")
-    $('#category-add-name').val("")
-}
-
 /* 카테고리 Function */
+const getCategories = async (element) => {
+    const fragment = await getCategoriesFragment(element)
+    $('#admin-content').html(fragment)
+
+    const categories = await callGetCategories()
+
+    getCategoriesTemplate(categories)
+
+    $('.admin-nav.active').removeClass('active')
+}
 const loadCategoriesFragment = (element) => {
     const options = {
         method: 'GET'
     }
 
     async function success(response) {
-        const fragment = await response.text();
-        $('#admin-content').html(fragment);
+        const fragment = await response.text()
+        $('#admin-content').html(fragment)
 
-        const categories = await callGetCategories();
+        const categories = await callGetCategories()
 
-        initializeCategoriesTemplate(categories);
+        getCategoriesTemplate(categories)
     }
 
 
@@ -110,7 +106,7 @@ const sendSaveCategoryRequest = () => {
 
         const categories = await callGetCategories();
 
-        initializeCategoriesTemplate(categories);
+        getCategoriesTemplate(categories);
     }
 
 
@@ -134,7 +130,7 @@ const sendModifyCategoryRequest = () => {
         const jsonData = await response.json()
         const categories = await callGetCategories();
 
-        initializeCategoriesTemplate(categories);
+        getCategoriesTemplate(categories);
     }
 
 
@@ -159,7 +155,7 @@ const sendDeleteCategoryRequest = (categoryId) => {
 
         const categories = await callGetCategories()
 
-        initializeCategoriesTemplate(categories)
+        getCategoriesTemplate(categories)
     }
 
 
@@ -355,8 +351,24 @@ const sendSaveMenuRequest = () => {
 /* Article Transaction */
 const loadArticlesFragment = async () => {
     $('#admin-content').html("")
-}
 
+    const options = {
+        method: 'GET'
+    }
+
+    async function success(response) {
+        const fragment = await response.text();
+        $('#admin-content').html(fragment);
+
+
+    }
+
+    function fail(json) {
+    }
+
+    httpRequest('/admin/frag/articles', options, success, fail)
+    $('.admin-nav.active').removeClass('active');
+}
 
 /* document.ready  */
 $(document).ready(function () {
