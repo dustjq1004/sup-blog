@@ -5,48 +5,25 @@ const getCategories = async (element) => {
 
     const categories = await callGetCategories()
 
-    getCategoriesTemplate(categories)
+    const template = getCategoriesTemplate(categories)
 
     $('.admin-nav.active').removeClass('active')
-}
-const loadCategoriesFragment = (element) => {
-    const options = {
-        method: 'GET'
-    }
 
-    async function success(response) {
-        const fragment = await response.text()
-        $('#admin-content').html(fragment)
+    $('#categories-content').html(template)
 
-        const categories = await callGetCategories()
+    $("#categories-content .list-group-item").click(function () {
+        $("#categories-content .list-group-item").removeClass("active") // 모든 항목에서 active 제거
+        $(this).addClass("active")  // 클릭한 항목에 active 추가
+    })
 
-        getCategoriesTemplate(categories)
-    }
-
-
-    function fail(json) {
-    }
-
-    httpRequest('/admin/frag/categories', options, success, fail)
-    $('.admin-nav.active').removeClass('active');
+    $('#category-add-id').val("")
+    $('#category-add-name').val("")
 }
 
-const showCategoryUpdateModal = (categoryId) => {
-    const options = {
-        method: 'GET'
-    }
-
-    async function success(response) {
-        const category = await response.json();
-        const template = categoryDetailUpdateTemplate(category)
-        $('#category-update-modal').html(template)
-    }
-
-
-    function fail(json) {
-    }
-
-    httpRequest(`/api/category?categoryId=${categoryId}`, options, success, fail)
+const showCategoryUpdateModal = async () => {
+    const category = getCategoryUpdateModal();
+    const template = getCategoryUpdateTemplate(category)
+    $('#category-update-modal').html(template)
 }
 
 const callGetCategory = async (categoryId) => {
@@ -73,7 +50,7 @@ const callGetCategories = async () => {
 
     const options = {
         method: 'GET'
-    };
+    }
 
     async function success(response) {
         const items = await response.json()

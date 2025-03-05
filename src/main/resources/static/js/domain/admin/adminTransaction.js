@@ -15,3 +15,21 @@ const getCategoriesFragment = async (element) => {
 
     return fragment
 }
+
+const getCategoryUpdateModal = async (categoryId) => {
+    let category = "";
+    const options = {
+        method: 'GET'
+    }
+
+    async function success(response) {
+        category = await response.json()
+    }
+
+
+    function fail(json) {
+    }
+
+    await httpRequest(`/api/category?categoryId=${categoryId}`, options, success, fail)
+    return category;
+}
