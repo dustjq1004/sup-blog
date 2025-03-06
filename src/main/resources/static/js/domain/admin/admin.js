@@ -1,15 +1,11 @@
 /* 카테고리 Function */
-const getCategories = async (element) => {
+const loadCategoriesTemplate = async (element) => {
     const fragment = await getCategoriesFragment(element)
     $('#admin-content').html(fragment)
 
-    const categories = await callGetCategories()
-
-    const template = getCategoriesTemplate(categories)
+    await setCategoriesTemplate();
 
     $('.admin-nav.active').removeClass('active')
-
-    $('#categories-content').html(template)
 
     $("#categories-content .list-group-item").click(function () {
         $("#categories-content .list-group-item").removeClass("active") // 모든 항목에서 active 제거
@@ -20,77 +16,27 @@ const getCategories = async (element) => {
     $('#category-add-name').val("")
 }
 
-const showCategoryUpdateModal = async () => {
-    const category = getCategoryUpdateModal();
-    const template = getCategoryUpdateTemplate(category)
+const setCategoriesTemplate = async () => {
+    const categories = await getAllCategory()
+    const template = await getCategoriesTemplate(categories)
+    $('#categories-content').html(template)
+}
+
+const showCategoryUpdateModal = async (categoryId) => {
+    const category = await getCategoryById(categoryId);
+    const template = await getCategoryUpdateTemplate(category)
     $('#category-update-modal').html(template)
 }
 
-const callGetCategory = async (categoryId) => {
-    let category = {};
-    const options = {
-        method: 'GET'
-    }
+const sendSaveCategoryRequest = async () => {
+    const jsonFormData = $('#categoryAddForm').serializeFormToJSON()
+    await saveCategory(jsonFormData)
+    await setCategoriesTemplate()
 
-    async function success(response) {
-        category = await response.json();
-    }
+    bootstrap.Modal.getInstance($('#categoryAddDetail')).hide()
+    $('.modal-backdrop').remove();
 
-
-    function fail(json) {
-    }
-
-    await httpRequest(`/api/category?categoryId=${categoryId}`, options, success, fail)
-
-    return category;
-}
-
-const callGetCategories = async () => {
-    let categories = {};
-
-    const options = {
-        method: 'GET'
-    }
-
-    async function success(response) {
-        const items = await response.json()
-        categories = items;
-
-    }
-
-
-    function fail(json) {
-    }
-
-    await httpRequest('/api/categories', options, success, fail)
-
-    return categories;
-}
-
-const sendSaveCategoryRequest = () => {
-    const jsonFormData = $('#categoryAddForm').serializeFormToJSON();
-    const options = {
-        method: 'POST',
-        body: JSON.stringify(jsonFormData)
-    }
-
-    async function success(response) {
-        alert("카테고리 정보가 추가 됐습니다.")
-        bootstrap.Modal.getInstance($('#categoryAddDetail')).hide()
-        $('.modal-backdrop').remove();
-
-        $("#categoryAddForm")[0].reset();
-
-        const categories = await callGetCategories();
-
-        getCategoriesTemplate(categories);
-    }
-
-
-    function fail(json) {
-    }
-
-    httpRequest(`/api/category`, options, success, fail)
+    $("#categoryAddForm")[0].reset();
 }
 
 const sendModifyCategoryRequest = () => {
@@ -105,7 +51,7 @@ const sendModifyCategoryRequest = () => {
         bootstrap.Modal.getInstance($('#categoryUpdateDetail')).hide()
         $('.modal-backdrop').remove();
         const jsonData = await response.json()
-        const categories = await callGetCategories();
+        const categories = await getAllCategory();
 
         getCategoriesTemplate(categories);
     }
@@ -130,7 +76,7 @@ const sendDeleteCategoryRequest = (categoryId) => {
     async function success(response) {
         alert("카테고리가 삭제 됐습니다.")
 
-        const categories = await callGetCategories()
+        const categories = await getAllCategory()
 
         getCategoriesTemplate(categories)
     }
@@ -160,7 +106,7 @@ function getMenus(categoryId) {
             const template = menusTemplate(item)
             $('#menus-content').html(template)
 
-            const category = await callGetCategory(categoryId);
+            const category = await getCategoryById(categoryId);
             $('#category-add-id').val(categoryId)
             $('#category-add-name').val(category.emoji + category.name);
         }
@@ -279,7 +225,7 @@ const showMenuAddModal = async () => {
 
     const modal = new bootstrap.Modal($('#menuAddDetail'));
     modal.show();
-    // const categories = await callGetCategories()
+    // const categories = await getAllCategory()
     // const noSelect = `<option value="">카테고리를 선택해 주세요.</option>`
     // const selectOptions = categories.categories.map(category => `
     //     <option value="${category.id}">${category.name}</option>

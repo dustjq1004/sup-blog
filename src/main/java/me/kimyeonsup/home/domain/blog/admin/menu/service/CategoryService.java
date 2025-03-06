@@ -16,6 +16,7 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
+    @Transactional
     public CategoryResponse save(AddCategoryRequest request) {
         return new CategoryResponse(categoryRepository.save(request.toEntity()));
     }
