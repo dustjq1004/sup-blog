@@ -5,7 +5,7 @@ const categoriesTemplate = (categories) => {
         <li class="list-group-item" data-active="${category.id}">
             <div class="d-flex flex-row">
                 <a class="p-3 lh-sm w-100 text-decoration-none" 
-                    onclick="callGetMenus(${category.id})">
+                    onclick="loadMenusTemplate(${category.id})">
                     <div class="d-flex align-items-center">
                       <strong class="mb-1">${!category.emoji || category.emoji.length === 0 ? '' : category.emoji}${category.name}</strong>
                       <small class="ms-2">${category.updatedAt}</small>

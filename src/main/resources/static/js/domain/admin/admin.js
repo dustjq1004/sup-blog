@@ -65,32 +65,17 @@ const sendDeleteCategoryRequest = async (categoryId) => {
 
 /* 카테고리 Function */
 
-const callGetMenus = async (categoryId) => {
-    getMenus(categoryId)
+const loadMenusTemplate = async (categoryId) => {
+    const menus = await getMenus(categoryId)
+
+    const template = await menusTemplate(menus)
+    $('#menus-content').html(template)
+
+    const category = await getCategoryById(categoryId);
+    $('#category-add-id').val(categoryId)
+    $('#category-add-name').val(category.emoji + category.name);
 }
 
-function getMenus(categoryId) {
-    const options = {
-        method: 'GET'
-    };
-
-    function getSuccess() {
-        return async (response) => {
-            const item = await response.json()
-            const template = menusTemplate(item)
-            $('#menus-content').html(template)
-
-            const category = await getCategoryById(categoryId);
-            $('#category-add-id').val(categoryId)
-            $('#category-add-name').val(category.emoji + category.name);
-        }
-    }
-
-    function fail(json) {
-    }
-
-    httpRequest(`/api/menus/${categoryId}`, options, getSuccess(), fail)
-}
 
 const callMenuDetails = (menuId) => {
     const options = {
@@ -124,7 +109,7 @@ const sendUpdateMenuRequest = () => {
         bootstrap.Modal.getInstance($('#menuUpdateDetail')).hide()
 
         const jsonData = await response.json()
-        callGetMenus(jsonData.categoryId)
+        loadMenusTemplate(jsonData.categoryId)
     }
 
 
@@ -148,7 +133,7 @@ const sendDeleteMenuRequest = (menuId) => {
         alert("메뉴가 삭제 됐습니다.")
 
         const jsonData = await response.json()
-        callGetMenus(jsonData.categoryId)
+        loadMenusTemplate(jsonData.categoryId)
     }
 
 
@@ -235,7 +220,7 @@ const sendSaveMenuRequest = () => {
         bootstrap.Modal.getInstance($('#menuAddDetail')).hide()
         $('#menuAddForm')[0].reset();
         const jsonData = await response.json()
-        callGetMenus(jsonData.categoryId)
+        loadMenusTemplate(jsonData.categoryId)
     }
 
 

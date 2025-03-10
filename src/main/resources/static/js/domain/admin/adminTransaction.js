@@ -105,3 +105,27 @@ const deleteCategory = async (categoryId) => {
 
     await httpRequest(`/api/category/delete`, options, success, fail)
 }
+
+/*
+*
+* Menu Transaction
+*
+*/
+const getMenus = async (categoryId) => {
+    let menus = {}
+    const options = {
+        method: 'GET'
+    };
+
+    function getSuccess() {
+        return async (response) => {
+            menus = await response.json()
+        }
+    }
+
+    function fail(json) {
+    }
+
+    await httpRequest(`/api/menus/${categoryId}`, options, getSuccess(), fail)
+    return menus
+}
