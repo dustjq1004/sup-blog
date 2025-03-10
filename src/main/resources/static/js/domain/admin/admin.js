@@ -28,71 +28,45 @@ const showCategoryUpdateModal = async (categoryId) => {
     $('#category-update-modal').html(template)
 }
 
-const sendSaveCategoryRequest = async () => {
-    const jsonFormData = $('#categoryAddForm').serializeFormToJSON()
-    await saveCategory(jsonFormData)
+const saveAndRenderCategory = async () => {
+    const categoryFormData = $('#categoryAddForm').serializeFormToJSON()
+    await createCategory(categoryFormData)
     await setCategoriesTemplate()
 
     bootstrap.Modal.getInstance($('#categoryAddDetail')).hide()
+    $('.modal-backdrop').remove()
+
+    $("#categoryAddForm")[0].reset()
+}
+
+const sendModifyCategoryRequest = async () => {
+    const categoryFormData = $('#categoryModifyForm').serializeFormToJSON()
+    await updateCategory(categoryFormData)
+    const categories = await getAllCategory()
+
+    const template = getCategoriesTemplate(categories)
+    $('#categories-content').html(template)
+
     $('.modal-backdrop').remove();
-
-    $("#categoryAddForm")[0].reset();
+    bootstrap.Modal.getInstance($('#categoryUpdateDetail')).hide()
 }
 
-const sendModifyCategoryRequest = () => {
-    const jsonFormData = $('#categoryModifyForm').serializeFormToJSON();
-    const options = {
-        method: 'PUT',
-        body: JSON.stringify(jsonFormData)
-    }
-
-    async function success(response) {
-        alert("카테고리 정보가 수정 됐습니다.")
-        bootstrap.Modal.getInstance($('#categoryUpdateDetail')).hide()
-        $('.modal-backdrop').remove();
-        const jsonData = await response.json()
-        const categories = await getAllCategory();
-
-        getCategoriesTemplate(categories);
-    }
-
-
-    function fail(json) {
-    }
-
-    httpRequest(`/api/category/update`, options, success, fail)
-}
-
-const sendDeleteCategoryRequest = (categoryId) => {
+const sendDeleteCategoryRequest = async (categoryId) => {
     if (!confirm("카테고리를 삭제하시겠습니까?")) {
         return
     }
 
-    const options = {
-        method: 'DELETE',
-        body: JSON.stringify({"categoryId": categoryId})
-    }
+    await deleteCategory(categoryId)
 
-    async function success(response) {
-        alert("카테고리가 삭제 됐습니다.")
-
-        const categories = await getAllCategory()
-
-        getCategoriesTemplate(categories)
-    }
-
-
-    function fail(response) {
-        alert("카테고리 삭제에 실패했습니다.")
-    }
-
-    httpRequest(`/api/category/delete`, options, success, fail)
+    const categories = await getAllCategory()
+    const template = await getCategoriesTemplate(categories)
+    $('#categories-content').html(template)
 }
 
 /* 카테고리 Function */
 
 const callGetMenus = async (categoryId) => {
-    getMenus(categoryId);
+    getMenus(categoryId)
 }
 
 function getMenus(categoryId) {
