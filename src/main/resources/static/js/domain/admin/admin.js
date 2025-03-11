@@ -77,24 +77,11 @@ const loadMenusTemplate = async (categoryId) => {
 }
 
 
-const callMenuDetails = (menuId) => {
-    const options = {
-        method: 'GET'
-    };
-
-    function getSuccess() {
-        return async (response) => {
-            const item = await response.json();
-            const template = menuDetailModalTemplate(item);
-            $('#menu-detail-modal').html(template);
-            initializeUpdateModalEvent(item);
-        }
-    }
-
-    function fail(json) {
-    }
-
-    httpRequest(`/api/menu/${menuId}`, options, getSuccess(), fail)
+const loadMenuDetailTemplate = async (menuId) => {
+    const menu = await getMenuDetailById(menuId)
+    const template = menuDetailModalTemplate(menu)
+    $('#menu-detail-modal').html(template)
+    initializeUpdateModalEvent(menu)
 }
 
 const sendUpdateMenuRequest = () => {

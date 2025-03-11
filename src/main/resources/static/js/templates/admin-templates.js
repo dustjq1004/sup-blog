@@ -33,7 +33,7 @@ const menusTemplate = (menus) => {
     const tableBody = menus.menus.map(menu => `
         <li class="list-group-item list-group-item-action">
             <div class="d-flex flex-row">
-                <a onclick="callMenuDetails(${menu.id})" aria-current="true" class="p-3 d-flex w-100 align-items-center
+                <a onclick="loadMenuDetailTemplate(${menu.id})" aria-current="true" class="p-3 d-flex w-100 align-items-center
                  mx-2 text-decoration-none link-dark"
                     data-bs-toggle="modal" data-bs-target="#menuDetailModal">    
                     <strong class="mb-1">${menu.name}</strong>

@@ -129,3 +129,23 @@ const getMenus = async (categoryId) => {
     await httpRequest(`/api/menus/${categoryId}`, options, getSuccess(), fail)
     return menus
 }
+
+const getMenuDetailById = async (menuId) => {
+    let menu = {}
+    const options = {
+        method: 'GET'
+    };
+
+    function getSuccess() {
+        return async (response) => {
+            menu = await response.json();
+
+        }
+    }
+
+    function fail(json) {
+    }
+
+    await httpRequest(`/api/menu/${menuId}`, options, getSuccess(), fail)
+    return menu;
+}
