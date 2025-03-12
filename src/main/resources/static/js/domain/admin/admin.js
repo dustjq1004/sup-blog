@@ -41,7 +41,7 @@ const saveAndRenderCategory = async () => {
 
 const sendModifyCategoryRequest = async () => {
     const categoryFormData = $('#categoryModifyForm').serializeFormToJSON()
-    await updateCategory(categoryFormData)
+    await putCategoryUpdate(categoryFormData)
     const categories = await getAllCategory()
 
     const template = getCategoriesTemplate(categories)
@@ -84,51 +84,18 @@ const loadMenuDetailTemplate = async (menuId) => {
     initializeUpdateModalEvent(menu)
 }
 
-const sendUpdateMenuRequest = () => {
-    const jsonFormData = $('#menuUpdateForm').serializeFormToJSON();
-    const options = {
-        method: 'PUT',
-        body: JSON.stringify(jsonFormData)
-    }
-
-    async function success(response) {
-        alert("메뉴 정보가 수정 됐습니다.")
-        bootstrap.Modal.getInstance($('#menuUpdateDetail')).hide()
-
-        const jsonData = await response.json()
-        loadMenusTemplate(jsonData.categoryId)
-    }
-
-
-    function fail(json) {
-    }
-
-    httpRequest(`/api/menu/update`, options, success, fail)
+const updateMenu = async () => {
+    const menuFormData = $('#menuUpdateForm').serializeFormToJSON()
+    await putMenuUpdate(menuFormData)
+    bootstrap.Modal.getInstance($('#menuUpdateDetail')).hide()
 }
 
-const sendDeleteMenuRequest = (menuId) => {
+const deleteMenu = async (menuId) => {
     if (!confirm("메뉴를 삭제하시겠습니까?")) {
         return
     }
 
-    const options = {
-        method: 'DELETE',
-        body: JSON.stringify({"menuId": menuId})
-    }
-
-    async function success(response) {
-        alert("메뉴가 삭제 됐습니다.")
-
-        const jsonData = await response.json()
-        loadMenusTemplate(jsonData.categoryId)
-    }
-
-
-    function fail(json) {
-        alert("메뉴를 삭제할 수 없습니다.")
-    }
-
-    httpRequest(`/api/menu/delete`, options, success, fail)
+    await deleteMenuRemove(menuId)
 }
 
 const initializeUpdateModalEvent = (menu) => {

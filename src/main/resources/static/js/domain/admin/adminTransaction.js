@@ -71,7 +71,7 @@ const createCategory = async (categoryFormData) => {
     await httpRequest(`/api/category`, options, success, fail)
 }
 
-const updateCategory = async (categoryFormData) => {
+const putCategoryUpdate = async (categoryFormData) => {
     const options = {
         method: 'PUT',
         body: JSON.stringify(categoryFormData)
@@ -148,4 +148,44 @@ const getMenuDetailById = async (menuId) => {
 
     await httpRequest(`/api/menu/${menuId}`, options, getSuccess(), fail)
     return menu;
+}
+
+const putMenuUpdate = async (menuFormData) => {
+    const options = {
+        method: 'PUT',
+        body: JSON.stringify(menuFormData)
+    }
+
+    async function success(response) {
+        alert("메뉴 정보가 수정 됐습니다.")
+
+        const jsonData = await response.json()
+        loadMenusTemplate(jsonData.categoryId)
+    }
+
+    function fail(json) {
+    }
+
+    await httpRequest(`/api/menu/update`, options, success, fail)
+}
+
+const deleteMenuRemove = async (menuId) => {
+    const options = {
+        method: 'DELETE',
+        body: JSON.stringify({"menuId": menuId})
+    }
+
+    async function success(response) {
+        alert("메뉴가 삭제 됐습니다.")
+
+        const jsonData = await response.json()
+        loadMenusTemplate(jsonData.categoryId)
+    }
+
+
+    function fail(json) {
+        alert("메뉴를 삭제할 수 없습니다.")
+    }
+
+    httpRequest(`/api/menu/delete`, options, success, fail)
 }
