@@ -100,18 +100,9 @@ const deleteMenu = async (menuId) => {
 
 const initializeUpdateModalEvent = (menu) => {
     document.getElementById('menuUpdateBtn').addEventListener('click', async function () {
-        let categories = {}
-
-        const options = {
-            method: 'GET'
-        };
-
-        await httpRequest('/api/categories', options, async (response) => {
-            categories = await response.json();
-        }, () => {
-        });
-
+        const categories = await getAllCategory()
         const template = menuDetailUpdateTemplate(menu, categories);
+
         $('#menu-update-modal').html(template);
 
         // 첫 번째 모달 닫기
@@ -138,16 +129,21 @@ const showMenuAddModal = async () => {
 
     const modal = new bootstrap.Modal($('#menuAddDetail'));
     modal.show();
-    // const categories = await getAllCategory()
-    // const noSelect = `<option value="">카테고리를 선택해 주세요.</option>`
-    // const selectOptions = categories.categories.map(category => `
-    //     <option value="${category.id}">${category.name}</option>
-    // `)
-    //
-    // $('#select-category').html(noSelect.concat(selectOptions));
 }
 
-function verifyFormInput(jsonFormData) {
+const sendSaveMenuRequest = async () => {
+    const menuFormData = $('#menuAddForm').serializeFormToJSON();
+
+    if (!verifyMenuInput(menuFormData)) {
+        return false;
+    }
+
+    await postMenuAdd(menuFormData)
+    bootstrap.Modal.getInstance($('#menuAddDetail')).hide()
+    $('#menuAddForm')[0].reset()
+}
+
+function verifyMenuInput(jsonFormData) {
     const categoryId = jsonFormData['categoryId'];
     if (categoryId == null || categoryId == 'undefined') {
         alert("카테고리를 선택해주세요.");
@@ -157,53 +153,13 @@ function verifyFormInput(jsonFormData) {
     return true;
 }
 
-const sendSaveMenuRequest = () => {
-    const jsonFormData = $('#menuAddForm').serializeFormToJSON();
-
-    if (!verifyFormInput(jsonFormData)) {
-        return false;
-    }
-
-    const options = {
-        method: 'POST',
-        body: JSON.stringify(jsonFormData)
-    }
-
-    async function success(response) {
-        alert("메뉴 정보가 추가 됐습니다.")
-        bootstrap.Modal.getInstance($('#menuAddDetail')).hide()
-        $('#menuAddForm')[0].reset();
-        const jsonData = await response.json()
-        loadMenusTemplate(jsonData.categoryId)
-    }
-
-
-    function fail(json) {
-    }
-
-    httpRequest(`/api/menu`, options, success, fail)
-}
-
 /* Article Transaction */
 const loadArticlesFragment = async () => {
     $('#admin-content').html("")
+    const fragment = await getArticlesFragment()
 
-    const options = {
-        method: 'GET'
-    }
-
-    async function success(response) {
-        const fragment = await response.text();
-        $('#admin-content').html(fragment);
-
-
-    }
-
-    function fail(json) {
-    }
-
-    httpRequest('/admin/frag/articles', options, success, fail)
-    $('.admin-nav.active').removeClass('active');
+    $('#admin-content').html(fragment)
+    $('.admin-nav.active').removeClass('active')
 }
 
 /* document.ready  */

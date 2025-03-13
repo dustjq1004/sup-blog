@@ -43,7 +43,6 @@ const getAllCategory = async () => {
 
     async function success(response) {
         categories = await response.json()
-
     }
 
     function fail(json) {
@@ -188,4 +187,41 @@ const deleteMenuRemove = async (menuId) => {
     }
 
     httpRequest(`/api/menu/delete`, options, success, fail)
+}
+
+const postMenuAdd = async (menuFormData) => {
+    const options = {
+        method: 'POST',
+        body: JSON.stringify(menuFormData)
+    }
+
+    async function success(response) {
+        alert("메뉴 정보가 추가 됐습니다.")
+        const jsonData = await response.json()
+        loadMenusTemplate(jsonData.categoryId)
+    }
+
+    function fail(json) {
+    }
+
+    await httpRequest(`/api/menu`, options, success, fail)
+}
+
+
+const getArticlesFragment = async () => {
+    let fragment = {}
+    const options = {
+        method: 'GET'
+    }
+
+    async function success(response) {
+        fragment = await response.text()
+    }
+
+    function fail(json) {
+    }
+
+    await httpRequest('/admin/frag/articles', options, success, fail)
+
+    return fragment
 }
