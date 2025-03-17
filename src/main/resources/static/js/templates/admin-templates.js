@@ -33,13 +33,13 @@ const menusTemplate = (menus) => {
     const tableBody = menus.menus.map(menu => `
         <li class="list-group-item list-group-item-action">
             <div class="d-flex flex-row">
-                <a onclick="deleteMenu(${menu.id})" aria-current="true" class="p-3 d-flex w-100 align-items-center
+                <a onclick="loadMenuDetailTemplate(${menu.id})" aria-current="true" class="p-3 d-flex w-100 align-items-center
                  mx-2 text-decoration-none link-dark"
                     data-bs-toggle="modal" data-bs-target="#menuDetailModal">    
                     <strong class="mb-1">${menu.name}</strong>
                     <small class="ms-2">${menu.updatedAt}</small>
                 </a>
-                <button type="button" class="btn btn-secondary" onclick="sendDeleteMenuRequest(${menu.id})">
+                <button type="button" class="btn btn-secondary" onclick="deleteMenu(${menu.id})">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 2 16 16">
                       <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
                       <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>

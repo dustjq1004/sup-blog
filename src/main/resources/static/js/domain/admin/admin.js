@@ -1,16 +1,11 @@
+let currentCategoryId = "";
+
 /* 카테고리 Function */
 const loadCategoriesTemplate = async (element) => {
     const fragment = await getCategoriesFragment(element)
     $('#admin-content').html(fragment)
 
     await setCategoriesTemplate();
-
-    $('.admin-nav.active').removeClass('active')
-
-    $("#categories-content .list-group-item").click(function () {
-        $("#categories-content .list-group-item").removeClass("active") // 모든 항목에서 active 제거
-        $(this).addClass("active")  // 클릭한 항목에 active 추가
-    })
 
     $('#category-add-id').val("")
     $('#category-add-name').val("")
@@ -87,6 +82,8 @@ const loadMenuDetailTemplate = async (menuId) => {
 const updateMenu = async () => {
     const menuFormData = $('#menuUpdateForm').serializeFormToJSON()
     await putMenuUpdate(menuFormData)
+    await loadMenusTemplate(currentCategoryId)
+
     bootstrap.Modal.getInstance($('#menuUpdateDetail')).hide()
 }
 
@@ -159,7 +156,6 @@ const loadArticlesFragment = async () => {
     const fragment = await getArticlesFragment()
 
     $('#admin-content').html(fragment)
-    $('.admin-nav.active').removeClass('active')
 }
 
 /* document.ready  */
@@ -169,6 +165,12 @@ $(document).ready(function () {
             $(element).removeClass("active")
         })
         $(event.currentTarget).addClass("active")
+    })
+
+    $(document).on("click", "#categories-content .list-group-item", (event) => {
+        $("#categories-content .list-group-item").removeClass("active") // 모든 항목에서 active 제거
+        $(event.currentTarget).addClass("active")  // 클릭한 항목에 active 추가
+        currentCategoryId = $(event.currentTarget).data("active")
     })
 })
 

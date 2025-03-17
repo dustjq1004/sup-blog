@@ -159,7 +159,6 @@ const putMenuUpdate = async (menuFormData) => {
         alert("메뉴 정보가 수정 됐습니다.")
 
         const jsonData = await response.json()
-        loadMenusTemplate(jsonData.categoryId)
     }
 
     function fail(json) {

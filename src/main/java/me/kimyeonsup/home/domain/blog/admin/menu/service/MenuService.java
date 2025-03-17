@@ -73,7 +73,6 @@ public class MenuService {
         long id = request.getId();
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + id));
-
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + request.getCategoryId()));
 
