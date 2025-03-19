@@ -224,3 +224,28 @@ const getArticlesFragment = async () => {
 
     return fragment
 }
+
+const getArticles = async (menuName) => {
+    let articles = {}
+    const options = {
+        method: 'GET'
+    }
+
+    const queryParams = {}
+    if (!isNull(menuName)) {
+        queryParams.menuName = menuName;
+    }
+
+    const queryString = new URLSearchParams(queryParams).toString()
+
+    async function success(response) {
+        articles = await response.text()
+    }
+
+    function fail(json) {
+    }
+
+    await httpRequest(`/api/articles?${queryString}`, options, success, fail)
+
+    return articles
+}

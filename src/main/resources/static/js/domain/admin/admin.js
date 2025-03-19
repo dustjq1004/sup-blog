@@ -154,7 +154,7 @@ function verifyMenuInput(jsonFormData) {
 const loadArticlesFragment = async () => {
     $('#admin-content').html("")
     const fragment = await getArticlesFragment()
-
+    const articles = await getArticles()
     $('#admin-content').html(fragment)
 }
 

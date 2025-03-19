@@ -102,4 +102,8 @@ $.fn.serializeFormToJSON = function () {
     });
 
     return json;
-};
+}
+
+function nvl(value) {
+    return value ?? "";
+}
