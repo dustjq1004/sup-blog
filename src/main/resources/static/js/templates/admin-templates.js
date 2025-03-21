@@ -1,7 +1,5 @@
 const categoriesTemplate = (categories) => {
-
-    // 테이블 바디 생성 (반복문으로 JSON 데이터 추가)gap-3
-    const tableBody = categories.categories.map(category => `
+    const template = categories.categories.map(category => `
         <li class="list-group-item" data-active="${category.id}">
             <div class="d-flex flex-row">
                 <a class="p-3 lh-sm w-100 text-decoration-none" 
@@ -23,14 +21,12 @@ const categoriesTemplate = (categories) => {
         </li>
     `).join("");
 
-
-    // 최종 테이블 조합
-    return tableBody;
+    return template;
 }
 
 const menusTemplate = (menus) => {
     // 테이블 바디 생성 (반복문으로 JSON 데이터 추가)
-    const tableBody = menus.menus.map(menu => `
+    const template = menus.menus.map(menu => `
         <li class="list-group-item list-group-item-action">
             <div class="d-flex flex-row">
                 <a onclick="loadMenuDetailTemplate(${menu.id})" aria-current="true" class="p-3 d-flex w-100 align-items-center
@@ -50,7 +46,7 @@ const menusTemplate = (menus) => {
     `).join("");
 
     // 최종 테이블 조합
-    return tableBody;
+    return template;
 }
 
 const menuDetailModalTemplate = (menu) => {
@@ -141,5 +137,13 @@ const categoryDetailUpdateTemplate = (category) => {
             <button onclick="sendModifyCategoryRequest()" type="button" class="btn btn-primary">수정</button>
         </div>
     `
+    return template;
+}
+
+const articlesTemplate = (articles) => {
+    const template = articles.map(article =>
+        `
+        `
+    ).join("");
     return template;
 }

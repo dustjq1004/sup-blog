@@ -13,13 +13,13 @@ const loadCategoriesTemplate = async (element) => {
 
 const setCategoriesTemplate = async () => {
     const categories = await getAllCategory()
-    const template = await getCategoriesTemplate(categories)
+    const template = await categoriesTemplate(categories)
     $('#categories-content').html(template)
 }
 
 const showCategoryUpdateModal = async (categoryId) => {
     const category = await getCategoryById(categoryId);
-    const template = await getCategoryUpdateTemplate(category)
+    const template = await categoryDetailUpdateTemplate(category)
     $('#category-update-modal').html(template)
 }
 
@@ -39,7 +39,7 @@ const sendModifyCategoryRequest = async () => {
     await putCategoryUpdate(categoryFormData)
     const categories = await getAllCategory()
 
-    const template = getCategoriesTemplate(categories)
+    const template = categoriesTemplate(categories)
     $('#categories-content').html(template)
 
     $('.modal-backdrop').remove();
@@ -54,7 +54,7 @@ const sendDeleteCategoryRequest = async (categoryId) => {
     await deleteCategory(categoryId)
 
     const categories = await getAllCategory()
-    const template = await getCategoriesTemplate(categories)
+    const template = await categoriesTemplate(categories)
     $('#categories-content').html(template)
 }
 
@@ -154,8 +154,13 @@ function verifyMenuInput(jsonFormData) {
 const loadArticlesFragment = async () => {
     $('#admin-content').html("")
     const fragment = await getArticlesFragment()
-    const articles = await getArticles()
     $('#admin-content').html(fragment)
+
+    const articles = await getArticles()
+    console.log(articles)
+    const template = await articlesTemplate(articles)
+    console.log(template)
+    $('#articles-wrap').html(template)
 }
 
 /* document.ready  */

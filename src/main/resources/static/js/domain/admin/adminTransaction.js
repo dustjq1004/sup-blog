@@ -239,7 +239,8 @@ const getArticles = async (menuName) => {
     const queryString = new URLSearchParams(queryParams).toString()
 
     async function success(response) {
-        articles = await response.text()
+        const result = await response.json()
+        articles = result.data
     }
 
     function fail(json) {
