@@ -59,6 +59,10 @@ common
     margin-top: 5rem !important;
 }
 
+.ms-m1 {
+    margin-left: -1rem;
+}
+
 /*
 common
 - tag style
