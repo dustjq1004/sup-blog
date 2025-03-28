@@ -27,7 +27,7 @@
 
 <div th:fragment="articlesFragment()" class="row">
     <div id="articles-container">
-        <div class="card card-line border-transparent mb-7">
+        <div class="card rounded-4 card-line border-transparent mb-7">
             <div class="card-body p-4">
                 <div class="row align-items-center">
                     <div class="col-12 col-lg-auto mb-3 mb-lg-0">
@@ -69,8 +69,53 @@
                 </div>
             </div>
         </div>
-        <div id="article-wrap">
-
+        <div id="article-wrap" class="mt-5">
+            <table class="table table-hover table-select align-middle mb-0">
+                <thead>
+                <tr>
+                    <th style="width: 0px">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="tableCheckAll">
+                            <label class="form-check-label" for="tableCheckAll"></label>
+                        </div>
+                    </th>
+                    <th>카테고리</th>
+                    <th>글 제목</th>
+                    <th>부 제목</th>
+                    <th>작성자</th>
+                    <th>등록일자</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td style="width: 0px">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="tableCheckOne">
+                            <label class="form-check-label" for="tableCheckOne"></label>
+                        </div>
+                    </td>
+                    <td>
+                        자바
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="">
+                                <div>Filters AI</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="fs-sm text-body-secondary">abcdefg</div>
+                    </td>
+                    <td>
+                        dustjq1005
+                    </td>
+                    <td>
+                        <div class="fs-sm text-body-secondary">Updated on Apr 10, 2024</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
         </div>
     </div>

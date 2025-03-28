@@ -1,5 +1,17 @@
+:root {
+    --admin-search-filter-container-color: rgba(var(--primary-black), .05);
+}
+
 ul {
     margin-bottom: 0rem;
+}
+
+.admin-content .card {
+    background-color: var(--admin-search-filter-container-color);
+}
+
+.main {
+    min-height: 100vh;
 }
 
 .admin-content {
@@ -15,6 +27,3 @@ ul {
     border-right: 1px solid rgba(187, 185, 185, 0.6);
 }
 
-.main {
-    min-height: 100vh;
-}

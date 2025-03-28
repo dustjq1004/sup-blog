@@ -11,7 +11,6 @@ public class AdminViewController {
 
     @GetMapping
     public String index(Model model) {
-
         return "blog/admin/main";
     }
 
