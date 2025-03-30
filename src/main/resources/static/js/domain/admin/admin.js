@@ -159,8 +159,8 @@ const loadArticlesFragment = async () => {
     const articles = await getArticles()
     console.log(articles)
     const template = await articlesTemplate(articles)
-    console.log(template)
-    $('#articles-wrap').html(template)
+
+    $('#article-tbody').html(template)
 }
 
 /* document.ready  */

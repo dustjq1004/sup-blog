@@ -141,8 +141,36 @@ const categoryDetailUpdateTemplate = (category) => {
 }
 
 const articlesTemplate = (articles) => {
+
     const template = articles.map(article =>
         `
+            <tr>
+                <td style="width: 0px">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="tableCheckOne">
+                        <label class="form-check-label" for="tableCheckOne"></label>
+                    </div>
+                </td>
+                <td>
+                    ${article.menuName}
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="">
+                            <div>${article.title}</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="fs-sm text-body-secondary">${article.subTitle}</div>
+                </td>
+                <td>
+                    dustjq1005
+                </td>
+                <td>
+                    <div class="fs-sm text-body-secondary">${article.updatedAt}</div>
+                </td>
+            </tr>
         `
     ).join("");
     return template;
