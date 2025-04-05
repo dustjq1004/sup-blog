@@ -5,8 +5,8 @@ function isNull(checkValue) {
         return true;
     }
 
-    if (checkValue instanceof String) {
-        return checkValue.trim().length == 0 || checkValue === 'null'
+    if (typeof checkValue === "string") {
+        return checkValue.trim().length === 0 || checkValue === 'null'
     }
 
     return false;

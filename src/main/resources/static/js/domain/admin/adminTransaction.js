@@ -225,7 +225,7 @@ const getArticlesFragment = async () => {
     return fragment
 }
 
-const getArticles = async (menuName) => {
+const getArticles = async (menuName, pageNumber) => {
     let articles = {}
     const options = {
         method: 'GET'
@@ -233,14 +233,15 @@ const getArticles = async (menuName) => {
 
     const queryParams = {}
     if (!isNull(menuName)) {
-        queryParams.menuName = menuName;
+        queryParams.menuName = menuName
     }
+    queryParams.pageNumber = pageNumber
 
     const queryString = new URLSearchParams(queryParams).toString()
 
     async function success(response) {
         const result = await response.json()
-        articles = result.data
+        articles = result
     }
 
     function fail(json) {

@@ -151,15 +151,19 @@ function verifyMenuInput(jsonFormData) {
 }
 
 /* Article Transaction */
-const loadArticlesFragment = async () => {
+const loadArticlesFragment = async (pageNumber) => {
+    const maxPageNumber = 10
     $('#admin-content').html("")
     const fragment = await getArticlesFragment()
     $('#admin-content').html(fragment)
 
-    const articles = await getArticles()
-    console.log(articles)
-    const template = await articlesTemplate(articles)
+    const articles = await getArticles("", pageNumber)
+    const template = await articlesTemplate(articles.data)
+    const pageNumberTemplate = await articlesPageNumberTemplate(articles.pageNumber, maxPageNumber, articles.totalPages)
+    const pageSummary = getPageSummary(articles);
 
+    $('#articlePagination').html(pageNumberTemplate)
+    $('#articlePageSummary').html(pageSummary)
     $('#article-tbody').html(template)
 }
 
@@ -178,4 +182,6 @@ $(document).ready(function () {
         currentCategoryId = $(event.currentTarget).data("active")
     })
 })
+
+
 
