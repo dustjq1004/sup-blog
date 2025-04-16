@@ -34,7 +34,7 @@ public class BlogViewController {
                 .map(CategoryResponse::new)
                 .toList();
 
-        Page<Article> articles = articleService.findAllPagenation(0, null);
+        Page<Article> articles = articleService.findAllPagination(0, null, null);
 
         model.addAttribute("categories", categories);
         model.addAttribute("articles", articles.stream()
@@ -50,7 +50,7 @@ public class BlogViewController {
                 .map(CategoryResponse::new)
                 .toList();
 
-        Page<Article> articles = articleService.findAllPagenation(0, menuName);
+        Page<Article> articles = articleService.findAllPagination(0, null, menuName);
 
         model.addAttribute("categories", categories);
         model.addAttribute("articles", articles.stream()

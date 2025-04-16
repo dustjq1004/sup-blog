@@ -1,14 +1,13 @@
 package me.kimyeonsup.home.domain.blog.article.repository;
 
 import jakarta.validation.constraints.NotBlank;
+import java.util.List;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlePrevNextDto;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
-import java.util.List;
 
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
@@ -19,6 +18,9 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     @Query("SELECT a FROM Article a LEFT JOIN FETCH a.menu m WHERE m.name = :menuName")
     Page<Article> findByMenuName(Pageable pageRequest, String menuName);
+
+    @Query("SELECT a FROM Article a LEFT JOIN FETCH a.menu.category m WHERE m.id = :categoryId")
+    Page<Article> findByCategoryId(Pageable pageRequest, Long categoryId);
 
     /*
     SELECT

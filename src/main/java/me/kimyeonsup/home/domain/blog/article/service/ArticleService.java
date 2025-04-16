@@ -43,12 +43,14 @@ public class ArticleService {
         return articleRepository.findAll();
     }
 
-    public Page<Article> findAllPagenation(int pageNumber, String menuName) {
+    public Page<Article> findAllPagination(int pageNumber, Long categoryId, String menuName) {
         Pageable pageRequest = PageRequest.of(pageNumber, PAGE_SIZE, Sort.by(Direction.DESC, ORDER_CRITERIA));
 
         Page<Article> articles = Optional.ofNullable(menuName)
-                .map(s -> articleRepository.findByMenuName(pageRequest, menuName))
-                .orElseGet(() -> articleRepository.findAll(pageRequest));
+                .map(name -> articleRepository.findByMenuName(pageRequest, menuName))
+                .orElseGet(() -> Optional.ofNullable(categoryId)
+                        .map(id -> articleRepository.findByCategoryId(pageRequest, categoryId))
+                        .orElseGet(() -> articleRepository.findAll(pageRequest)));
 
         return articles;
     }
