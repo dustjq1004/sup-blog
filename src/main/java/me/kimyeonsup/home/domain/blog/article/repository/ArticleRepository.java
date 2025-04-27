@@ -19,7 +19,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("SELECT a FROM Article a LEFT JOIN FETCH a.menu m WHERE m.name = :menuName")
     Page<Article> findByMenuName(Pageable pageRequest, String menuName);
 
-    @Query("SELECT a FROM Article a LEFT JOIN FETCH a.menu.category m WHERE m.id = :categoryId")
+    @Query("SELECT a FROM Article a LEFT JOIN FETCH a.menu m LEFT JOIN m.category c WHERE c.id = :categoryId")
     Page<Article> findByCategoryId(Pageable pageRequest, Long categoryId);
 
     /*
