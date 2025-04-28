@@ -26,44 +26,98 @@
 </div>
 
 <div th:fragment="articlesFragment()" class="row">
-    <div id="articles-container">
+    <div id="articles-container" class="articles-container">
         <div class="card rounded-4 card-line border-transparent mb-7">
             <div class="card-body p-4">
                 <div class="row align-items-center">
                     <div class="col-12 col-lg-auto mb-3 mb-lg-0">
                         <div class="row align-items-center">
                             <div class="col-auto">
-                                <div class="text-body-secondary">Articles -----</div>
-                            </div>
-                            <div class="col-auto border-start border-dark">
-                                <a class="badge text-bg-danger p-2" href="#"> Delete </a>
+                                <div class="text-body-secondary">No customers selected</div>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col col-lg-auto ms-auto">
                         <div class="input-group bg-body">
-                            <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                            <input type="text" class="form-control p-2" placeholder="Search" aria-label="Search"
                                    aria-describedby="search">
                             <span class="input-group-text" id="search">
-                                <i class="bi bi-search"></i>
-                              </span>
+                                <a type="button" onclick="">
+                                    <i class="bi bi-search"></i>
+                                </a>
+                            </span>
                         </div>
                     </div>
                     <div class="col-auto">
-                        <div class="drop-down">
-                            <button class="btn btn-secondary" data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                        <div class="dropdown">
+                            <button id="articleFilterButton" class="btn btn-secondary py-2" type="button"
+                                    data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside"
                                     aria-expanded="false">
                                 <i class="bi bi-filter-left"></i>
                             </button>
-
+                            <div class="dropdown-menu rounded-3 p-3 shadow">
+                                <h4 class="fs-lg mb-4">Filter</h4>
+                                <form style="width: 350px;">
+                                    <div class="row align-items-center mb-3">
+                                        <div class="col-3">
+                                            <label class="form-label mb-0" for="filterUser">User</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <select id="filterUser" class="form-select">
+                                                <option value="all">All</option>
+                                                <option value="user1">User 1</option>
+                                                <option value="user2">User 2</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <div class="col-auto ms-m1">
                         <div class="drop-down">
-                            <button class="btn btn-secondary" data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                            <button class="btn btn-secondary py-2" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside"
                                     aria-expanded="false">
                                 <i class="bi bi-list-ol"></i>
                             </button>
+                            <div class="dropdown-menu rounded-3 p-3">
+                                <h4 class="fs-lg mb-4">Sort</h4>
+                                <form style="width: 350px" id="filterForm">
+                                    <div class="row gx-3">
+                                        <div class="col">
+                                            <div class="choices" data-type="select-one" tabindex="0" role="listbox"
+                                                 aria-haspopup="true" aria-expanded="false">
+                                                <select id="sortSelect" class="form-select"
+                                                        aria-label="Default select example">
+                                                    <option value="user">User</option>
+                                                    <option value="company">Company</option>
+                                                    <option value="phone">Phone</option>
+                                                    <option value="location">Location</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <div class="btn-group" role="group"
+                                                 aria-label="Basic radio toggle button group">
+                                                <input type="radio" class="btn-check" name="sortRadio" id="sortAsc"
+                                                       autocomplete="off" checked="">
+                                                <label class="btn btn-light" for="sortAsc" data-bs-toggle="tooltip"
+                                                       data-bs-title="Ascending">
+                                                    <i class="bi bi-arrow-up"></i>
+                                                </label>
+                                                <input type="radio" class="btn-check" name="sortRadio" id="sortDesc"
+                                                       autocomplete="off">
+                                                <label class="btn btn-light" for="sortDesc" data-bs-toggle="tooltip"
+                                                       data-bs-title="Descending">
+                                                    <i class="bi bi-arrow-down"></i>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

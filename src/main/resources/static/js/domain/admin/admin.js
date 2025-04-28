@@ -124,12 +124,12 @@ const showMenuAddModal = async () => {
         return false
     }
 
-    const modal = new bootstrap.Modal($('#menuAddDetail'));
-    modal.show();
+    const modal = new bootstrap.Modal($('#menuAddDetail'))
+    modal.show()
 }
 
 const sendSaveMenuRequest = async () => {
-    const menuFormData = $('#menuAddForm').serializeFormToJSON();
+    const menuFormData = $('#menuAddForm').serializeFormToJSON()
 
     if (!verifyMenuInput(menuFormData)) {
         return false;
@@ -141,9 +141,9 @@ const sendSaveMenuRequest = async () => {
 }
 
 function verifyMenuInput(jsonFormData) {
-    const categoryId = jsonFormData['categoryId'];
+    const categoryId = jsonFormData['categoryId']
     if (categoryId == null || categoryId == 'undefined') {
-        alert("카테고리를 선택해주세요.");
+        alert("카테고리를 선택해주세요.")
         return false;
     }
 
@@ -160,7 +160,7 @@ const loadArticlesFragment = async (pageNumber) => {
     const articles = await getArticles("", pageNumber)
     const template = await articlesTemplate(articles.data)
     const pageNumberTemplate = await articlesPageNumberTemplate(articles.pageNumber, maxPageNumber, articles.totalPages)
-    const pageSummary = getPageSummary(articles);
+    const pageSummary = getPageSummary(articles)
 
     $('#articlePagination').html(pageNumberTemplate)
     $('#articlePageSummary').html(pageSummary)
