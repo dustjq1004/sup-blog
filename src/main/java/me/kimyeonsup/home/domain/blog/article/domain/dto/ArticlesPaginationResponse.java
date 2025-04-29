@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class PaginationResponse<T> {
+public class ArticlesPaginationResponse<T> {
 
     private final int pageNumber;
     private final int pageSize;

@@ -6,7 +6,7 @@ import me.kimyeonsup.home.config.oauth.PrincipalDetail;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleListViewResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleResponse;
-import me.kimyeonsup.home.domain.blog.article.domain.dto.PaginationResponse;
+import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlesPaginationResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.domain.blog.article.service.ArticleService;
@@ -33,14 +33,14 @@ public class BlogApiController {
     private final DraftService draftService;
 
     @GetMapping("/api/articles")
-    public ResponseEntity<PaginationResponse<ArticleListViewResponse>> findArticles(
+    public ResponseEntity<ArticlesPaginationResponse<ArticleListViewResponse>> findArticles(
             @RequestParam(required = false, defaultValue = "0") int pageNumber,
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) String menuName) {
 
         Page<Article> articles = articleService.findAllPagination(pageNumber, categoryId, menuName);
 
-        PaginationResponse<ArticleListViewResponse> paginationResponse = new PaginationResponse<>(
+        ArticlesPaginationResponse<ArticleListViewResponse> paginationResponse = new ArticlesPaginationResponse<>(
                 articles.getNumber(), articles.getSize(), articles.getNumberOfElements(), articles.isFirst(),
                 articles.isLast(), articles.getTotalPages(), articles.getTotalElements(),
                 articles.stream()
