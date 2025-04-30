@@ -9,7 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
 import me.kimyeonsup.home.domain.blog.article.domain.vo.Thumbnail;
 import me.kimyeonsup.home.global.common.entity.BaseTimeEntity;
@@ -17,6 +19,7 @@ import me.kimyeonsup.home.global.common.entity.BaseTimeEntity;
 @Entity
 @Getter
 @Table(name = "article")
+@NoArgsConstructor
 public class AdminArticle extends BaseTimeEntity {
 
     @Id
@@ -43,5 +46,16 @@ public class AdminArticle extends BaseTimeEntity {
 
     @ManyToOne
     private Menu menu;
+
+    @Builder
+    public AdminArticle(String title, String content, Thumbnail thumbnailUrl, String subTitle, String author,
+                        Menu menu) {
+        this.title = title;
+        this.content = content;
+        this.subTitle = subTitle;
+        this.author = author;
+        this.menu = menu;
+        this.thumbnailUrl = thumbnailUrl;
+    }
 
 }
