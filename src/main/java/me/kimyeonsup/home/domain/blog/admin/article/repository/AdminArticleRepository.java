@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AdminArticleRepository extends JpaRepository<AdminArticle, Long> {
 
-    List<AdminArticle> findByCategoryId(Long categoryId);
+    List<AdminArticle> findByMenu_CategoryId(Long categoryId);
 
     List<AdminArticle> findByMenuId(Long menuId);
 }
