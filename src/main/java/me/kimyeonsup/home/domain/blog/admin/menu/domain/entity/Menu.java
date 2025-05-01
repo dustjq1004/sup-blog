@@ -37,7 +37,7 @@ public class Menu extends BaseTimeEntity {
     private String emoji;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
     @OneToMany(mappedBy = "menu", fetch = FetchType.LAZY)
