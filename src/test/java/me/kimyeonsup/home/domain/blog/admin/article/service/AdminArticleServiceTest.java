@@ -18,7 +18,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 
 @SpringBootTest(properties = {
         "spring.sql.init.mode=never"
@@ -73,7 +75,8 @@ class AdminArticleServiceTest {
     @Test
     @DisplayName("블로그 글을 조회한다.")
     void getArticles() {
-        Page<AdminArticle> articles = adminArticleService.findArticlesBy(0, null, null);
+        PageRequest pageRequest = PageRequest.of(1, 10, Sort.by(Direction.DESC, "createdAt"));
+        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest, null, null);
 
         assertThat(articles.getTotalElements()).isNotZero();
     }
@@ -82,7 +85,8 @@ class AdminArticleServiceTest {
     @DisplayName("블로그 글을 카테고리로 조회한다.")
     @ValueSource(longs = {1L, 2L, 3L})
     void getArticlesByCategory(Long categoryId) {
-        Page<AdminArticle> articles = adminArticleService.findArticlesBy(0, categoryId, null);
+        PageRequest pageRequest = PageRequest.of(0, 20, Sort.by(Direction.DESC, "createdAt"));
+        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest, categoryId, null);
 
         assertThat(articles.getTotalElements()).isNotZero();
         articles.forEach(article -> {
@@ -95,9 +99,9 @@ class AdminArticleServiceTest {
     void getArticlesByMenu() {
         // given
         Long menuId = 1L;
-
+        PageRequest pageRequest = PageRequest.of(1, 10, Sort.by(Direction.DESC, "createdAt"));
         // when
-        Page<AdminArticle> articles = adminArticleService.findArticlesBy(0, null, menuId);
+        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest, null, menuId);
 
         // then
         assertThat(articles.getTotalElements()).isNotZero();
@@ -115,9 +119,10 @@ class AdminArticleServiceTest {
         String title = "test title";
         createArticle(title, "test sub title", "test content", "test author", menu);
         createArticle(title, "test sub title", "test content", "test author", menu);
+        PageRequest pageRequest = PageRequest.of(1, 10, Sort.by(Direction.DESC, "createdAt"));
 
         // when
-        Page<AdminArticle> articles = adminArticleService.findArticlesBy(0, null, null);
+        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest, null, null);
 
         // then
         assertThat(articles.getTotalElements()).isEqualTo(2);
@@ -131,10 +136,10 @@ class AdminArticleServiceTest {
     void getArticlesOrderByCreatedAt() {
         // given
         int pageNumber = 0;
-        int pageSize = 20;
+        PageRequest pageRequest = PageRequest.of(pageNumber, 10, Sort.by(Direction.DESC, "createdAt"));
 
         // when
-        var articles = adminArticleService.findArticlesBy(pageNumber, null, null);
+        var articles = adminArticleService.findArticlesBy(pageRequest, null, null);
 
         // then
         assertThat(articles.getPageable().getSort()).isEqualTo(Sort.by(Sort.Direction.DESC, "createdAt"));
@@ -145,9 +150,9 @@ class AdminArticleServiceTest {
     void getArticlesOrderByTitle() {
         // given
         int pageNumber = 0;
-
+        PageRequest pageRequest = PageRequest.of(pageNumber, 20, Sort.by(Direction.DESC, "createdAt"));
         // when
-        var articles = adminArticleService.findArticlesBy(pageNumber, null, null);
+        var articles = adminArticleService.findArticlesBy(pageRequest, null, null);
 
         // then
         assertThat(articles.getPageable().getSort()).isEqualTo(Sort.by(Sort.Direction.ASC, "title"));
@@ -159,9 +164,9 @@ class AdminArticleServiceTest {
         // given
         int pageNumber = 0;
         int pageSize = 20;
-
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by(Direction.DESC, "createdAt"));
         // when
-        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageNumber, null, null);
+        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest, null, null);
 
         // then
         assertThat(articles.getNumber()).isEqualTo(pageNumber);
