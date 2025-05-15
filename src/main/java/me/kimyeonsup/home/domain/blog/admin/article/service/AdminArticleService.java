@@ -17,12 +17,17 @@ public class AdminArticleService {
      * 필터 - 카테고리, 메뉴
      * 정렬 - 제목, 시간 순으로 정렬 가능
      * Paging 처리
+     * -> PageRequest 빌더패턴 변경 예정
      * */
-    public Page<AdminArticle> findArticlesBy(PageRequest pageRequest, Long categoryId, Long menuId) {
-        // PageRequest pageRequest = PageRequest.of(pageNumber, 10, Sort.by(Direction.DESC, "createdAt"));
-        // 1. 필터 구현 - 카테고리
-        // 2. 필터 구현 - 메뉴
-        // 3. 정렬 구현 - 제목, 시간 순으로 정렬 가능
+    public Page<AdminArticle> findArticlesBy(PageRequest pageRequest, final Long categoryId, final Long menuId) {
+        // 필터 구현 - 메뉴
+        if (menuId != null) {
+            return adminArticleRepository.findByMenuId(pageRequest, menuId);
+        }
+        // 필터 구현 - 카테고리
+        if (categoryId != null) {
+            return adminArticleRepository.findByMenu_CategoryId(categoryId);
+        }
 
         return adminArticleRepository.findAll(pageRequest);
     }
