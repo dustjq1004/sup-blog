@@ -3,6 +3,8 @@ package me.kimyeonsup.home.domain.blog.admin.article.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.Random;
+import me.kimyeonsup.home.domain.blog.admin.article.domain.dto.ArticleSelectCondition;
 import me.kimyeonsup.home.domain.blog.admin.article.domain.entity.AdminArticle;
 import me.kimyeonsup.home.domain.blog.admin.article.repository.AdminArticleRepository;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Category;
@@ -10,6 +12,7 @@ import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
 import me.kimyeonsup.home.domain.blog.admin.menu.repository.CategoryRepository;
 import me.kimyeonsup.home.domain.blog.admin.menu.repository.MenuRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,17 +47,27 @@ class AdminArticleServiceTest {
         assertThat(adminArticleService).isNotNull();
     }
 
+    @BeforeAll
+    static void beforeAll() {
+        // 테스트 데이터베이스 초기화
+        // 이 메서드는 모든 테스트가 실행되기 전에 한 번만 실행됩니다.
+        // 예를 들어, 테스트 데이터베이스를 초기화하는 작업을 수행할 수 있습니다.
+
+    }
+
     @BeforeEach
     void setUp() {
         // 카테고리 생성
         Category category1 = Category.builder().name("category1").build();
-        categoryRepository.saveAll(List.of(category1));
+        Category category2 = Category.builder().name("category2").build();
+        Category category3 = Category.builder().name("category3").build();
+        categoryRepository.saveAll(List.of(category1, category2, category3));
 
         // 메뉴 생성
         List<Menu> menus = List.of(
                 Menu.builder().name("menu1").category(category1).build(),
-                Menu.builder().name("menu2").category(category1).build(),
-                Menu.builder().name("menu3").category(category1).build()
+                Menu.builder().name("menu2").category(category2).build(),
+                Menu.builder().name("menu3").category(category3).build()
         );
 
         menuRepository.saveAll(menus);
@@ -64,19 +77,26 @@ class AdminArticleServiceTest {
         createArticle("제목1", "sub title", "test content", "test author", menu);
         createArticle("제목2", "sub title", "test content", "test author", menu);
         createArticle("제목3", "test sub title", "test content", "test author", menu);
+        for (int i = 0; i < 30; i++) {
+            createArticle("제목" + i, "test sub title", "test content", "test author",
+                    menus.get(new Random().nextInt(menus.size())));
+        }
     }
 
     @AfterEach
     void tearDown() {
         // 데이터 베이스 초기화 - 다음 테스트 코드 영향
-        adminArticleRepository.deleteAllInBatch();
+        // adminArticleRepository.deleteAllInBatch();
+        // menuRepository.deleteAllInBatch();
+        // categoryRepository.deleteAllInBatch();
     }
 
     @Test
     @DisplayName("블로그 글을 조회한다.")
     void getArticles() {
         PageRequest pageRequest = PageRequest.of(1, 10, Sort.by(Direction.DESC, "createdAt"));
-        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest, null, null);
+        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest,
+                ArticleSelectCondition.builder().build());
 
         assertThat(articles.getTotalElements()).isNotZero();
     }
@@ -86,7 +106,11 @@ class AdminArticleServiceTest {
     @ValueSource(longs = {1L, 2L, 3L})
     void getArticlesByCategory(Long categoryId) {
         PageRequest pageRequest = PageRequest.of(0, 20, Sort.by(Direction.DESC, "createdAt"));
-        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest, categoryId, null);
+        ArticleSelectCondition params = ArticleSelectCondition.builder()
+                .categoryId(categoryId)
+                .build();
+
+        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest, params);
 
         assertThat(articles.getTotalElements()).isNotZero();
         articles.forEach(article -> {
@@ -101,7 +125,11 @@ class AdminArticleServiceTest {
         Long menuId = 1L;
         PageRequest pageRequest = PageRequest.of(1, 10, Sort.by(Direction.DESC, "createdAt"));
         // when
-        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest, null, menuId);
+        ArticleSelectCondition params = ArticleSelectCondition.builder()
+                .menuId(menuId)
+                .build();
+
+        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest, params);
 
         // then
         assertThat(articles.getTotalElements()).isNotZero();
@@ -120,9 +148,14 @@ class AdminArticleServiceTest {
         createArticle(title, "test sub title", "test content", "test author", menu);
         createArticle(title, "test sub title", "test content", "test author", menu);
         PageRequest pageRequest = PageRequest.of(1, 10, Sort.by(Direction.DESC, "createdAt"));
+        ArticleSelectCondition params = ArticleSelectCondition.builder()
+                .title(title)
+                .build();
 
         // when
-        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest, null, null);
+
+        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest,
+                params);
 
         // then
         assertThat(articles.getTotalElements()).isEqualTo(2);
@@ -139,7 +172,7 @@ class AdminArticleServiceTest {
         PageRequest pageRequest = PageRequest.of(pageNumber, 10, Sort.by(Direction.DESC, "createdAt"));
 
         // when
-        var articles = adminArticleService.findArticlesBy(pageRequest, null, null);
+        var articles = adminArticleService.findArticlesBy(pageRequest, ArticleSelectCondition.builder().build());
 
         // then
         assertThat(articles.getPageable().getSort()).isEqualTo(Sort.by(Sort.Direction.DESC, "createdAt"));
@@ -150,9 +183,9 @@ class AdminArticleServiceTest {
     void getArticlesOrderByTitle() {
         // given
         int pageNumber = 0;
-        PageRequest pageRequest = PageRequest.of(pageNumber, 20, Sort.by(Direction.DESC, "createdAt"));
+        PageRequest pageRequest = PageRequest.of(pageNumber, 20, Sort.by(Direction.ASC, "title"));
         // when
-        var articles = adminArticleService.findArticlesBy(pageRequest, null, null);
+        var articles = adminArticleService.findArticlesBy(pageRequest, ArticleSelectCondition.builder().build());
 
         // then
         assertThat(articles.getPageable().getSort()).isEqualTo(Sort.by(Sort.Direction.ASC, "title"));
@@ -166,7 +199,8 @@ class AdminArticleServiceTest {
         int pageSize = 20;
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by(Direction.DESC, "createdAt"));
         // when
-        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest, null, null);
+        Page<AdminArticle> articles = adminArticleService.findArticlesBy(pageRequest,
+                ArticleSelectCondition.builder().build());
 
         // then
         assertThat(articles.getNumber()).isEqualTo(pageNumber);
