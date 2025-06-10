@@ -10,8 +10,9 @@ import org.springframework.stereotype.Repository;
 public interface AdminArticleRepository extends JpaRepository<AdminArticle, Long> {
 
 
-    Page<AdminArticle> findByMenuId(PageRequest pageRequest, Long menuId);
+    Page<AdminArticle> findByMenuIdAndTitleContaining(PageRequest pageRequest, Long menuId, String title);
 
-    Page<AdminArticle> findByMenu_CategoryId(Long categoryId);
+    Page<AdminArticle> findByMenu_CategoryIdAndTitleContaining(PageRequest pageRequest, Long categoryId, String title);
 
+    Page<AdminArticle> findByTitleContaining(PageRequest pageRequest, String title);
 }

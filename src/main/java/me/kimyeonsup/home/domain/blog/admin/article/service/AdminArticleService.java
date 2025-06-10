@@ -1,8 +1,11 @@
 package me.kimyeonsup.home.domain.blog.admin.article.service;
 
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import me.kimyeonsup.home.domain.blog.admin.article.domain.dto.ArticleSelectCondition;
 import me.kimyeonsup.home.domain.blog.admin.article.domain.entity.AdminArticle;
 import me.kimyeonsup.home.domain.blog.admin.article.repository.AdminArticleRepository;
+import me.kimyeonsup.home.util.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -19,17 +22,21 @@ public class AdminArticleService {
      * Paging 처리
      * -> PageRequest 빌더패턴 변경 예정
      * */
-    public Page<AdminArticle> findArticlesBy(PageRequest pageRequest, final Long categoryId, final Long menuId) {
+    public Page<AdminArticle> findArticlesBy(PageRequest pageRequest, ArticleSelectCondition params) {
+        final Long categoryId = params.getCategoryId();
+        final Long menuId = params.getMenuId();
+        final String title = StringUtils.nvl(params.getTitle(), "");
+
         // 필터 구현 - 메뉴
-        if (menuId != null) {
-            return adminArticleRepository.findByMenuId(pageRequest, menuId);
+        if (Objects.nonNull(menuId)) {
+            return adminArticleRepository.findByMenuIdAndTitleContaining(pageRequest, menuId, title);
         }
         // 필터 구현 - 카테고리
-        if (categoryId != null) {
-            return adminArticleRepository.findByMenu_CategoryId(categoryId);
+        if (Objects.nonNull(categoryId)) {
+            return adminArticleRepository.findByMenu_CategoryIdAndTitleContaining(pageRequest, categoryId, title);
         }
 
-        return adminArticleRepository.findAll(pageRequest);
+        return adminArticleRepository.findByTitleContaining(pageRequest, title);
     }
 
 }
