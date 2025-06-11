@@ -1,6 +1,8 @@
 package me.kimyeonsup.home.domain.blog.admin.article.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.kimyeonsup.home.domain.blog.admin.article.domain.dto.AdminArticlesPaginationResponse;
+import me.kimyeonsup.home.domain.blog.admin.article.domain.dto.AdminArticlesResponse;
 import me.kimyeonsup.home.domain.blog.admin.article.domain.dto.ArticleSelectCondition;
 import me.kimyeonsup.home.domain.blog.admin.article.domain.entity.AdminArticle;
 import me.kimyeonsup.home.domain.blog.admin.article.service.AdminArticleService;
@@ -19,11 +21,12 @@ public class AdminArticleApiController {
     private final AdminArticleService adminArticleService;
 
     @GetMapping("/api/admin/articles")
-    public ResponseEntity<Page<AdminArticle>> findArticles(
+    public ResponseEntity<AdminArticlesPaginationResponse<AdminArticlesResponse>> findArticles(
             @RequestParam(required = false) int pageNumber,
-            @RequestParam(required = false) int pageSize,
-            @RequestParam(required = false) String sortBy,
-            @RequestParam(required = false) String direction,
+            @RequestParam(required = false, defaultValue = "10") int pageSize,
+            @RequestParam(required = false, defaultValue = "createdAt") String sortBy,
+            @RequestParam(required = false, defaultValue = "DESC") String direction,
+            @RequestParam(required = false, defaultValue = "") String title,
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) Long menuId) {
 
@@ -32,15 +35,28 @@ public class AdminArticleApiController {
                 .pageNumber(pageNumber)
                 .sortBy(sortBy)
                 .direction(direction)
-                .build().createPageRequest();
+                .build()
+                .createPageRequest();
+
         ArticleSelectCondition params = ArticleSelectCondition.builder()
                 .categoryId(categoryId)
                 .menuId(menuId)
+                .title(title)
                 .build();
 
         Page<AdminArticle> articles = adminArticleService.findArticlesBy(articlePageRequest, params);
 
+        AdminArticlesPaginationResponse<AdminArticlesResponse> articlesDto = new AdminArticlesPaginationResponse<>(
+                articles.getNumber(),
+                articles.getSize(),
+                articles.getNumberOfElements(),
+                articles.isFirst(),
+                articles.isLast(),
+                articles.getTotalPages(),
+                articles.getTotalElements(),
+                articles.stream().map(AdminArticlesResponse::new).toList());
+
         return ResponseEntity.ok()
-                .body(articles);
+                .body(articlesDto);
     }
 }
