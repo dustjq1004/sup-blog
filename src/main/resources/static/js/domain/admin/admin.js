@@ -59,7 +59,6 @@ const sendDeleteCategoryRequest = async (categoryId) => {
 }
 
 /* 카테고리 Function */
-
 const loadMenusTemplate = async (categoryId) => {
     const menus = await getMenus(categoryId)
 
@@ -70,7 +69,6 @@ const loadMenusTemplate = async (categoryId) => {
     $('#category-add-id').val(categoryId)
     $('#category-add-name').val(category.emoji + category.name);
 }
-
 
 const loadMenuDetailTemplate = async (menuId) => {
     const menu = await getMenuDetailById(menuId)
@@ -152,12 +150,32 @@ function verifyMenuInput(jsonFormData) {
 
 /* Article Transaction */
 const loadArticlesFragment = async (pageNumber) => {
-    const maxPageNumber = 10
     $('#admin-content').html("")
     const fragment = await getArticlesFragment()
     $('#admin-content').html(fragment)
 
-    const articles = await getArticles("", pageNumber)
+    // 초기 카테고리 데이터 로드
+    loadCategories();
+
+    await loadArticles(pageNumber)
+}
+
+async function loadArticles(pageNumber) {
+    const maxPageNumber = 10
+    const categoryId = $("#filterCategory").val();
+    const menuId = $("#filterMenu").val();
+    const sortBy = $("#sortBy").val()
+    const sortDirection = $("#sortDirection").val()
+    const articleSearchFormData = $('#articleSearchForm').serializeFormToJSON()
+
+    articleSearchFormData.categoryId = categoryId;
+    articleSearchFormData.menuId = menuId;
+    articleSearchFormData.sortBy = sortBy
+    articleSearchFormData.direction = sortDirection
+
+    console.log(articleSearchFormData)
+
+    const articles = await getArticles(articleSearchFormData, pageNumber)
     const template = await articlesTemplate(articles.data)
     const pageNumberTemplate = await articlesPageNumberTemplate(articles.pageNumber, maxPageNumber, articles.totalPages)
     const pageSummary = getPageSummary(articles)
@@ -181,7 +199,96 @@ $(document).ready(function () {
         $(event.currentTarget).addClass("active")  // 클릭한 항목에 active 추가
         currentCategoryId = $(event.currentTarget).data("active")
     })
+
+    $(document).on("click", "#adminArticlesSearch", () => {
+        loadArticles(0)
+    })
+
+    // 카테고리 선택 시 메뉴 데이터 로드
+    $(document).on("change", "#filterCategory", function () {
+        const categoryId = $(this).val();
+        if (categoryId) {
+            loadMenus(categoryId);
+            $("#filterMenu").prop("disabled", false);
+        } else {
+            $("#filterMenu").prop("disabled", true);
+            $("#filterMenu").html('<option value="">Select Menu</option>');
+        }
+    });
+
+    // 필터 적용 버튼 클릭
+    $(document).on("click", "#applyFilter", () => {
+        loadArticles(0);
+
+        // 드롭다운 닫기
+        const dropdownElement = document.getElementById('articleFilterButton');
+        const dropdown = bootstrap.Dropdown.getInstance(dropdownElement);
+        if (dropdown) {
+            dropdown.hide();
+        }
+    });
+
+    // Sort 적용 버튼 클릭
+    $(document).on("click", "#applySort", () => {
+        const sortBy = $("#sortBy").val();
+        const sortDirection = $("#sortDirection").val();
+        const articleSearchFormData = $('#articleSearchForm').serializeFormToJSON();
+        articleSearchFormData.sortBy = sortBy;
+        articleSearchFormData.direction = sortDirection;
+        loadArticles(0);
+
+        // 드롭다운 닫기
+        const dropdownElement = document.getElementById('articleSortButton');
+        const dropdown = bootstrap.Dropdown.getInstance(dropdownElement);
+        if (dropdown) {
+            dropdown.hide();
+        }
+    });
 })
+
+// 카테고리 데이터 로드
+const loadCategories = async () => {
+    const options = {
+        method: 'GET'
+    };
+
+    async function success(response) {
+        const json = await response.json();
+        let options = '<option value="">Select Category</option>';
+        json.categories.forEach(category => {
+            options += `<option value="${category.id}">${category.name}</option>`;
+        });
+        $("#filterCategory").html(options);
+    }
+
+    function fail(error) {
+        console.error('Failed to load categories:', error);
+    }
+
+    await httpRequest('/api/categories', options, success, fail);
+}
+
+// 메뉴 데이터 로드
+const loadMenus = async (categoryId) => {
+    const options = {
+        method: 'GET'
+    };
+
+    async function success(response) {
+        const json = await response.json();
+        let options = '<option value="">Select Menu</option>';
+        json.menus.forEach(menu => {
+            options += `<option value="${menu.id}">${menu.name}</option>`;
+        });
+        $("#filterMenu").html(options);
+    }
+
+    function fail(error) {
+        console.error('Failed to load menus:', error);
+    }
+
+    await httpRequest(`/api/menus/${categoryId}`, options, success, fail);
+}
 
 
 

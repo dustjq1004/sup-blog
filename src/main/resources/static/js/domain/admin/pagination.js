@@ -5,14 +5,14 @@ const articlesPageNumberTemplate = (pageNumber, maxPageNumber, totalPages) => {
     console.log(startPage + "  " + endNumber)
     const previousPageString = `
             <li class="page-item">
-                <a class="page-link" onclick="loadArticlesFragment(${previousNumber})" aria-label="Previous">
+                <a class="page-link" onclick="loadArticles(${previousNumber})" aria-label="Previous">
                     <span aria-hidden="true">«</span>
                 </a>
             </li>
     `
     const nextPageString = `
             <li class="page-item">
-                <a class="page-link" onclick="loadArticlesFragment(${endNumber})" aria-label="Next">
+                <a class="page-link" onclick="loadArticles(${endNumber})" aria-label="Next">
                     <span aria-hidden="true">»</span>
                 </a>
             </li>
@@ -21,7 +21,7 @@ const articlesPageNumberTemplate = (pageNumber, maxPageNumber, totalPages) => {
     for (let i = startPage; i <= endPage; i++) {
         pageNumbersString += `
                   <li class="page-item">
-                    <a class="page-link ${i - 1 === pageNumber ? 'active' : ''}" onclick="loadArticlesFragment(${i - 1})">${i}</a>
+                    <a class="page-link ${i - 1 === pageNumber ? 'active' : ''}" onclick="loadArticles(${i - 1})">${i}</a>
                   </li>
         `
     }

@@ -225,19 +225,15 @@ const getArticlesFragment = async () => {
     return fragment
 }
 
-const getArticles = async (menuName, pageNumber) => {
+const getArticles = async (articleSearchFormData, pageNumber) => {
     let articles = {}
     const options = {
         method: 'GET'
     }
 
-    const queryParams = {}
-    if (!isNull(menuName)) {
-        queryParams.menuName = menuName
-    }
-    queryParams.pageNumber = pageNumber
+    articleSearchFormData.pageNumber = pageNumber
 
-    const queryString = new URLSearchParams(queryParams).toString()
+    const queryString = new URLSearchParams(articleSearchFormData).toString()
 
     async function success(response) {
         const result = await response.json()
@@ -247,7 +243,7 @@ const getArticles = async (menuName, pageNumber) => {
     function fail(json) {
     }
 
-    await httpRequest(`/api/articles?${queryString}`, options, success, fail)
+    await httpRequest(`/api/admin/articles?${queryString}`, options, success, fail)
 
     return articles
 }

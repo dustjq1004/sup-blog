@@ -118,7 +118,7 @@ const menuDetailUpdateTemplate = (menu, categories) => {
 }
 
 
-const categoryDetailUpdateTemplate = (category) => {
+const categoryDetailUpdateTemplate = async (category) => {
     const template = `
         <div class="modal-header">
             <h1 class="modal-title fs-5" id="menuUpdateLabel">카테고리 정보</h1>
@@ -141,6 +141,13 @@ const categoryDetailUpdateTemplate = (category) => {
 }
 
 const articlesTemplate = (articles) => {
+    if (!articles || articles.length === 0) {
+        return `
+            <tr>
+                <td colspan="7" class="text-center">조회된 데이터가 없습니다</td>
+            </tr>
+        `;
+    }
 
     const template = articles.map(article =>
         `
@@ -165,7 +172,10 @@ const articlesTemplate = (articles) => {
                     <div class="fs-sm text-body-secondary">${article.subTitle}</div>
                 </td>
                 <td>
-                    dustjq1005
+                    ${article.author}
+                </td>
+                <td>
+                    <div class="fs-sm text-body-secondary">${article.createdAt}</div>
                 </td>
                 <td>
                     <div class="fs-sm text-body-secondary">${article.updatedAt}</div>
