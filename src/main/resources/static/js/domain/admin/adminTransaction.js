@@ -247,3 +247,26 @@ const getArticles = async (articleSearchFormData, pageNumber) => {
 
     return articles
 }
+
+// 선택된 게시글 삭제
+async function deleteSelectedArticles(articleIds) {
+    try {
+        const response = await fetch('/api/admin/articles/batch', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({articleIds})
+        });
+
+        if (response.ok) {
+            alert('선택한 항목이 삭제되었습니다.');
+            loadArticles(currentPage); // 현재 페이지 새로고침
+        } else {
+            alert('삭제 중 오류가 발생했습니다.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('삭제 중 오류가 발생했습니다.');
+    }
+}

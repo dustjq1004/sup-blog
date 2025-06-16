@@ -69,3 +69,74 @@ ul {
     border-color: var(--bs-form-control-focus-border-color);
     box-shadow: none;
 }
+
+
+/* 체크박스 컨테이너 스타일 */
+.article-checkbox-container {
+    transition: all 0.3s ease;
+}
+
+/* 버튼 그룹 스타일 */
+#actionButtons {
+    transition: all 0.3s ease;
+}
+
+/* 편집 버튼 스타일 */
+#editButton, #deleteButton, #cancelButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* 테이블 컨테이너 스타일 */
+.table-container {
+    overflow-y: auto;
+    height: 700px;
+    margin-bottom: 1rem;
+}
+
+/* 페이징 컨테이너 스타일 */
+.pagination-container {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--bs-body-bg);
+    padding: 1rem 0;
+    border-top: 1px solid var(--bs-border-color);
+    z-index: 100;
+}
+
+/* 테이블 행 높이 고정 */
+.table tbody tr {
+    height: 42px; /* 체크박스 컨테이너의 높이를 고려한 값 */
+}
+
+/* 체크박스 컨테이너 스타일 */
+.article-checkbox-container {
+    transition: all 0.3s ease;
+    transform: translateY(25%);
+    display: block;
+
+    min-height: 0rem;
+    margin-bottom: 0rem;
+}
+
+/* 체크박스 스타일 */
+.article-checkbox {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+}
+
+/* 체크박스가 있는 셀 스타일 */
+.table td:first-child {
+    position: relative;
+    height: 50px; /* 체크박스 컨테이너의 너비 고정 */
+    padding-left: 1.5rem;
+}
+
+/* 테이블 셀 스타일 */
+.table td, .table th {
+    vertical-align: middle;
+    padding: 0.75rem;
+    padding-left: 1.5rem;
+}

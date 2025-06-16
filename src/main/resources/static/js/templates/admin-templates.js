@@ -153,9 +153,10 @@ const articlesTemplate = (articles) => {
         `
             <tr>
                 <td style="width: 0px">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="tableCheckOne">
-                        <label class="form-check-label" for="tableCheckOne"></label>
+                    <div class="form-check d-none article-checkbox-container">
+                        <input class="form-check-input article-checkbox" type="checkbox" 
+                               data-article-id="${article.id}" id="tableCheckBox">
+                        <label class="form-check-label" for="tableCheckBox"></label>
                     </div>
                 </td>
                 <td>

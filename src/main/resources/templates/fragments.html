@@ -134,45 +134,61 @@
             </div>
         </div>
         <div id="article-wrap" class="mt-5">
-            <table class="table table-hover table-select align-middle mb-3">
-                <thead>
-                <tr>
-                    <th style="width: 0px">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="tableCheckAll">
-                            <label class="form-check-label" for="tableCheckAll"></label>
-                        </div>
-                    </th>
-                    <th>카테고리</th>
-                    <th>글 제목</th>
-                    <th>부 제목</th>
-                    <th>작성자</th>
-                    <th>등록일자</th>
-                    <th>수정일자</th>
-                </tr>
-                </thead>
-                <tbody id="article-tbody">
-                <tr>
-
-                </tr>
-
-                </tbody>
-            </table>
-        </div>
-        <div class="row align-items-center">
-            <div class="col">
-                <!-- Text -->
-                <p id="articlePageSummary" class="text-body-secondary mb-0">(0 total)</p>
+            <!-- 편집 버튼 영역 -->
+            <div class="d-flex justify-content-end mb-3">
+                <button id="editButton" class="btn btn-primary me-2">
+                    <i class="bi bi-pencil"></i> 편집
+                </button>
+                <div id="actionButtons" class="d-none">
+                    <button id="deleteButton" class="btn btn-danger me-2">
+                        <i class="bi bi-trash"></i> 삭제
+                    </button>
+                    <button id="cancelButton" class="btn btn-secondary">
+                        <i class="bi bi-x"></i> 취소
+                    </button>
+                </div>
             </div>
-            <div class="col-auto">
-                <!-- Pagination -->
-                <nav aria-label="Page navigation">
-                    <ul id="articlePagination" class="pagination mb-0">
 
-                    </ul>
-                </nav>
+            <!-- 테이블 영역 -->
+            <div class="table-container">
+                <table class="table table-hover table-select align-middle mb-3">
+                    <thead>
+                    <tr>
+                        <th style="width: 0px">
+                            <div class="form-check d-none article-checkbox-container" id="tableCheckAllContainer">
+                                <input class="form-check-input" type="checkbox" id="tableCheckAll">
+                                <label class="form-check-label" for="tableCheckAll"></label>
+                            </div>
+                        </th>
+                        <th>카테고리</th>
+                        <th>글 제목</th>
+                        <th>부 제목</th>
+                        <th>작성자</th>
+                        <th>등록일자</th>
+                        <th>수정일자</th>
+                    </tr>
+                    </thead>
+                    <tbody id="article-tbody">
+                    </tbody>
+                </table>
             </div>
-        </div>
+
+            <!-- 페이징 버튼 영역 -->
+            <div class="pagination-container">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <!-- Text -->
+                        <p id="articlePageSummary" class="text-body-secondary mb-0">(0 total)</p>
+                    </div>
+                    <div class="col-auto">
+                        <!-- Pagination -->
+                        <nav aria-label="Page navigation">
+                            <ul id="articlePagination" class="pagination mb-0">
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
     </div>
 </div>
 </body>

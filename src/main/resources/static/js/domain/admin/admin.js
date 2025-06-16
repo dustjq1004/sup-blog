@@ -1,5 +1,8 @@
 let currentCategoryId = "";
 
+// 편집 모드 상태 관리
+let isEditMode = false;
+
 /* 카테고리 Function */
 const loadCategoriesTemplate = async (element) => {
     const fragment = await getCategoriesFragment(element)
@@ -244,6 +247,40 @@ $(document).ready(function () {
             dropdown.hide();
         }
     });
+
+    // 편집 버튼 클릭 이벤트
+    $(document).on("click", "#editButton", function () {
+        isEditMode = true;
+        updateButtonVisibility();
+        showCheckboxes();
+    });
+
+    // 취소 버튼 클릭 이벤트
+    $(document).on("click", "#cancelButton", function () {
+        isEditMode = false;
+        updateButtonVisibility();
+        hideCheckboxes();
+        uncheckAllCheckboxes();
+    });
+
+    // 삭제 버튼 클릭 이벤트
+    $(document).on('click', "#deleteButton", function () {
+        const selectedIds = getSelectedArticleIds();
+        if (selectedIds.length === 0) {
+            alert('삭제할 항목을 선택해주세요.');
+            return;
+        }
+
+        if (confirm('선택한 항목을 삭제하시겠습니까?')) {
+            deleteSelectedArticles(selectedIds);
+        }
+    });
+
+    // 전체 선택 체크박스 이벤트
+    $(document).on('change', "#tableCheckAll", function () {
+        const isChecked = $(this).prop('checked');
+        $('.article-checkbox').prop('checked', isChecked);
+    });
 })
 
 // 카테고리 데이터 로드
@@ -290,5 +327,38 @@ const loadMenus = async (categoryId) => {
     await httpRequest(`/api/menus/${categoryId}`, options, success, fail);
 }
 
+// 버튼 가시성 업데이트
+function updateButtonVisibility() {
+    if (isEditMode) {
+        $('#editButton').addClass('d-none');
+        $('#actionButtons').removeClass('d-none');
+    } else {
+        $('#editButton').removeClass('d-none');
+        $('#actionButtons').addClass('d-none');
+    }
+}
 
+// 체크박스 표시
+function showCheckboxes() {
+    $('#tableCheckAllContainer').removeClass('d-none');
+    $('.article-checkbox-container').removeClass('d-none');
+}
 
+// 체크박스 숨김
+function hideCheckboxes() {
+    $('#tableCheckAllContainer').addClass('d-none');
+    $('.article-checkbox-container').addClass('d-none');
+}
+
+// 모든 체크박스 해제
+function uncheckAllCheckboxes() {
+    $('#tableCheckAll').prop('checked', false);
+    $('.article-checkbox').prop('checked', false);
+}
+
+// 선택된 게시글 ID 가져오기
+function getSelectedArticleIds() {
+    return $('.article-checkbox:checked').map(function () {
+        return $(this).data('article-id');
+    }).get();
+}
