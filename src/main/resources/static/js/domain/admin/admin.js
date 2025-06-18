@@ -183,6 +183,15 @@ async function loadArticles(pageNumber) {
     const pageNumberTemplate = await articlesPageNumberTemplate(articles.pageNumber, maxPageNumber, articles.totalPages)
     const pageSummary = getPageSummary(articles)
 
+    // 페이징 시 편집모드 해제
+    if (isEditMode) {
+        isEditMode = false;
+        updateButtonVisibility();
+        hideCheckboxes();
+        uncheckAllCheckboxes();
+        updateSelectedCount();
+    }
+
     $('#articlePagination').html(pageNumberTemplate)
     $('#articlePageSummary').html(pageSummary)
     $('#article-tbody').html(template)
@@ -281,6 +290,35 @@ $(document).ready(function () {
         const isChecked = $(this).prop('checked');
         $('.article-checkbox').prop('checked', isChecked);
     });
+
+    // 체크박스 선택 이벤트 추가
+    $(document).on('change', '.article-checkbox', function () {
+        updateSelectedCount();
+    });
+
+    // 편집 버튼 클릭 이벤트 수정
+    $(document).on('click', '#editButton', function () {
+        isEditMode = true;
+        updateButtonVisibility();
+        showCheckboxes();
+        updateSelectedCount(); // 초기 상태 업데이트
+    });
+
+    // 취소 버튼 클릭 이벤트 수정
+    $(document).on('click', '#cancelButton', function () {
+        isEditMode = false;
+        updateButtonVisibility();
+        hideCheckboxes();
+        uncheckAllCheckboxes();
+        updateSelectedCount();
+    });
+
+    // 전체 선택 체크박스 이벤트 수정
+    $(document).on('change', '#tableCheckAll', function () {
+        const isChecked = $(this).prop('checked');
+        $('.article-checkbox').prop('checked', isChecked);
+        updateSelectedCount();
+    });
 })
 
 // 카테고리 데이터 로드
@@ -361,4 +399,16 @@ function getSelectedArticleIds() {
     return $('.article-checkbox:checked').map(function () {
         return $(this).data('article-id');
     }).get();
+}
+
+// 선택된 항목 수 업데이트
+function updateSelectedCount() {
+    const selectedCount = $('.article-checkbox:checked').length;
+    const totalCount = $('.article-checkbox').length;
+
+    if (selectedCount === 0) {
+        $('#selectedCountText').text('No selected');
+    } else {
+        $('#selectedCountText').text(`${selectedCount} selected`);
+    }
 }
