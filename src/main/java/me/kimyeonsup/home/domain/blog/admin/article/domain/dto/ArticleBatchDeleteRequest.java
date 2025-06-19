@@ -1,4 +1,4 @@
-package me.kimyeonsup.home.domain.blog.admin.menu.domain.dto;
+package me.kimyeonsup.home.domain.blog.admin.article.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeleteCategoryRequest {
+public class ArticleBatchDeleteRequest {
 
-    private long categoryId;
+    private Long[] articleIds;
 
 }

@@ -256,12 +256,12 @@ async function deleteSelectedArticles(articleIds) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({articleIds})
+            body: JSON.stringify({"articleIds": articleIds})
         });
 
         if (response.ok) {
             alert('선택한 항목이 삭제되었습니다.');
-            loadArticles(currentPage); // 현재 페이지 새로고침
+            loadArticles(0); // 현재 페이지 새로고침
         } else {
             alert('삭제 중 오류가 발생했습니다.');
         }

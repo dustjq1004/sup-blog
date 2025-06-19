@@ -1,8 +1,11 @@
 package me.kimyeonsup.home.domain.blog.admin.article.controller;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.home.domain.blog.admin.article.domain.dto.AdminArticlesPaginationResponse;
 import me.kimyeonsup.home.domain.blog.admin.article.domain.dto.AdminArticlesResponse;
+import me.kimyeonsup.home.domain.blog.admin.article.domain.dto.ArticleBatchDeleteRequest;
+import me.kimyeonsup.home.domain.blog.admin.article.domain.dto.ArticleBatchDeleteResponse;
 import me.kimyeonsup.home.domain.blog.admin.article.domain.dto.ArticleSelectCondition;
 import me.kimyeonsup.home.domain.blog.admin.article.domain.entity.AdminArticle;
 import me.kimyeonsup.home.domain.blog.admin.article.service.AdminArticleService;
@@ -10,11 +13,13 @@ import me.kimyeonsup.home.domain.blog.admin.pagination.PageRequestBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class AdminArticleApiController {
 
@@ -58,5 +63,21 @@ public class AdminArticleApiController {
 
         return ResponseEntity.ok()
                 .body(articlesDto);
+    }
+
+    /**
+     * 게시글 일괄 삭제
+     *
+     * @param params 삭제할 게시글 ID 목록
+     * @return ResponseEntity<ArticleBatchDeleteResponse>
+     */
+    @DeleteMapping("/api/admin/articles/batch")
+    public ResponseEntity<ArticleBatchDeleteResponse> deleteArticlesByIds(
+            @RequestBody ArticleBatchDeleteRequest params) {
+        int deletedCount = adminArticleService.deleteArticlesByIds(List.of(params.getArticleIds()));
+        return ResponseEntity.ok()
+                .body(ArticleBatchDeleteResponse.builder()
+                        .deletedCount(deletedCount)
+                        .build());
     }
 }
