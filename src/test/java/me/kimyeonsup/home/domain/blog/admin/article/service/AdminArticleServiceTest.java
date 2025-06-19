@@ -207,6 +207,20 @@ class AdminArticleServiceTest {
         assertThat(articles.getNumberOfElements()).isEqualTo(pageSize);
     }
 
+    @Test
+    @DisplayName("블로그 글을 3개 일괄 삭제한다.")
+    void deleteArticlesByIds() {
+        // given
+        List<AdminArticle> articles = adminArticleRepository.findAll();
+        Long[] articleIds = articles.stream().map(AdminArticle::getId).limit(3).toArray(Long[]::new);
+
+        // when
+        int deletedCount = adminArticleService.deleteArticlesByIds(List.of(articleIds));
+
+        // then
+        assertThat(deletedCount).isEqualTo(3);
+    }
+
     private AdminArticle createArticle(String title, String subTitle, String content, String author, Menu menu) {
         AdminArticle created = AdminArticle.builder()
                 .title(title)
@@ -218,5 +232,4 @@ class AdminArticleServiceTest {
         adminArticleRepository.save(created);
         return created;
     }
-
 }
