@@ -1,4 +1,5 @@
 let currentCategoryId = "";
+let currentPageNumber = 0;
 
 // 편집 모드 상태 관리
 let isEditMode = false;
@@ -164,6 +165,7 @@ const loadArticlesFragment = async (pageNumber) => {
 }
 
 async function loadArticles(pageNumber) {
+    currentPageNumber = pageNumber;
     const maxPageNumber = 10
     const categoryId = $("#filterCategory").val();
     const menuId = $("#filterMenu").val();
@@ -273,16 +275,19 @@ $(document).ready(function () {
     });
 
     // 삭제 버튼 클릭 이벤트
-    $(document).on('click', "#deleteButton", function () {
+    $(document).on('click', "#deleteButton", async function () {
         const selectedIds = getSelectedArticleIds();
         if (selectedIds.length === 0) {
             alert('삭제할 항목을 선택해주세요.');
             return;
         }
 
-        if (confirm('선택한 항목을 삭제하시겠습니까?')) {
-            deleteSelectedArticles(selectedIds);
+        if (!confirm('선택한 항목을 삭제하시겠습니까?')) {
+            return;
         }
+
+        const deletedCount = await deleteSelectedArticles(selectedIds);
+        loadArticles(currentPageNumber)
     });
 
     // 전체 선택 체크박스 이벤트
@@ -302,6 +307,7 @@ $(document).ready(function () {
         updateButtonVisibility();
         showCheckboxes();
         updateSelectedCount(); // 초기 상태 업데이트
+        document.querySelector('table').classList.toggle('show-col');
     });
 
     // 취소 버튼 클릭 이벤트 수정
@@ -311,6 +317,7 @@ $(document).ready(function () {
         hideCheckboxes();
         uncheckAllCheckboxes();
         updateSelectedCount();
+        document.querySelector('table').classList.toggle('show-col');
     });
 
     // 전체 선택 체크박스 이벤트 수정

@@ -249,24 +249,28 @@ const getArticles = async (articleSearchFormData, pageNumber) => {
 }
 
 // 선택된 게시글 삭제
+// 선택된 게시글 삭제
 async function deleteSelectedArticles(articleIds) {
-    try {
-        const response = await fetch('/api/admin/articles/batch', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({"articleIds": articleIds})
-        });
+    let deletedCount = 0;
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({articleIds})
+    };
 
-        if (response.ok) {
-            alert('선택한 항목이 삭제되었습니다.');
-            loadArticles(0); // 현재 페이지 새로고침
-        } else {
-            alert('삭제 중 오류가 발생했습니다.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
+    async function success(response) {
+        alert('선택한 항목이 삭제되었습니다.');
+        const json = response.json();
+        deletedCount = json.deletedCount || 0; // 삭제된 항목 수를 가져옵니다.
+    }
+
+    function fail(response) {
         alert('삭제 중 오류가 발생했습니다.');
     }
+
+    await httpRequest('/api/admin/articles/batch', options, success, fail);
+
+    return deletedCount;
 }
