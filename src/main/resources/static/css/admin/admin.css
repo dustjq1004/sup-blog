@@ -98,9 +98,7 @@ ul {
 
 /* 테이블 컨테이너 스타일 */
 .table-container {
-    overflow-y: auto;
-    height: 700px;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 /* 페이징 컨테이너 스타일 */

@@ -166,7 +166,8 @@ const loadArticlesFragment = async (pageNumber) => {
 
 async function loadArticles(pageNumber) {
     currentPageNumber = pageNumber;
-    const maxPageNumber = 10
+    const maxPageNumber = 20
+    const pageSize = 20;
     const categoryId = $("#filterCategory").val();
     const menuId = $("#filterMenu").val();
     const sortBy = $("#sortBy").val()
@@ -175,10 +176,9 @@ async function loadArticles(pageNumber) {
 
     articleSearchFormData.categoryId = categoryId;
     articleSearchFormData.menuId = menuId;
+    articleSearchFormData.pageSize = pageSize;
     articleSearchFormData.sortBy = sortBy
     articleSearchFormData.direction = sortDirection
-
-    console.log(articleSearchFormData)
 
     const articles = await getArticles(articleSearchFormData, pageNumber)
     const template = await articlesTemplate(articles.data)
