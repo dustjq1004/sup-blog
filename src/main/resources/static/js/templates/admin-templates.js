@@ -53,17 +53,31 @@ const menuDetailModalTemplate = (menu) => {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div>
-                    <label>카테고리</label>
-                    ${menu.categoryEmoji} ${menu.categoryName}
-                </div>
-                <div>
-                    <label>이름</label>
-                    ${menu.emoji} ${menu.name}
-                </div>
-                <div>
-                    <label>설명</label>
-                    ${menu.description}
+                <div class="border rounded-4 p-4 bg-white">
+                    <div class="row mb-3">
+                        <div class="col-6 text-secondary fw-medium">카테고리</div>
+                        <div class="col-6 text-end">${menu.categoryEmoji} ${menu.categoryName}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6 text-secondary fw-medium">메뉴 이름</div>
+                        <div class="col-6 text-end">${menu.emoji} ${menu.name}</div>
+                    </div>
+                    <hr>
+                    <div class="row align-items-center">
+                        <div class="col-6 text-secondary fw-medium">설명</div>
+                        <div class="col-6 text-end">
+                            ${menu.description}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-6 text-secondary fw-medium">Created</div>
+                        <div class="col-6 text-end">${menu.createdAt || '-'}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-6 text-secondary fw-medium">Last Updated</div>
+                        <div class="col-6 text-end">${menu.updatedAt || '-'}</div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -161,13 +175,17 @@ const articlesTemplate = (articles) => {
                 </td>
                 <td>
                     <div class="d-flex align-items-center">
-                        <div class="">
-                            <div>${article.title}</div>
+                        <div class="text-truncate w-100" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="${article.title}">
+                            ${article.title}
                         </div>
                     </div>
                 </td>
                 <td>
-                    <div class="fs-sm text-body-secondary">${article.subTitle}</div>
+                    <div class="text-truncate" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="${article.subTitle}">
+                        <div class="fs-sm text-body-secondary">
+                            ${article.subTitle}
+                        </div>
+                    </div>
                 </td>
                 <td>
                     ${article.author}

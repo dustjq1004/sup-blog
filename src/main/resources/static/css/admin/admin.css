@@ -5,6 +5,8 @@
     --admin-form-control-focus-box-shadow: 0 0 0 0.25rem rgba(107, 132, 255, 0.25);
     --bs-table-border-width: 1px;
     --bs-table-border-color: var(--bs-border-color);
+
+    --admin-checkbox-checked-color: #6a11cb2e;
 }
 
 ul {
@@ -69,11 +71,11 @@ ul {
     border: none;
 }
 
-.form-control {
+.search-input {
     border: none;
 }
 
-.form-control:focus {
+.search-input:focus {
     border-color: var(--bs-form-control-focus-border-color);
     box-shadow: none;
 }
@@ -130,9 +132,16 @@ ul {
     margin: 0;
     width: 16px;
     height: 16px;
+    border: 1px solid var(--admin-checkbox-checked-color);
+}
+
+.form-check-input:checked {
+    background-color: var(--admin-checkbox-checked-color);
+    border-color: var(--admin-checkbox-checked-color);
 }
 
 table {
+    table-layout: fixed;
     border-top: var(--bs-table-border-width) solid var(--bs-table-border-color);
 }
 

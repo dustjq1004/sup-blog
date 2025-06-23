@@ -11,6 +11,8 @@
     --draft-no-item-color: #6c6c6c;
 
     --draft-title-tooltip-background: rgba(0, 0, 0, 0.84);
+
+    --table-hover-color: #f8f9fa; /* 연한 회색 */
 }
 
 body {
@@ -110,4 +112,12 @@ border
 */
 .border-transparent {
     border-color: transparent !important;
+}
+
+/*
+table
+ */
+/* 커스텀 색상 */
+.table {
+    --bs-table-hover-bg: var(--table-hover-color); /* 연한 회색 */
 }
