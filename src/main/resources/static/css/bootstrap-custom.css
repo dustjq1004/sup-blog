@@ -59,6 +59,10 @@ common
     margin-top: 5rem !important;
 }
 
+.ms-m1 {
+    margin-left: -1rem;
+}
+
 /*
 common
 - tag style
@@ -89,4 +93,13 @@ common
 .btn-blog:hover {
     background-color: rgba(var(--bd-violet-rgb), 1);
     color: white;
+}
+
+/*
+list-group
+list-group-item
+ */
+
+.list-group-item {
+    padding: 0;
 }

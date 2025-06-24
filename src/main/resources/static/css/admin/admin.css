@@ -1,0 +1,172 @@
+:root {
+    --admin-search-filter-container-color: rgba(247, 247, 248, 1);
+    --bs-form-control-focus-border-color: transparent;
+    --bs-form-control-focus-box-shadow: none;
+    --admin-form-control-focus-box-shadow: 0 0 0 0.25rem rgba(107, 132, 255, 0.25);
+    --bs-table-border-width: 1px;
+    --bs-table-border-color: var(--bs-border-color);
+
+    --admin-checkbox-checked-color: #6a11cb2e;
+}
+
+ul {
+    margin-bottom: 0rem;
+}
+
+.fs-lg {
+    font-size: 1.25rem;
+}
+
+.admin-content .card {
+    background-color: var(--admin-search-filter-container-color);
+}
+
+.main {
+    min-height: 100vh;
+}
+
+.admin-content {
+    gap: 3rem;
+}
+
+.admin-content-container {
+    overflow: visible;
+}
+
+.admin-sidebar-container {
+    margin: 0 auto;
+    border-right: 1px solid rgba(187, 185, 185, 0.6);
+}
+
+/* admin - search filter */
+#articleFilterButton, #articleSortButton {
+    padding: 0.4rem 0.7rem;
+}
+
+
+/* admin - aritcles */
+
+.articles-container {
+    font-size: 0.9rem;
+}
+
+.input-group {
+    align-items: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    width: 100%;
+    transition: all .3s ease-in-out;
+}
+
+.input-group:focus-within {
+    border-color: blue;
+    box-shadow: var(--admin-form-control-focus-box-shadow);
+}
+
+.input-group-text {
+    background-color: var(--bs-body-bg);
+    border: none;
+}
+
+.search-input {
+    border: none;
+}
+
+.search-input:focus {
+    border-color: var(--bs-form-control-focus-border-color);
+    box-shadow: none;
+}
+
+
+/* 체크박스 컨테이너 스타일 */
+.article-checkbox-container {
+    transition: all 0.3s ease;
+}
+
+/* 버튼 그룹 스타일 */
+#actionButtons {
+    transition: all 0.3s ease;
+}
+
+/* 편집 버튼 스타일 */
+#editButton, #deleteButton, #cancelButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* 테이블 컨테이너 스타일 */
+.table-container {
+    margin-bottom: 2rem;
+}
+
+/* 페이징 컨테이너 스타일 */
+.pagination-container {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--bs-body-bg);
+    padding: 1rem 0;
+    border-top: 1px solid var(--bs-border-color);
+    z-index: 100;
+}
+
+/* 테이블 행 높이 고정 */
+.table tbody tr {
+    height: 42px; /* 체크박스 컨테이너의 높이를 고려한 값 */
+}
+
+/* 체크박스 컨테이너 스타일 */
+.article-checkbox-container {
+    transition: all 0.3s ease;
+    display: block;
+    transform: translateY(25%);
+    min-height: 0rem;
+    margin-bottom: 0rem;
+}
+
+/* 체크박스 스타일 */
+.article-checkbox {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--admin-checkbox-checked-color);
+}
+
+.form-check-input:checked {
+    background-color: var(--admin-checkbox-checked-color);
+    border-color: var(--admin-checkbox-checked-color);
+}
+
+table {
+    table-layout: fixed;
+    border-top: var(--bs-table-border-width) solid var(--bs-table-border-color);
+}
+
+/* 체크박스가 있는 셀 스타일 */
+.table td:first-child {
+    position: relative;
+    height: 50px; /* 체크박스 컨테이너의 너비 고정 */
+    padding-left: 1.5rem;
+}
+
+.table th:first-child {
+    position: relative;
+    height: 50px; /* 체크박스 컨테이너의 너비 고정 */
+    padding-left: 1.5rem;
+}
+
+/* 테이블 셀 스타일 */
+.table td, .table th {
+    vertical-align: middle;
+    padding: 1rem;
+    padding-left: 1.5rem;
+    transition: transform 400ms ease;
+}
+
+/* .show 컬럼 활성화 시 원하는 고정 너비로 확장 */
+table.show-col .col2 {
+    transform: translateX(25%);
+}

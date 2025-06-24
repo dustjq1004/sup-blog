@@ -29,7 +29,7 @@
                         <div class="col-md-5">
                             <select class="form-select" id="menu" required="required">
                                 <option value="">메뉴 선택</option>
-                                <option th:each="menu : ${menus}" th:selected="${menu.name.equals(article.menuName)}" th:text="${menu.name}" th:value="${menu.id}">United States
+                                <option th:each="menu : ${menus.menus}" th:selected="${menu.name.equals(article.menuName)}" th:text="${menu.name}" th:value="${menu.id}">
                                 </option>
                             </select>
                             <div class="invalid-feedback">

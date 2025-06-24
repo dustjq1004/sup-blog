@@ -1,5 +1,6 @@
 :root {
     --primary-white: white;
+    --primary-black: 0, 0, 0;
     --signature-color: #6a11cb;
 
     --draft-modal-background-color: #f0f1f3;
@@ -10,6 +11,8 @@
     --draft-no-item-color: #6c6c6c;
 
     --draft-title-tooltip-background: rgba(0, 0, 0, 0.84);
+
+    --table-hover-color: #f8f9fa; /* 연한 회색 */
 }
 
 body {
@@ -26,6 +29,8 @@ html, body {
 
 a {
     cursor: pointer;
+    text-decoration: none;
+    color: #212529;
 }
 
 image {
@@ -95,4 +100,24 @@ size
     width: 100%;
     height: 90%;
     z-index: -1; /* 화면 전체 높이 */
+}
+
+.list-group-item.active a {
+    color: var(--bs-list-group-active-color);
+}
+
+
+/*
+border
+*/
+.border-transparent {
+    border-color: transparent !important;
+}
+
+/*
+table
+ */
+/* 커스텀 색상 */
+.table {
+    --bs-table-hover-bg: var(--table-hover-color); /* 연한 회색 */
 }

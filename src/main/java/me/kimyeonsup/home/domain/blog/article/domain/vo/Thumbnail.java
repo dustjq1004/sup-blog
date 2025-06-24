@@ -2,12 +2,11 @@ package me.kimyeonsup.home.domain.blog.article.domain.vo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.Getter;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import lombok.Getter;
 
 @Getter
 @Embeddable
@@ -32,10 +31,18 @@ public class Thumbnail {
         return new Thumbnail(content);
     }
 
+    public static Thumbnail empty() {
+        return new Thumbnail("");
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Thumbnail thumbnail = (Thumbnail) o;
         return Objects.equals(url, thumbnail.url);
     }

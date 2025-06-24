@@ -12,4 +12,5 @@ import lombok.Setter;
 public class SearchParams {
 
     private String titleParam;
+    
 }

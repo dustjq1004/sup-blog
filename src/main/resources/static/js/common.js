@@ -5,8 +5,8 @@ function isNull(checkValue) {
         return true;
     }
 
-    if (checkValue instanceof String) {
-        return checkValue.trim().length == 0 || checkValue === 'null'
+    if (typeof checkValue === "string") {
+        return checkValue.trim().length === 0 || checkValue === 'null'
     }
 
     return false;
@@ -34,7 +34,7 @@ async function httpRequest(url, options, success, fail) {
     if (response.status === 401 && refresh_token) {
         const result = await requestAccessToken(getCookie('refresh_token'));
         if (result) {
-            httpRequest(method, url, body, success, fail);
+            httpRequest(url, options, success, fail);
         }
     } else {
         return fail(response);
@@ -77,4 +77,33 @@ function getCookie(key) {
     });
 
     return result;
+}
+
+// FormData Json 변환
+$.fn.serializeFormToJSON = function () {
+    const json = {};
+
+    // Select 요소의 선택된 값만 처리
+    this.find('select').each(function () {
+        const name = $(this).attr('name');
+        const selectedValue = $(this).find(':selected').val() || '';
+        if (name) {
+            json[name] = selectedValue;
+        }
+    });
+
+    // 기타 입력 요소 처리
+    const formData = this.serializeArray();
+    $.each(formData, function () {
+        if (!json.hasOwnProperty(this.name)) {
+            // Select에서 처리되지 않은 다른 요소만 추가
+            json[this.name] = this.value || '';
+        }
+    });
+
+    return json;
+}
+
+function nvl(value) {
+    return value ?? "";
 }

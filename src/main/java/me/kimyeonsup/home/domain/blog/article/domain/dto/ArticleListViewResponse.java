@@ -1,10 +1,10 @@
 package me.kimyeonsup.home.domain.blog.article.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.util.StringUtils;
-
-import java.time.LocalDateTime;
 
 @Getter
 public class ArticleListViewResponse {
@@ -15,6 +15,8 @@ public class ArticleListViewResponse {
     private final String content;
     private final String thumbnailUrl;
     private final String menuName;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
     private final LocalDateTime updatedAt;
 
     public ArticleListViewResponse(Article article) {
