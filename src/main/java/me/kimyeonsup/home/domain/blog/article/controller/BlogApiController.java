@@ -6,7 +6,6 @@ import me.kimyeonsup.home.config.oauth.PrincipalDetail;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleListViewResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleResponse;
-import me.kimyeonsup.home.domain.blog.article.domain.dto.PaginationResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlesPaginationResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
