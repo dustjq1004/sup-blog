@@ -1,16 +1,28 @@
 package me.kimyeonsup.home.menu.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.AddMenuRequest;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.DeleteMenuRequest;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.UpdateMenuRequest;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Category;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
+import me.kimyeonsup.home.domain.blog.admin.menu.repository.CategoryRepository;
+import me.kimyeonsup.home.domain.blog.admin.menu.repository.MenuRepository;
+import me.kimyeonsup.home.domain.blog.admin.menu.service.MenuService;
 import me.kimyeonsup.home.domain.blog.article.repository.ArticleRepository;
+import me.kimyeonsup.home.domain.blog.draft.repository.DraftRepository;
 import me.kimyeonsup.home.login.domain.entity.User;
 import me.kimyeonsup.home.login.repository.UserRepository;
-import me.kimyeonsup.home.domain.blog.menu.domain.dto.AddMenuRequest;
-import me.kimyeonsup.home.domain.blog.menu.domain.dto.UpdateMenuRequest;
-import me.kimyeonsup.home.domain.blog.menu.domain.entity.Category;
-import me.kimyeonsup.home.domain.blog.menu.domain.entity.Menu;
-import me.kimyeonsup.home.domain.blog.menu.repository.CategoryRepository;
-import me.kimyeonsup.home.domain.blog.menu.repository.MenuRepository;
-import me.kimyeonsup.home.domain.blog.menu.service.MenuService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,15 +39,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -65,6 +68,9 @@ class MenuApiControllerTest {
     @Autowired
     ArticleRepository articleRepository;
 
+    @Autowired
+    DraftRepository draftRepository;
+
     User user;
 
     Category category;
@@ -91,6 +97,7 @@ class MenuApiControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(context)
                 .build();
         articleRepository.deleteAll();
+        draftRepository.deleteAll();
         menuRepository.deleteAll();
         categoryRepository.deleteAll();
         category = categoryRepository.save(Category.builder()
@@ -104,7 +111,7 @@ class MenuApiControllerTest {
     void addMenuTest() throws Exception {
         final String url = "/api/menu";
         final String name = "자바";
-        final AddMenuRequest request = new AddMenuRequest(category.getId(), name);
+        final AddMenuRequest request = new AddMenuRequest(category.getId(), "", name, "");
 
         final String requestBody = objectMapper.writeValueAsString(request);
 
@@ -128,11 +135,15 @@ class MenuApiControllerTest {
     @DisplayName("deleteMenu : 메뉴를 삭제한다.")
     @Test
     void deleteMenu() throws Exception {
-        final String url = "/api/menu/{id}";
-        Menu savededMenu = savedMenu(category);
+        final String url = "/api/menu/delete";
+        Menu savedMenu = savedMenu(category);
+
+        DeleteMenuRequest menuRequest = new DeleteMenuRequest(savedMenu.getId());
 
         //when
-        mockMvc.perform(delete(url, savededMenu.getId()))
+        mockMvc.perform(delete(url)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(objectMapper.writeValueAsString(menuRequest)))
                 .andExpect(status().isOk());
 
         //then
@@ -144,15 +155,15 @@ class MenuApiControllerTest {
     @DisplayName("메뉴 이름을 수정한다.")
     @Test
     void updateMenu() throws Exception {
-        final String url = "/api/menu/{id}";
+        final String url = "/api/menu/update";
         Menu savedMenu = savedMenu(category);
 
         final String newName = "파이썬";
 
-        UpdateMenuRequest request = new UpdateMenuRequest(category.getId(), newName);
+        UpdateMenuRequest request = new UpdateMenuRequest(savedMenu.getId(), category.getId(), "", newName, "");
 
         //when
-        ResultActions result = mockMvc.perform(put(url, savedMenu.getId())
+        ResultActions result = mockMvc.perform(put(url)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(request)));
 

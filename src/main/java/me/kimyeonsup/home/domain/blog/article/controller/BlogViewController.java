@@ -1,18 +1,16 @@
 package me.kimyeonsup.home.domain.blog.article.controller;
 
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.CategoryResponse;
+import me.kimyeonsup.home.domain.blog.admin.menu.service.CategoryService;
+import me.kimyeonsup.home.domain.blog.admin.menu.service.MenuService;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleListViewResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlePrevNextResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleUpdatedResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.domain.blog.article.service.ArticleService;
-import me.kimyeonsup.home.domain.blog.menu.domain.dto.CategoryResponse;
-import me.kimyeonsup.home.domain.blog.menu.domain.dto.MenuResponse;
-import me.kimyeonsup.home.domain.blog.menu.service.CategoryService;
-import me.kimyeonsup.home.domain.blog.menu.service.MenuService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +34,7 @@ public class BlogViewController {
                 .map(CategoryResponse::new)
                 .toList();
 
-        Page<Article> articles = articleService.findAllPagenation(0, null);
+        Page<Article> articles = articleService.findAllPagination(0, null, null);
 
         model.addAttribute("categories", categories);
         model.addAttribute("articles", articles.stream()
@@ -52,7 +50,7 @@ public class BlogViewController {
                 .map(CategoryResponse::new)
                 .toList();
 
-        Page<Article> articles = articleService.findAllPagenation(0, menuName);
+        Page<Article> articles = articleService.findAllPagination(0, null, menuName);
 
         model.addAttribute("categories", categories);
         model.addAttribute("articles", articles.stream()
@@ -87,9 +85,7 @@ public class BlogViewController {
         }
 
         model.addAttribute("menus",
-                menuService.findAll().stream()
-                        .map(MenuResponse::new)
-                        .toList());
+                menuService.findAll());
 
         return "blog/newArticle";
     }

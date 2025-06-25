@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{blog/admin/index}"
+        layout:fragment="content">
+<head>
+</head>
+<body>
+<div class="min-vh-100 container my-5 px-xxl-2 pt-4">
+    <div class="row flex-lg-row-reverse d-lg-grid content admin-content">
+        <div class="offcanvas-body p-4 pt-0 p-lg-2 admin-content-container ms-4 admin-sidebar-container">
+            <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
+                <li class="bd-links-group py-2">
+                    <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold mb-1 fs-4">
+                        블로그 관리
+                    </strong>
+                    <ul class="side-link list-unstyled fw-normal pb-2 big">
+                        <li class="bd-links-group py-1 ms-3">
+                            <a class="admin-nav bd-links-link d-inline-block rounded" aria-current="page"
+                               onclick="loadCategoriesTemplate(this)">
+                                카테고리 관리
+                            </a>
+                        </li>
+                        <li class="bd-links-group py-1 ms-3">
+                            <a class="admin-nav bd-links-link d-inline-block rounded" aria-current="page"
+                               onclick="loadArticlesFragment(0)">
+                                글 관리
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div id="main" class="main">
+            <div id="admin-content" class="container">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal - category Add -->
+<div class="modal fade" id="categoryAddDetail" tabindex="-1" aria-labelledby="categoryAddLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="category-add-modal" class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="menuAddLabel">카테고리 정보</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="categoryAddContent" class="modal-body">
+                <form id="categoryAddForm">
+                    <div class="mb-3">
+                        <label for="category-name" class="col-form-label">이름 : </label>
+                        <input name="name" type="text" class="form-control" id="category-name" value=""/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="saveAndRenderCategory()" type="button" class="btn btn-primary">추가</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal - category Update -->
+<div class="modal fade" id="categoryUpdateDetail" tabindex="-1" aria-labelledby="categoryUpdateLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="category-update-modal" class="modal-content">
+        </div>
+    </div>
+</div>
+
+<!-- Modal - Menu Detail -->
+<div class="modal fade" id="menuDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="menu-detail-modal" class="modal-content">
+        </div>
+    </div>
+</div>
+
+<!-- Modal - Menu Add -->
+<div class="modal fade" id="menuAddDetail" tabindex="-1" aria-labelledby="menuAddLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="menu-add-modal" class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="menuUpdateLabel">메뉴 정보</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="menuUpdateContent" class="modal-body">
+                <form id="menuAddForm">
+                    <div class="mb-3">
+                        <label for="category-add-name" class="col-form-label">카테고리 : </label>
+                        <input name="categoryName" type="text" class="form-control" id="category-add-name" disabled/>
+                    </div>
+                    <div class="mb-3">
+                        <input name="categoryId" type="hidden" id="category-add-id" value="">
+                        <label for="menu-name" class="col-form-label">이름 : </label>
+                        <input name="name" type="text" class="form-control" id="menu-name" value=""/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="menu-description" class="col-form-label">설명 : </label>
+                        <input name="description" type="text" class="form-control" id="menu-description" value=""/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="sendSaveMenuRequest()" type="button" class="btn btn-primary">추가</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal - Menu Update -->
+<div class="modal fade" id="menuUpdateDetail" tabindex="-1" aria-labelledby="menuUpdateLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div id="menu-update-modal" class="modal-content">
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="/js/domain/admin/admin.js"></script>
+<script src="/js/templates/admin-templates.js"></script>
+<script src="/js/domain/admin/adminTransaction.js"></script>
+<script src="/js/domain/admin/pagination.js"></script>
+</html>

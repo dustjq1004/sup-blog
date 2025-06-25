@@ -9,4 +9,11 @@ public class StringUtils {
     public static String replaceAllSpecialCharacter(String text) {
         return SPECIAL_CHARACTER.matcher(text).replaceAll("");
     }
+
+    public static String nvl(String title, String s) {
+        if (title == null || title.isEmpty()) {
+            return s;
+        }
+        return title;
+    }
 }

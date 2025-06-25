@@ -1,14 +1,24 @@
 package me.kimyeonsup.home.article.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import me.kimyeonsup.home.config.oauth.PrincipalDetail;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Category;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
+import me.kimyeonsup.home.domain.blog.admin.menu.repository.CategoryRepository;
+import me.kimyeonsup.home.domain.blog.admin.menu.repository.MenuRepository;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.domain.blog.article.repository.ArticleRepository;
-import me.kimyeonsup.home.domain.blog.menu.domain.entity.Menu;
-import me.kimyeonsup.home.domain.blog.menu.repository.MenuRepository;
 import me.kimyeonsup.home.login.domain.entity.User;
 import me.kimyeonsup.home.login.repository.UserRepository;
 import org.assertj.core.api.Assertions;
@@ -29,15 +39,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -60,9 +61,13 @@ public class AddArticleFailTest {
     UserRepository userRepository;
 
     @Autowired
+    CategoryRepository categoryRepository;
+
+    @Autowired
     MenuRepository menuRepository;
 
     PrincipalDetail principalDetail;
+    Category category;
     Menu menu;
 
     private static final String url = "/api/articles";
@@ -75,8 +80,12 @@ public class AddArticleFailTest {
                 .password("test")
                 .role("관리자")
                 .build());
+        category = categoryRepository.save(Category.builder()
+                .name("언어")
+                .build());
         menu = menuRepository.save(Menu.builder()
                 .name("자바")
+                .category(category)
                 .build());
 
         principalDetail = new PrincipalDetail(user);
@@ -127,7 +136,8 @@ public class AddArticleFailTest {
     @DisplayName("블로그 글 추가시 썸네일 이미지 검증 테스트.")
     @ParameterizedTest
     @CsvSource({"[image](https://urlimage.com/images/image.png)",
-            "[image](https://urlimage.com/images/image.png)"})
+            "[image](https://urlimage.com/images/image.png)",
+            "[](https://urlimage.com/images/image.png)"})
     void saveThumbnailImageUrl(String content) throws Exception {
         // given
         final String url = "/api/articles";
