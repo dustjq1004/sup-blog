@@ -2,6 +2,8 @@ spring:
   config:
     activate:
       on-profile: dev
+    import: optional:file:.env[.properties]
+
   lifecycle:
     timeout-per-shutdown-phase: 30s
   datasource:
@@ -37,9 +39,8 @@ jwt:
 cloud:
   aws:
     region: ap-northeast-2
-    stack:
-      auto: false
     credentials:
-      instance-profile: true
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
   s3:
     bucket: suplab-bucket
