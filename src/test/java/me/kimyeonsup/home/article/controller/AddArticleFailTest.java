@@ -12,7 +12,9 @@ import java.util.Collection;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import me.kimyeonsup.home.config.oauth.PrincipalDetail;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Category;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.entity.Menu;
+import me.kimyeonsup.home.domain.blog.admin.menu.repository.CategoryRepository;
 import me.kimyeonsup.home.domain.blog.admin.menu.repository.MenuRepository;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
@@ -59,9 +61,13 @@ public class AddArticleFailTest {
     UserRepository userRepository;
 
     @Autowired
+    CategoryRepository categoryRepository;
+
+    @Autowired
     MenuRepository menuRepository;
 
     PrincipalDetail principalDetail;
+    Category category;
     Menu menu;
 
     private static final String url = "/api/articles";
@@ -74,8 +80,12 @@ public class AddArticleFailTest {
                 .password("test")
                 .role("관리자")
                 .build());
+        category = categoryRepository.save(Category.builder()
+                .name("언어")
+                .build());
         menu = menuRepository.save(Menu.builder()
                 .name("자바")
+                .category(category)
                 .build());
 
         principalDetail = new PrincipalDetail(user);
