@@ -6,11 +6,14 @@ import me.kimyeonsup.home.config.oauth.PrincipalDetail;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.AddArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleListViewResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleResponse;
+import me.kimyeonsup.home.domain.blog.article.domain.dto.PaginationResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlesPaginationResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.UpdateArticleRequest;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.domain.blog.article.service.ArticleService;
 import me.kimyeonsup.home.domain.blog.draft.service.DraftService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 public class BlogApiController {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(BlogApiController.class);
 
     private final ArticleService articleService;
     private final DraftService draftService;
