@@ -202,6 +202,99 @@ async function loadArticles(pageNumber) {
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }
 
+// 카테고리 데이터 로드
+const loadCategories = async () => {
+    const options = {
+        method: 'GET'
+    };
+
+    async function success(response) {
+        const json = await response.json();
+        let options = '<option value="">Select Category</option>';
+        json.categories.forEach(category => {
+            options += `<option value="${category.id}">${category.name}</option>`;
+        });
+        $("#filterCategory").html(options);
+    }
+
+    function fail(error) {
+        console.error('Failed to load categories:', error);
+    }
+
+    await httpRequest('/api/categories', options, success, fail);
+}
+
+// 메뉴 데이터 로드
+const loadMenus = async (categoryId) => {
+    const options = {
+        method: 'GET'
+    };
+
+    async function success(response) {
+        const json = await response.json();
+        let options = '<option value="">Select Menu</option>';
+        json.menus.forEach(menu => {
+            options += `<option value="${menu.id}">${menu.name}</option>`;
+        });
+        $("#filterMenu").html(options);
+    }
+
+    function fail(error) {
+        console.error('Failed to load menus:', error);
+    }
+
+    await httpRequest(`/api/menus/${categoryId}`, options, success, fail);
+}
+
+// 버튼 가시성 업데이트
+function updateButtonVisibility() {
+    if (isEditMode) {
+        $('#editButton').addClass('d-none');
+        $('#actionButtons').removeClass('d-none');
+    } else {
+        $('#editButton').removeClass('d-none');
+        $('#actionButtons').addClass('d-none');
+    }
+}
+
+// 체크박스 표시
+function showCheckboxes() {
+    $('#tableCheckAllContainer').removeClass('d-none');
+    $('.article-checkbox-container').removeClass('d-none');
+}
+
+// 체크박스 숨김
+function hideCheckboxes() {
+    $('#tableCheckAllContainer').addClass('d-none');
+    $('.article-checkbox-container').addClass('d-none');
+}
+
+// 모든 체크박스 해제
+function uncheckAllCheckboxes() {
+    $('#tableCheckAll').prop('checked', false);
+    $('.article-checkbox').prop('checked', false);
+}
+
+// 선택된 게시글 ID 가져오기
+function getSelectedArticleIds() {
+    return $('.article-checkbox:checked').map(function () {
+        return $(this).data('article-id');
+    }).get();
+}
+
+// 선택된 항목 수 업데이트
+function updateSelectedCount() {
+    const selectedCount = $('.article-checkbox:checked').length;
+    const totalCount = $('.article-checkbox').length;
+
+    if (selectedCount === 0) {
+        $('#selectedCountText').text('No selected');
+    } else {
+        $('#selectedCountText').text(`${selectedCount} selected`);
+    }
+}
+
+
 /* document.ready  */
 $(document).ready(function () {
     $(document).on("click", ".admin-nav", (event) => {
@@ -329,96 +422,6 @@ $(document).ready(function () {
         $('.article-checkbox').prop('checked', isChecked);
         updateSelectedCount();
     });
+
+    $('.side-link .admin-nav').first().trigger('click');
 })
-
-// 카테고리 데이터 로드
-const loadCategories = async () => {
-    const options = {
-        method: 'GET'
-    };
-
-    async function success(response) {
-        const json = await response.json();
-        let options = '<option value="">Select Category</option>';
-        json.categories.forEach(category => {
-            options += `<option value="${category.id}">${category.name}</option>`;
-        });
-        $("#filterCategory").html(options);
-    }
-
-    function fail(error) {
-        console.error('Failed to load categories:', error);
-    }
-
-    await httpRequest('/api/categories', options, success, fail);
-}
-
-// 메뉴 데이터 로드
-const loadMenus = async (categoryId) => {
-    const options = {
-        method: 'GET'
-    };
-
-    async function success(response) {
-        const json = await response.json();
-        let options = '<option value="">Select Menu</option>';
-        json.menus.forEach(menu => {
-            options += `<option value="${menu.id}">${menu.name}</option>`;
-        });
-        $("#filterMenu").html(options);
-    }
-
-    function fail(error) {
-        console.error('Failed to load menus:', error);
-    }
-
-    await httpRequest(`/api/menus/${categoryId}`, options, success, fail);
-}
-
-// 버튼 가시성 업데이트
-function updateButtonVisibility() {
-    if (isEditMode) {
-        $('#editButton').addClass('d-none');
-        $('#actionButtons').removeClass('d-none');
-    } else {
-        $('#editButton').removeClass('d-none');
-        $('#actionButtons').addClass('d-none');
-    }
-}
-
-// 체크박스 표시
-function showCheckboxes() {
-    $('#tableCheckAllContainer').removeClass('d-none');
-    $('.article-checkbox-container').removeClass('d-none');
-}
-
-// 체크박스 숨김
-function hideCheckboxes() {
-    $('#tableCheckAllContainer').addClass('d-none');
-    $('.article-checkbox-container').addClass('d-none');
-}
-
-// 모든 체크박스 해제
-function uncheckAllCheckboxes() {
-    $('#tableCheckAll').prop('checked', false);
-    $('.article-checkbox').prop('checked', false);
-}
-
-// 선택된 게시글 ID 가져오기
-function getSelectedArticleIds() {
-    return $('.article-checkbox:checked').map(function () {
-        return $(this).data('article-id');
-    }).get();
-}
-
-// 선택된 항목 수 업데이트
-function updateSelectedCount() {
-    const selectedCount = $('.article-checkbox:checked').length;
-    const totalCount = $('.article-checkbox').length;
-
-    if (selectedCount === 0) {
-        $('#selectedCountText').text('No selected');
-    } else {
-        $('#selectedCountText').text(`${selectedCount} selected`);
-    }
-}
