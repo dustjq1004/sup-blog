@@ -67,7 +67,7 @@ public class WebOAuthSecurityConfig {
         // Logout Filter가 내부적으로 세션 만료를 해준다.
         http.logout(logout ->
                 logout.logoutUrl("/logout")
-                        .logoutSuccessUrl("/login"));
+                        .logoutSuccessUrl("/"));
 
         http.exceptionHandling(exceptionHandler ->
                 exceptionHandler.defaultAuthenticationEntryPointFor( // -> 특정 조건에 대해 기본 AuthenticationEntryPoint를 설정
