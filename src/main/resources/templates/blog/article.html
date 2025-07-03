@@ -5,6 +5,9 @@
       layout:decorate="~{index}"
       layout:fragment="content">
 <head>
+    <meta property="og:title" th:content="${article.title}"/>
+    <meta property="og:description" th:content="${article.subTitle}"/>
+    <meta property="og:image" content="https://suplab-bucket.s3.ap-northeast-2.amazonaws.com/static/og_sup_lab.png"/>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.css"
           integrity="sha512-twSIkcOWTg8pO2szOkSwXeumnI79JQ0zVRavBB5cdJvhVFhReF9fBlyFM380P6vKIQ4mlD80EPtuZdSPpqYDgQ=="
