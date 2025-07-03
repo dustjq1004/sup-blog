@@ -107,3 +107,7 @@ $.fn.serializeFormToJSON = function () {
 function nvl(value) {
     return value ?? "";
 }
+
+$(document).on('show.bs.modal shown.bs.modal', function () {
+    $('body').css('padding-right', '');
+});
