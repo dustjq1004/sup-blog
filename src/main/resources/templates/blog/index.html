@@ -43,7 +43,7 @@
                             <div class="card-body">
                                 <div class="mb-2">
                                     <span class="text-secondary fs-7"
-                                          th:text="|${#temporals.format(item.updatedAt, 'yyyy.MM.dd')}|"></span>
+                                          th:text="|${#temporals.format(item.createdAt, 'yyyy.MM.dd')}|"></span>
                                 </div>
                                 <h5 class="mb-1 text-truncate" th:text="${item.title}">title</h5>
                                 <p class="card-text text-body-tertiary fs-6 text-truncate" th:utext="${item.subTitle}">

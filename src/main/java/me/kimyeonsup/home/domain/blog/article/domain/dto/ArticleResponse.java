@@ -1,7 +1,6 @@
 package me.kimyeonsup.home.domain.blog.article.domain.dto;
 
 import java.time.LocalDateTime;
-
 import lombok.Getter;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.util.CommonMarkUtil;
@@ -15,7 +14,8 @@ public class ArticleResponse {
     private final String content;
     private final String author;
     private final String menuName;
-    private final LocalDateTime updateAt;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
 
     public ArticleResponse(Article article) {
         this.id = article.getId();
@@ -24,6 +24,7 @@ public class ArticleResponse {
         this.content = CommonMarkUtil.renderHtml(article.getContent());
         this.author = article.getAuthor();
         this.menuName = article.getMenu().getName();
-        this.updateAt = article.getUpdatedAt();
+        this.createdAt = article.getCreatedAt();
+        this.updatedAt = article.getUpdatedAt();
     }
 }
