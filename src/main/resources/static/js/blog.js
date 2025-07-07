@@ -53,7 +53,7 @@ const getArticlesPagination = async (pageNumber, menuName) => {
                         <div class="card border border-0 p-2 rounded-4">
                             <svg class="bd-placeholder-img card-img-top rounded-4" width="100%" height="180"
                                  xmlns="http://www.w3.org/2000/svg" role="img"
-                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title></title>
                                 <image height="100%" width="100%"
                                        preserveAspectRatio="xMidYMid slice"
                                        href="${article.thumbnailUrl}"></image>
