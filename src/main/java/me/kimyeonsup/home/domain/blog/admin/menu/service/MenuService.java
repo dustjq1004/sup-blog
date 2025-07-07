@@ -95,4 +95,17 @@ public class MenuService {
                 .updatedAt(menu.getUpdatedAt())
                 .build();
     }
+
+    public MenuResponse findByName(String menuName) {
+        Menu menu = menuRepository.findByName(menuName)
+                .orElseThrow(() -> new IllegalArgumentException("not found : " + menuName));
+        return MenuResponse.builder()
+                .id(menu.getId())
+                .emoji(menu.getEmoji())
+                .name(menu.getName())
+                .description(menu.getDescription())
+                .createdAt(menu.getCreatedAt())
+                .updatedAt(menu.getUpdatedAt())
+                .build();
+    }
 }
