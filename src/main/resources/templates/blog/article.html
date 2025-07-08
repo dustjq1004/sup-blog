@@ -44,9 +44,9 @@
                             <div class="text-muted ms-auto d-flex justify-content-start">
                                 <span class="username" th:text="|${article.author}|"></span>
                                 <span class="separator">·</span>
-                                <span th:text="|${#temporals.format(article.updatedAt, 'yyyy년 MM월 dd일')}|"></span>
-                                <span class="separator">·</span>
                                 <span th:text="|${#temporals.format(article.createdAt, 'yyyy년 MM월 dd일')} 수정됨|"></span>
+                                <span class="separator">·</span>
+                                <span th:text="|${#temporals.format(article.updatedAt, 'yyyy년 MM월 dd일')}|"></span>
                             </div>
                         </header>
                         <section class="mb-5 markdown-body">
