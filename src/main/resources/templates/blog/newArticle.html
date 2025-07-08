@@ -5,6 +5,7 @@
       layout:fragment="content">
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+    <link rel="stylesheet" href="/css/markdown.css"/>
     <link rel="stylesheet" th:href="@{/css/newArticle.css}">
     <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
     <style>
@@ -56,7 +57,7 @@
                             <input type="text" class="form-control" placeholder="부제목" id="subTitle" th:value="${article.subTitle}">
                         </div>
                     </header>
-                    <section class="mb-5">
+                    <section class="mb-5 markdown-body">
                         <textarea class="form-control h-25" rows="10" placeholder="내용" id="content"
                                   th:text="${article.content}"></textarea>
                     </section>
