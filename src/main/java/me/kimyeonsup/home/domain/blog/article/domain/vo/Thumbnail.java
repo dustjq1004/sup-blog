@@ -14,7 +14,7 @@ public class Thumbnail {
 
     private static final Pattern IMG_TAG_PATTERN = Pattern.compile("(?i)<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
     private static final Pattern MD_IMG_TAG_PATTERN = Pattern.compile("^!\\[[a-zA-Z0-9]*\\]\\(([\\w:.\\/-]*)");
-    private static final List<String> noImages = List.of("noimage01.png", "noimage02.png");
+    private static final List<String> noImages = List.of("noimage01.png", "noimage02.png", "noimage03.png");
     private static final String NO_IMAGE_PREFIX = "/img/";
 
     @Column(name = "thumbnail_url")

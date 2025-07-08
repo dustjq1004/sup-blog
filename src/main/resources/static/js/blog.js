@@ -2,7 +2,7 @@ let isRequesting = false
 
 // 메뉴 활성화
 document.addEventListener('DOMContentLoaded', function () {
-    let pageNumber = 1;
+    let pageNumber = 0;
 
     // 현재 페이지 URL
     let menuItems = document.querySelectorAll('.side-link a');
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // getArticlesPagination(pageNumber++, menuName);
+    getArticlesPagination(pageNumber++, menuName);
 });
 
 const getArticlesPagination = async (pageNumber, menuName) => {
@@ -40,6 +40,8 @@ const getArticlesPagination = async (pageNumber, menuName) => {
 
     if (pageNumber) data["pageNumber"] = pageNumber;
     if (menuName) data["menuName"] = menuName;
+
+    showSkeletonLoading('#article-list');
 
     function success(result) {
         let articlesAppendHtml = "";
@@ -51,7 +53,7 @@ const getArticlesPagination = async (pageNumber, menuName) => {
                         <div class="card border border-0 p-2 rounded-4">
                             <svg class="bd-placeholder-img card-img-top rounded-4" width="100%" height="180"
                                  xmlns="http://www.w3.org/2000/svg" role="img"
-                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title></title>
                                 <image height="100%" width="100%"
                                        preserveAspectRatio="xMidYMid slice"
                                        href="${article.thumbnailUrl}"></image>
@@ -71,12 +73,18 @@ const getArticlesPagination = async (pageNumber, menuName) => {
         });
         $('#article-list').append(articlesAppendHtml);
         isRequesting = result.last;
+        $('.skeleton-card').remove();
     }
 
     function fail() {
     }
 
-    await ajaxGetRequest('GET', '/api/articles', data, success, fail);
+    setTimeout(async () => {
+        await ajaxGetRequest('GET', '/api/articles', data, success, fail);
+    }, 1000);
+
+
+    // hideSkeletonLoading();
 }
 
 function ajaxGetRequest(method, url, data, success, fail) {

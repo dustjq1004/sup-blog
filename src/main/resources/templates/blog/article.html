@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html data-theme="light"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{index}"
@@ -8,10 +9,7 @@
     <meta property="og:title" th:content="${article.title}"/>
     <meta property="og:description" th:content="${article.subTitle}"/>
     <meta property="og:image" content="https://suplab-bucket.s3.ap-northeast-2.amazonaws.com/static/og_sup_lab.png"/>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown-light.css"
-          integrity="sha512-twSIkcOWTg8pO2szOkSwXeumnI79JQ0zVRavBB5cdJvhVFhReF9fBlyFM380P6vKIQ4mlD80EPtuZdSPpqYDgQ=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="/css/markdown.css"/>
     <link rel="stylesheet" th:href="@{/css/article.css}">
 </head>
 <body class="bg-light">
@@ -46,7 +44,9 @@
                             <div class="text-muted ms-auto d-flex justify-content-start">
                                 <span class="username" th:text="|${article.author}|"></span>
                                 <span class="separator">·</span>
-                                <span th:text="|${#temporals.format(article.updateAt, 'yyyy년 MM월 dd일')}|"></span>
+                                <span th:text="|${#temporals.format(article.updatedAt, 'yyyy년 MM월 dd일')}|"></span>
+                                <span class="separator">·</span>
+                                <span th:text="|${#temporals.format(article.createdAt, 'yyyy년 MM월 dd일')} 수정됨|"></span>
                             </div>
                         </header>
                         <section class="mb-5 markdown-body">

@@ -17,6 +17,9 @@ public class ArticleListViewResponse {
     private final String menuName;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
+    private final LocalDateTime createdAt;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
     private final LocalDateTime updatedAt;
 
     public ArticleListViewResponse(Article article) {
@@ -26,6 +29,7 @@ public class ArticleListViewResponse {
         this.content = StringUtils.replaceAllSpecialCharacter(article.getContent());
         this.thumbnailUrl = article.getThumbnailUrl();
         this.menuName = article.getMenu().getName();
+        this.createdAt = article.getCreatedAt();
         this.updatedAt = article.getUpdatedAt();
     }
 }

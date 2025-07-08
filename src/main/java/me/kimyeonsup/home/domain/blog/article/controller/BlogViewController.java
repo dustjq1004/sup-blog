@@ -3,15 +3,14 @@ package me.kimyeonsup.home.domain.blog.article.controller;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.CategoryResponse;
+import me.kimyeonsup.home.domain.blog.admin.menu.domain.dto.MenuResponse;
 import me.kimyeonsup.home.domain.blog.admin.menu.service.CategoryService;
 import me.kimyeonsup.home.domain.blog.admin.menu.service.MenuService;
-import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleListViewResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticlePrevNextResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.dto.ArticleUpdatedResponse;
 import me.kimyeonsup.home.domain.blog.article.domain.entity.Article;
 import me.kimyeonsup.home.domain.blog.article.service.ArticleService;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,12 +33,7 @@ public class BlogViewController {
                 .map(CategoryResponse::new)
                 .toList();
 
-        Page<Article> articles = articleService.findAllPagination(0, null, null);
-
         model.addAttribute("categories", categories);
-        model.addAttribute("articles", articles.stream()
-                .map(ArticleListViewResponse::new)
-                .toList());
 
         return "blog/index";
     }
@@ -50,12 +44,10 @@ public class BlogViewController {
                 .map(CategoryResponse::new)
                 .toList();
 
-        Page<Article> articles = articleService.findAllPagination(0, null, menuName);
+        MenuResponse menu = menuService.findByName(menuName);
 
         model.addAttribute("categories", categories);
-        model.addAttribute("articles", articles.stream()
-                .map(ArticleListViewResponse::new)
-                .toList());
+        model.addAttribute("menu", menu);
 
         return "blog/index";
     }
