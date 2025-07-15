@@ -115,3 +115,9 @@ list-group-item
         gap: 2rem;
     }
 }
+
+
+/* modal style */
+.modal-open {
+    padding-right: 0px !important;
+}
