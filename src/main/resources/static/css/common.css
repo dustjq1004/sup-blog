@@ -121,3 +121,25 @@ table
 .table {
     --bs-table-hover-bg: var(--table-hover-color); /* 연한 회색 */
 }
+
+/* 관리자/글쓰기 드롭다운 전용 스타일 */
+.admin-dropdown-menu {
+    background: #f5f3ff; /* 톤 다운된 연보라 */
+    box-shadow: 0 8px 32px 0 rgba(124, 58, 237, 0.15), 0 1.5px 6px 0 rgba(0, 0, 0, 0.08);
+    border: none;
+    border-radius: 14px;
+    min-width: 180px;
+    padding: 10px 0;
+}
+
+.admin-dropdown-menu .dropdown-item {
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background 0.15s;
+}
+
+.admin-dropdown-menu .dropdown-item:hover,
+.admin-dropdown-menu .dropdown-item:focus {
+    background: #e9d5ff;
+    color: #3b0764;
+}
