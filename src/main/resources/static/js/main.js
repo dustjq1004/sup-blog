@@ -11,11 +11,11 @@ inputField.addEventListener('blur', function () {
 
 inputField.addEventListener('keyup', (e) => {
     getSearchedArticles(e.target.value);
-    $(".dropdown-menu").show();
+    $("#search-dropdown").show();
 })
 
 $('#search-cancel-button').on('click', () => {
-    $(".dropdown-menu").hide();
+    $("#search-dropdown").hide();
 })
 
 $(document).ready(() => {
@@ -101,7 +101,7 @@ const getSearchedArticles = async (searchParam) => {
 
     const queryString = new URLSearchParams(params).toString();
 
-    
+
     await httpRequest(`/api/main/articles/search?${queryString}`, options, success, fail)
     $("#loading-spinner").hide();
 }

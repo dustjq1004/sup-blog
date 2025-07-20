@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{index}"
       layout:fragment="content">
@@ -10,25 +9,25 @@
     <link rel="stylesheet" th:href="@{/css/blog/skeleton-loading.css}">
 </head>
 <body>
-<div class="container my-5 px-xxl-2 pt-4 min-vh-100">
+<div class="container my-5 px-xxl-2 pt-4">
 
     <div class="row flex-lg-row-reverse d-lg-grid content">
         <div class="offcanvas-body p-4 pt-0 p-lg-2" th:insert="~{blog/blogSidebar}" th:with="articles=${articles}">
         </div>
         <div id="main" class="main">
-            <div class="d-flex mb-4">
-                <h1 th:if="${menu != null}" class="" th:text="${menu.name}"></h1>
-                <h1 th:if="${menu == null}" class="">전체보기</h1>
-
-
-                <div class="d-flex ms-auto">
-                    <div sec:authorize="isAuthenticated()">
-                        <button type="button" id="create-btn"
-                                th:onclick="|location.href='@{/blog/new-article}'|"
-                                class="btn btn-blog btn-sm ">
-                            <i class="fa-solid fa-pen"></i>
-                        </button>
-                    </div>
+            <div class="mb-4 position-relative p-lg-2 page-fade-in">
+                <div class="blog-menu-title">
+                    <span class="blog-menu-quote">"</span>
+                    <span th:if="${menu != null}" class="blog-menu-name" th:text="${menu.name}"></span>
+                    <span th:if="${menu == null}" class="blog-menu-name">전체보기</span>
+                    <span class="blog-menu-quote">"</span>
+                </div>
+                <div th:if="${menu != null}" class="blog-menu-sub-title mb-5">
+                    <span th:if="${menu.description != null}" th:text="${menu.description}"></span>
+                    <span th:if="${menu.description == null}" th:text="${wiseSaying}"></span>
+                </div>
+                <div th:if="${menu == null}" class="blog-menu-sub-title mb-5">
+                    <span th:text="${wiseSaying}"></span>
                 </div>
             </div>
             <div id="article-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xxl-4 gy-3 gx-0">

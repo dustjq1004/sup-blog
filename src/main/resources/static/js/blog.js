@@ -44,8 +44,24 @@ const getArticlesPagination = async (pageNumber, menuName) => {
     showSkeletonLoading('#article-list');
 
     function success(result) {
-        let articlesAppendHtml = "";
-        let articles = result.data;
+        let articlesAppendHtml = ""
+        let articles = result.data
+        if (articles.length === 0) {
+            articlesAppendHtml += `
+                <div class="empty-article-message">
+                  <div class="empty-article-icon">
+                    <!-- Bootstrap 아이콘 사용: 느낌표 원형 -->
+                    <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                      <circle cx="32" cy="32" r="30" stroke="#3B82F6" stroke-width="3"/>
+                      <text x="32" y="44" text-anchor="middle" font-size="40" fill="#3B82F6" font-family="Arial, sans-serif">!</text>
+                    </svg>
+                  </div>
+                  <div class="empty-article-text">
+                    조회된 블로그 글이 없습니다.
+                  </div>
+                </div>
+            `
+        }
         articles.forEach(article => {
             articlesAppendHtml += `
                 <div class="col">

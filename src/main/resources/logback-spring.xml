@@ -16,7 +16,14 @@
         </encoder>
     </appender>
 
-    <root level="INFO">
-        <appender-ref ref="console"/>
-    </root>
+    <SpringProfile name="local">
+        <root level="DEBUG">
+            <appender-ref ref="console"/>
+        </root>
+    </SpringProfile>
+    <SpringProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="console"/>
+        </root>
+    </SpringProfile>
 </configuration>

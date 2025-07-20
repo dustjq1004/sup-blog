@@ -107,3 +107,23 @@ $.fn.serializeFormToJSON = function () {
 function nvl(value) {
     return value ?? "";
 }
+
+$(document).on('show.bs.modal shown.bs.modal', function () {
+    $('body').css('padding-right', '');
+});
+
+// DOM 로딩 완료 후 애니메이션 적용
+document.addEventListener('DOMContentLoaded', function () {
+    // body에 클래스 추가 (CSS에서 body에 직접 적용했다면 불필요)
+    //document.body.classList.add('page-fade-in');
+
+    // 또는 특정 요소들에 순차적으로 적용
+    const fadeElements = document.querySelectorAll('.fade-in-element');
+    fadeElements.forEach((element, index) => {
+        setTimeout(() => {
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+        }, index * 100); // 각 요소마다 100ms 지연
+    });
+});
+

@@ -1,19 +1,21 @@
-<ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
+<ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2 page-fade-in">
     <li class="bd-links-group py-2" th:each="item : ${categories}">
-        <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold mb-1 fs-4"
-                th:text="${item.name}">
-            카테고리
-        </strong>
+        <div th:if="${item.menus.size() > 0}">
+            <strong class="bd-links-heading d-flex w-100 align-items-center fw-semibold mb-1 fs-4"
+                    th:text="${item.name}">
+                카테고리
+            </strong>
 
-        <ul class="side-link list-unstyled fw-normal pb-2 ms-4 big">
-            <li th:each="menu : ${item.menus}">
-                <a class="bd-links-link d-inline-block rounded" aria-current="page"
-                   th:href="@{/blog/{menuName}(menuName=${menu.name})}"
-                   th:data="${menu.id}"
-                   th:text="${menu.name}">
-                    메뉴
-                </a>
-            </li>
-        </ul>
+            <ul class="side-link list-unstyled fw-normal pb-2 ms-4 big">
+                <li th:each="menu : ${item.menus}">
+                    <a class="bd-links-link d-inline-block rounded" aria-current="page"
+                       th:href="@{/blog/{menuName}(menuName=${menu.name})}"
+                       th:data="${menu.id}"
+                       th:text="${menu.name}">
+                        메뉴
+                    </a>
+                </li>
+            </ul>
+        </div>
     </li>
 </ul>
