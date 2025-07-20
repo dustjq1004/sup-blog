@@ -126,3 +126,4 @@ document.addEventListener('DOMContentLoaded', function () {
         }, index * 100); // 각 요소마다 100ms 지연
     });
 });
+
