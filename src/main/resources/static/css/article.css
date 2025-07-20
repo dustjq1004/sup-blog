@@ -124,7 +124,7 @@ markdown - css
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 32px 0 24px 0; /* 위아래 여백은 필요에 따라 조정 */
+    margin: 24px 0 24px 0; /* 위아래 여백은 필요에 따라 조정 */
 }
 
 .blog-menu-quote {

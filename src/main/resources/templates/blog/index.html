@@ -15,16 +15,19 @@
         <div class="offcanvas-body p-4 pt-0 p-lg-2" th:insert="~{blog/blogSidebar}" th:with="articles=${articles}">
         </div>
         <div id="main" class="main">
-            <div class="mb-4 position-relative p-lg-2">
+            <div class="mb-4 position-relative p-lg-2 page-fade-in">
                 <div class="blog-menu-title">
                     <span class="blog-menu-quote">"</span>
                     <span th:if="${menu != null}" class="blog-menu-name" th:text="${menu.name}"></span>
                     <span th:if="${menu == null}" class="blog-menu-name">전체보기</span>
                     <span class="blog-menu-quote">"</span>
                 </div>
-                <div th:if="${menu != null}" class="blog-menu-sub-title">
+                <div th:if="${menu != null}" class="blog-menu-sub-title mb-5">
                     <span th:if="${menu.description != null}" th:text="${menu.description}"></span>
-                    <span th:if="${menu.description == null}"></span>
+                    <span th:if="${menu.description == null}" th:text="${wiseSaying}"></span>
+                </div>
+                <div th:if="${menu == null}" class="blog-menu-sub-title mb-5">
+                    <span th:text="${wiseSaying}"></span>
                 </div>
             </div>
             <div id="article-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xxl-4 gy-3 gx-0">
