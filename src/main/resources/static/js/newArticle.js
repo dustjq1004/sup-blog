@@ -23,10 +23,15 @@ function setDraftList(json) {
                         </span>
                     </div>
                     <div class="draft-item-action fs-3">
+                        <!-- 업로드 아이콘 -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="50" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
-                          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
-                          <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"/>
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+                            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"/>
                         </svg>
+                        <!-- 삭제 버튼(아이콘) 추가 -->
+                        <button type="button" class="btn ms-2 draft-delete-btn" onclick="deleteDraft(${draft.id}, event)">
+                            <i class="bi bi-trash3"></i>
+                        </button>
                     </div>
                 </div>
             </a>
@@ -36,7 +41,7 @@ function setDraftList(json) {
     return html;
 }
 
-function loadDraft(index) {
+function loadDraft(index, event) {
     const draft = draftList[index];
     if (!confirm(`"${draft.title}" \n을 불러오시겠습니까?`)) {
         return false;
@@ -49,6 +54,23 @@ function loadDraft(index) {
     $('#title').val(draft.title);
     $('#subTitle').val(draft.subTitle);
     easyMDE.value(draft.content);
+    bootstrap.Modal.getInstance($('#draftModal')).hide()
+}
+
+async function deleteDraft(draftId, event) {
+    event.stopPropagation(); // 부모 a 태그 클릭 방지
+    if (!confirm('이 임시글을 삭제하시겠습니까?')) return;
+
+
+    const options = {
+        method: 'DELETE'
+    };
+
+    await httpRequest(`/api/draft/${draftId}`, options, () => {
+        getDrafts();
+    }, () => {
+    })
+
 }
 
 function resetForm() {
@@ -59,25 +81,29 @@ function resetForm() {
     easyMDE.value("");
 }
 
-const success = async (body) => {
-    draftList = await body.json();
-    html = setDraftList(draftList);
+async function getDrafts() {
+    const options = {
+        method: 'GET'
+    };
 
-    $('#draft-list').html(html);
-    isDraftSaved = false;
+    const success = async (body) => {
+        draftList = await body.json();
+        html = setDraftList(draftList);
 
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        $('#draft-list').html(html);
+        isDraftSaved = false;
+
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    }
+
+    await httpRequest('/api/draft', options, success, () => {
+    })
 }
 
 $(document).ready(function () {
     $("#draft-button").click(async function () {
-        const options = {
-            method: 'GET'
-        };
-
-        await httpRequest('/api/draft', options, success, () => {
-        })
+        await getDrafts();
     })
 
     $("form :input").on("input", function () {
