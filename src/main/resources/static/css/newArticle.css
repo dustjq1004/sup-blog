@@ -1,11 +1,6 @@
-
-.a {
-
-}
-
 .draft-modal {
     margin-top: 15vh;
-    max-width: 600px;
+    max-width: 800px;
 }
 
 .draft-modal-content {
@@ -26,7 +21,7 @@
 
 .draft-modal-body {
     overflow: scroll;
-    height: 400px;
+    height: 500px;
 }
 
 #draft-list:first-child .draft-item-container {
@@ -52,10 +47,11 @@
     height: var(--draft-item-height);
     display: flex;
     flex-direction: row;
-    padding: 15px;
     color: var(--draft-item-container-color);
     background-color: var(--draft-item-background-color);
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 1px 8px 0px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 0px 0px 0.5px;
+    padding: 15px;
+    margin-bottom: 1px;
     /*padding: 0 var(--docsearch-spacing) 0 0;*/
 }
 
@@ -126,4 +122,27 @@
 
 .draft-items-button {
     height: 40px;
+}
+
+.draft-delete-btn {
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    height: 40px;
+}
+
+.draft-delete-btn:hover {
+    opacity: 1;
+}
+
+.draft-close-btn {
+    background-color: var(--draft-close-btn-color);
+    color: var(--primary-white);
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.draft-close-btn:hover {
+    background-color: var(--draft-close-btn-color);
+    color: var(--primary-white);
+    opacity: 1;
 }
