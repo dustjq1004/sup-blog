@@ -19,8 +19,14 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("SELECT a FROM Article a LEFT JOIN FETCH a.menu m WHERE m.name = :menuName")
     Page<Article> findByMenuName(Pageable pageRequest, String menuName);
 
+    @Query("SELECT a FROM Article a LEFT JOIN FETCH a.menu m WHERE m.name = :menuName AND a.title LIKE %:searchKeyword%")
+    Page<Article> findByMenuNameAndTitleContaining(Pageable pageRequest, String menuName, String searchKeyword);
+
     @Query("SELECT a FROM Article a LEFT JOIN FETCH a.menu m LEFT JOIN m.category c WHERE c.id = :categoryId")
     Page<Article> findByCategoryId(Pageable pageRequest, Long categoryId);
+
+    @Query("SELECT a FROM Article a LEFT JOIN FETCH a.menu m LEFT JOIN m.category c WHERE c.id = :categoryId AND a.title LIKE %:searchKeyword%")
+    Page<Article> findByCategoryIdAndTitleContaining(Pageable pageRequest, Long categoryId, String searchKeyword);
 
     /*
     SELECT
@@ -53,4 +59,6 @@ FROM QUESTION
     List<Article> findTop8ByOrderByCreatedAtDesc();
 
     List<Article> findByTitleContains(@NotBlank String titleParam);
+
+    Page<Article> findByTitleContaining(String title, Pageable pageable);
 }

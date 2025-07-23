@@ -32,6 +32,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // 검색 버튼 클릭
+    $('#blog-search-btn').on('click', function () {
+        $('#article-list').html("");
+        getArticlesPagination(0, menuName);
+    });
+
+    // input에서 Enter 키 입력 시
+    $('#blog-search-input').on('keydown', function (e) {
+        if (e.key === 'Enter') {
+            $('#article-list').html("");
+            getArticlesPagination(0, menuName);
+        }
+    });
+
     getArticlesPagination(pageNumber++, menuName);
 });
 
@@ -40,6 +54,7 @@ const getArticlesPagination = async (pageNumber, menuName) => {
 
     if (pageNumber) data["pageNumber"] = pageNumber;
     if (menuName) data["menuName"] = menuName;
+    data["searchKeyword"] = $('#blog-search-input').val();
 
     showSkeletonLoading('#article-list');
 
@@ -112,3 +127,4 @@ function ajaxGetRequest(method, url, data, success, fail) {
         fail: fail
     });
 }
+
