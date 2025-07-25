@@ -139,3 +139,59 @@ markdown - css
     font-size: 2rem;
     font-weight: 600;
 }
+
+/* blog search */
+.blog-search-group {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    /* 더 강한 그림자 효과 */
+    box-shadow: 0 4px 24px rgba(124, 58, 237, 0.10), 0 1.5px 6px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+}
+
+.blog-search-group:focus-within {
+    /* 포커스 시 그림자 강조 */
+    box-shadow: 0 8px 32px rgba(124, 58, 237, 0.16), 0 2px 8px rgba(0, 0, 0, 0.10);
+}
+
+.blog-search-input {
+    flex: 1 1 0;
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    font-size: 1rem;
+    background: transparent;
+    border-radius: 8px 0 0 8px;
+}
+
+.blog-search-btn {
+    border: none;
+    background: #7C3AED;
+    color: #fff;
+    padding: 0 15px;
+    height: 48px;
+    font-size: 1.1rem;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    transition: background 0.18s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blog-search-btn:hover,
+.blog-search-btn:focus {
+    background: #5b21b6;
+    color: #fff;
+}
+
+.blog-search-input::placeholder {
+    color: #b0b0b0;
+    font-size: 1rem;
+}

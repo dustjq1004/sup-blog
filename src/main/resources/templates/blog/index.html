@@ -15,7 +15,7 @@
         <div class="offcanvas-body p-4 pt-0 p-lg-2" th:insert="~{blog/blogSidebar}" th:with="articles=${articles}">
         </div>
         <div id="main" class="main">
-            <div class="mb-4 position-relative p-lg-2 page-fade-in">
+            <div class="position-relative p-lg-2 mb-3">
                 <div class="blog-menu-title">
                     <span class="blog-menu-quote">"</span>
                     <span th:if="${menu != null}" class="blog-menu-name" th:text="${menu.name}"></span>
@@ -30,14 +30,15 @@
                     <span th:text="${wiseSaying}"></span>
                 </div>
             </div>
-            <div class="row search-container mb-4">
-                <div class="col-12 col-md-6 mx-auto">
-                  <div class="input-group">
-                    <input type="text" id="blog-search-input" class="form-control" placeholder="검색어를 입력하세요" aria-label="검색어">
-                    <button class="btn btn-primary" type="button" id="blog-search-btn">
-                      <i class="bi bi-search"></i>
-                    </button>
-                  </div>
+            <div class="row search-container mb-6 page-fade-in">
+
+                <div class="col-12 col-md-8 mx-auto">
+                    <div class="blog-search-group">
+                        <input type="text" id="blog-search-input" class="blog-search-input" placeholder="검색어를 입력하세요">
+                        <button type="button" id="blog-search-btn" class="blog-search-btn">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div id="article-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xxl-4 gy-3 gx-0">
