@@ -40,9 +40,10 @@ public class BlogApiController {
     public ResponseEntity<ArticlesPaginationResponse<ArticleListViewResponse>> findArticles(
             @RequestParam(required = false, defaultValue = "0") int pageNumber,
             @RequestParam(required = false) Long categoryId,
-            @RequestParam(required = false) String menuName) {
+            @RequestParam(required = false) String menuName,
+            @RequestParam(required = false, defaultValue = "") String searchKeyword) {
 
-        Page<Article> articles = articleService.findAllPagination(pageNumber, categoryId, menuName);
+        Page<Article> articles = articleService.findAllPagination(pageNumber, categoryId, menuName, searchKeyword);
 
         ArticlesPaginationResponse<ArticleListViewResponse> paginationResponse = new ArticlesPaginationResponse<>(
                 articles.getNumber(), articles.getSize(), articles.getNumberOfElements(), articles.isFirst(),

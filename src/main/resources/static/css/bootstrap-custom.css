@@ -57,6 +57,10 @@ common
     margin-left: -1rem;
 }
 
+.mb-6 {
+    margin-bottom: 5rem !important;
+}
+
 /*
 common
 - tag style
