@@ -1,22 +1,23 @@
-const inputField = document.getElementById('search-input');
-const parentDiv = inputField.parentElement;
+// const inputField = document.getElementById('search-input');
+// const parentDiv = inputField.parentElement;
+/**
+ inputField.addEventListener('focus', function () {
+ parentDiv.classList.add('focused');
+ })
 
-inputField.addEventListener('focus', function () {
-    parentDiv.classList.add('focused');
-})
+ inputField.addEventListener('blur', function () {
+ parentDiv.classList.remove('focused');
+ })
 
-inputField.addEventListener('blur', function () {
-    parentDiv.classList.remove('focused');
-})
+ inputField.addEventListener('keyup', (e) => {
+ getSearchedArticles(e.target.value);
+ $("#search-dropdown").show();
+ })
 
-inputField.addEventListener('keyup', (e) => {
-    getSearchedArticles(e.target.value);
-    $("#search-dropdown").show();
-})
-
-$('#search-cancel-button').on('click', () => {
-    $("#search-dropdown").hide();
-})
+ $('#search-cancel-button').on('click', () => {
+ $("#search-dropdown").hide();
+ })
+ **/
 
 $(document).ready(() => {
     getLatestArticles();

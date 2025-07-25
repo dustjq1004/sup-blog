@@ -15,7 +15,7 @@
         <div class="offcanvas-body p-4 pt-0 p-lg-2" th:insert="~{blog/blogSidebar}" th:with="articles=${articles}">
         </div>
         <div id="main" class="main">
-            <div class="position-relative p-lg-2 mb-3">
+            <div class="position-relative p-lg-2 mb-3 page-fade-in">
                 <div class="blog-menu-title">
                     <span class="blog-menu-quote">"</span>
                     <span th:if="${menu != null}" class="blog-menu-name" th:text="${menu.name}"></span>
