@@ -18,17 +18,21 @@
     </SpringProfile>
     <SpringProfile name="dev">
         <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>/app/logs/application.log</file>  <!-- 컨테이너 내부 경로 -->
-            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <file>/app/logs/application.log</file>
+            
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
                 <fileNamePattern>/app/logs/application-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                    <maxFileSize>10MB</maxFileSize>
-                </timeBasedFileNamingAndTriggeringPolicy>
+                <maxFileSize>100MB</maxFileSize>
+                <maxHistory>30</maxHistory>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
             </rollingPolicy>
+            
             <encoder>
                 <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] [%thread] %logger{30} - %msg%n</pattern>
             </encoder>
+
         </appender>
+
         <root level="INFO">
             <appender-ref ref="FILE"/>
         </root>
