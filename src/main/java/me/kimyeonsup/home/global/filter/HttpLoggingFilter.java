@@ -23,10 +23,12 @@ public class HttpLoggingFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String clientIP = request.getHeader("X-Forwarded-For");
+        String requestId = request.getHeader("X-Request-Id");
         if (clientIP == null || clientIP.isEmpty()) {
             clientIP = request.getRemoteAddr();
         }
         MDC.put("clientIP", clientIP);
+        MDC.put("requestId", requestId);
 
         // 1. 요청 정보 로깅 (Body 제외)
         String url = request.getRequestURL().toString();
@@ -41,7 +43,6 @@ public class HttpLoggingFilter implements Filter {
         // 2. 응답 정보 로깅 (Body 출력 포함)
         int status = response.getStatus();
         // 응답 body는 ContentCachingResponseWrapper 없이 바로 읽을 수 없음(참고)
-        log.info("[RES] status={}", status);
     }
 
     // 파라미터를 문자열로 출력하는 메서드
