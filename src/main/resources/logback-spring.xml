@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
-    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <!--    <include resource="org/springframework/boot/logging/logback/base.xml"/>-->
     <SpringProfile name="local">
         <!-- Appenders -->
         <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-                <level>DEBUG</level>
-            </filter>
             <encoder>
                 <pattern>
                     %d{yyyy-MM-dd HH:mm:ss.SSS} %X{clientIP} %X{requestId} [%-5level] [%thread] %logger{30} - %msg%n
@@ -14,11 +11,14 @@
             </encoder>
         </appender>
 
-        <logger name="org.springframework.web" level="DEBUG"/>
-        <logger name="org.springframework.boot" level="DEBUG"/>
-        <logger name="org.hibernate.SQL" level="DEBUG"/>
-        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
-        <logger name="org.springframework.boot.autoconfigure" level="INFO"/>
+        <root level="DEBUG">
+            <appender-ref ref="console"/>
+        </root>
+        <!--        <logger name="org.springframework.web" level="DEBUG"/>-->
+        <!--        <logger name="org.springframework.boot" level="DEBUG"/>-->
+        <!--        <logger name="org.hibernate.SQL" level="DEBUG"/>-->
+        <!--        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>-->
+        <!--        <logger name="org.springframework.boot.autoconfigure" level="INFO"/>-->
     </SpringProfile>
     <SpringProfile name="dev">
         <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -37,7 +37,6 @@
                     [%d{yyyy-MM-dd HH:mm:ss.SSS}] %X{clientIP} %X{requestId} [%-5level] [%thread] %logger{30} - %msg%n
                 </pattern>
             </encoder>
-
         </appender>
 
         <root level="INFO">
