@@ -2,16 +2,17 @@
 <configuration scan="true" scanPeriod="30 seconds">
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
-    <SpringProfile name="local">
-        <!-- Appenders -->
-        <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-            <encoder>
-                <pattern>
-                    %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){magenta} %clr(%X{clientIP}){blue} %X{requestId} %clr([%-5level]){} %clr([%thread]){cyan} %clr(%logger{30}){cyan} - %msg%n
-                </pattern>
-            </encoder>
-        </appender>
 
+    <!-- Appenders -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){magenta} %clr(%X{clientIP}){blue} %X{requestId} %clr([%-5level]){} %clr([%thread]){cyan} %clr(%logger{30}){cyan} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <SpringProfile name="local">
         <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG" additivity="false">
             <appender-ref ref="console"/>
         </logger>
@@ -41,19 +42,41 @@
 
             <encoder>
                 <pattern>
-                    [%d{yyyy-MM-dd HH:mm:ss.SSS}] %X{clientIP} %X{requestId} [%-5level] [%thread] %logger{30} - %msg%n
+                    %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){magenta} %clr(%X{clientIP}){blue} %X{requestId} %clr([%-5level]){} %clr([%thread]){cyan} %clr(%logger{30}){cyan} - %msg%n
                 </pattern>
             </encoder>
         </appender>
 
+        <!-- 3. ERROR 로그 분리 -->
+        <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>/app/logs/error.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>/app/logs/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <pattern>
+                    %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){magenta} %clr(%X{clientIP}){blue} %X{requestId} %clr([%-5level]){} %clr([%thread]){cyan} %clr(%logger{30}){cyan} - %msg%n
+                </pattern>
+            </encoder>
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+        </appender>
+
         <logger name="org.springframework.web.filter.CommonsRequestLoggingFilter" level="DEBUG">
             <appender-ref ref="FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
         </logger>
         <logger name="me.kimyeonsup.home" level="DEBUG" additivity="false">
             <appender-ref ref="FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
         </logger>
         <logger name="org.springframework" level="ERROR">
             <appender-ref ref="FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
         </logger>
 
         <logger name="org.hibernate.SQL" level="DEBUG"/>
