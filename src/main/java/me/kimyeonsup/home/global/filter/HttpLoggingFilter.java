@@ -1,68 +1,45 @@
 package me.kimyeonsup.home.global.filter;
 
-import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Enumeration;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 @Slf4j
 @Component
-public class HttpLoggingFilter implements Filter {
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class HttpLoggingFilter extends OncePerRequestFilter {
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
+    public void doFilterInternal(HttpServletRequest request,
+                                 HttpServletResponse response,
+                                 FilterChain filterChain) throws ServletException, IOException {
+
         String clientIP = request.getHeader("X-Forwarded-For");
         String requestId = request.getHeader("X-Request-Id");
+
         if (clientIP == null || clientIP.isEmpty()) {
             clientIP = request.getRemoteAddr();
         }
+
         MDC.put("clientIP", clientIP);
         MDC.put("requestId", requestId);
-
-        // 1. 요청 정보 로깅 (Body 제외)
-        String url = request.getRequestURL().toString();
-        String params = getParams(request);
-        String userAgent = request.getHeader("User-Agent");
-
-        log.info("[REQ] url={}, params={}, userAgent={}", url, params, userAgent);
-
-        // 필터 체인 실행 (컨트롤러까지 요청 전달)
         filterChain.doFilter(request, response);
 
-        // 2. 응답 정보 로깅 (Body 출력 포함)
         int status = response.getStatus();
-        // 응답 body는 ContentCachingResponseWrapper 없이 바로 읽을 수 없음(참고)
-    }
-
-    // 파라미터를 문자열로 출력하는 메서드
-    private String getParams(HttpServletRequest req) {
-        StringBuilder sb = new StringBuilder();
-        Enumeration<String> names = req.getParameterNames();
-        while (names.hasMoreElements()) {
-            String name = names.nextElement();
-            String value = req.getParameter(name);
-            if (sb.length() > 0) {
-                sb.append("&");
-            }
-            sb.append(name).append("=").append(value);
+        if (status >= 400) {
+            log.error("Request failed with status: {}, clientIP: {}, requestId: {}", status, clientIP, requestId);
+        } else {
+            log.info("Request completed with status: {}, clientIP: {}, requestId: {}", status, clientIP, requestId);
         }
-        return sb.toString();
+        MDC.clear();
     }
 
-    @Override
-    public void destroy() {
-        MDC.remove("clientIP");
-        Filter.super.destroy();
-    }
 }
