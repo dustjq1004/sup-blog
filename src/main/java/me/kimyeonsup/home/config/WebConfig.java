@@ -1,6 +1,5 @@
 package me.kimyeonsup.home.config;
 
-import jakarta.servlet.http.HttpServletRequest;
 import me.kimyeonsup.home.config.interceptor.ArticleSessionInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,12 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public CommonsRequestLoggingFilter requestLoggingFilter() {
-        CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter() {
-            @Override
-            protected boolean shouldLog(HttpServletRequest request) {
-                return request.getRequestURI().startsWith("/api");
-            }
-        };
+        CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();
         loggingFilter.setIncludeQueryString(true);
         loggingFilter.setIncludeClientInfo(true);
         loggingFilter.setIncludePayload(true);

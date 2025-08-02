@@ -38,6 +38,7 @@ public class HttpLoggingFilter extends OncePerRequestFilter {
         ContentCachingResponseWrapper responseWrapper = null;
         if (request.getRequestURI().startsWith("/api")) {
             responseWrapper = new ContentCachingResponseWrapper(response);
+            responseWrapper.setCharacterEncoding("UTF-8");
             filterChain.doFilter(request, responseWrapper);
         } else {
             filterChain.doFilter(request, response);

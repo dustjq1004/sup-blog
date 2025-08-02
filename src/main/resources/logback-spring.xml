@@ -9,6 +9,7 @@
             <pattern>
                 %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){magenta} %clr(%X{clientIP}){blue} %X{requestId} %clr([%-5level]){} %clr([%thread]){cyan} %clr(%logger{30}){cyan} - %msg%n
             </pattern>
+            <charset>UTF-8</charset>
         </encoder>
     </appender>
 
@@ -48,6 +49,7 @@
                 <pattern>
                     %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){magenta} %clr(%X{clientIP}){blue} %X{requestId} %clr([%-5level]){} %clr([%thread]){cyan} %clr(%logger{30}){cyan} - %msg%n
                 </pattern>
+                <charset>UTF-8</charset>
             </encoder>
         </appender>
 
@@ -65,6 +67,7 @@
                 <pattern>
                     %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){magenta} %clr(%X{clientIP}){blue} %X{requestId} %clr([%-5level]){} %clr([%thread]){cyan} %clr(%logger{30}){cyan} - %msg%n
                 </pattern>
+                <charset>UTF-8</charset>
             </encoder>
             <filter class="ch.qos.logback.classic.filter.LevelFilter">
                 <level>ERROR</level>
