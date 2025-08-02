@@ -56,6 +56,7 @@
             <file>/app/logs/error.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
                 <fileNamePattern>/app/logs/error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <maxFileSize>100MB</maxFileSize>
                 <maxHistory>30</maxHistory>
                 <cleanHistoryOnStart>true</cleanHistoryOnStart>
                 <gzippedArchive>true</gzippedArchive>
