@@ -51,8 +51,10 @@
         <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <file>/app/logs/error.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <fileNamePattern>/app/logs/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+                <fileNamePattern>/app/logs/error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
                 <maxHistory>30</maxHistory>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+                <gzippedArchive>true</gzippedArchive>
             </rollingPolicy>
             <encoder>
                 <pattern>
