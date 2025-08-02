@@ -23,6 +23,10 @@
             <appender-ref ref="console"/>
         </logger>
 
+        <root level="ERROR">
+            <appender-ref ref="console"/>
+        </root>
+
         <logger name="org.hibernate.SQL" level="DEBUG"/>
         <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
         <!--        <logger name="org.springframework.boot" level="DEBUG"/>-->
@@ -80,6 +84,11 @@
             <appender-ref ref="FILE"/>
             <appender-ref ref="ERROR_FILE"/>
         </logger>
+
+        <root level="ERROR">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </root>
 
         <logger name="org.hibernate.SQL" level="DEBUG"/>
         <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
