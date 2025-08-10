@@ -110,6 +110,13 @@ function nvl(value) {
 
 $(document).on('show.bs.modal shown.bs.modal', function () {
     $('body').css('padding-right', '');
+
+    // body scrollbar 제거
+    $('html').css('overflow', 'hidden');
+});
+
+$(document).on('hidden.bs.modal', function () {
+    $('html').css('overflow', '');
 });
 
 // DOM 로딩 완료 후 애니메이션 적용
