@@ -11,17 +11,14 @@
     background-color: var(--primary-white);
 }
 
-.draft-modal-body {
-    padding: 0.5rem;
-}
-
 .draft-modal .modal-footer {
     background-color: var(--primary-white);
 }
 
 .draft-modal-body {
     overflow: scroll;
-    height: 500px;
+    height: 50vh;
+    padding: 0.5rem;
 }
 
 #draft-list:first-child .draft-item-container {
