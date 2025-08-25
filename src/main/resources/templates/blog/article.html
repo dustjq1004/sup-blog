@@ -24,7 +24,7 @@
                         <input type="hidden" id="article-id" th:value="${article.id}">
                         <header class="mb-5">
                             <div class="d-flex">
-                                <h1 class="fw-bolder w-90 text-wrap" th:utext="${article.title}"></h1>
+                                <h1 class="fw-bolder w-90 text-center text-wrap" th:utext="${article.title}"></h1>
                                 <div class="d-flex ms-auto">
                                     <div sec:authorize="isAuthenticated()"
                                          th:if="${#authentication.principal.getName().equals(article.getAuthor())} ">
@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <h5 class="mb-4 text-secondary" th:text="${article.subTitle}"></h5>
+                            <h5 class="mb-4 w-90 text-center text-secondary" th:text="${article.subTitle}"></h5>
                             <div class="text-muted ms-auto d-flex justify-content-start">
                                 <span class="username meta-item" th:text="|${article.author}|"></span>
                                 <span class="separator "></span>
@@ -65,14 +65,14 @@
                        th:href="|/blog/${article.menuName}/${prevNextArticle.prevId}|">
                         <div class="card-body">
                             <span class="pn-label">이전 글</span>
-                            <h6 th:text="${prevNextArticle.prevTitle}"></h6>
+                            <h6 class="text-truncate" th:text="${prevNextArticle.prevTitle}"></h6>
                         </div>
                     </a>
                     <a th:if="${not prevNextArticle.isPrev}"
                        class="card border-0 mb-2 link-underline link-underline-opacity-0">
                         <div class="card-body">
                             <span class="pn-label">이전 글</span>
-                            <h6 th:text="${prevNextArticle.prevTitle}"></h6>
+                            <h6 class="text-truncate" th:text="${prevNextArticle.prevTitle}"></h6>
                         </div>
                     </a>
                 </div>
@@ -82,14 +82,14 @@
                        th:href="|/blog/${article.menuName}/${prevNextArticle.nextId}|">
                         <div class="card-body ms-auto justify-content-end">
                             <span class="pn-label">다음 글</span>
-                            <h6 th:text="${prevNextArticle.nextTitle}"></h6>
+                            <h6 class="text-truncate" th:text="${prevNextArticle.nextTitle}"></h6>
                         </div>
                     </a>
                     <a th:if="${not prevNextArticle.isNext}"
                        class="card border-0 mb-1 ms-auto link-underline link-underline-opacity-0">
                         <div class="card-body ms-auto justify-content-end">
                             <span class="pn-label">다음 글</span>
-                            <h6 th:text="${prevNextArticle.nextTitle}"></h6>
+                            <h6 class="text-truncate" th:text="${prevNextArticle.nextTitle}"></h6>
                         </div>
                     </a>
                 </div>
