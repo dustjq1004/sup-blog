@@ -22,9 +22,19 @@
                 <div class="col">
                     <article>
                         <input type="hidden" id="article-id" th:value="${article.id}">
-                        <header class="mb-5">
-                            <div class="d-flex">
-                                <h1 class="fw-bolder w-90 text-center text-wrap" th:utext="${article.title}"></h1>
+                        <header class="p-lg-3 mb-6 page-fade-in">
+                            <div class="my-4 w-100 text-center text-wrap">
+                                <span class="blog-title-quote">"</span>
+                                <h1 class="fw-bolder text-wrap" th:utext="${article.title}"></h1>
+                                <span class="blog-title-quote">"</span>
+                            </div>
+                            <h5 class="mb-5 text-center text-secondary" th:text="${article.subTitle}"></h5>
+                            <div class="text-muted ms-auto d-flex justify-content-start">
+                                <span class="username meta-item" th:text="|${article.author}|"></span>
+                                <span class="separator "></span>
+                                <span class="createdAt meta-item" th:text="|${#temporals.format(article.createdAt, 'yyyy년 MM월 dd일')}|"></span>
+                                <span class="separator"></span>
+                                <span class="updatedAt meta-item" th:text="|${#temporals.format(article.updatedAt, 'yyyy년 MM월 dd일')} 수정됨|"></span>
                                 <div class="d-flex ms-auto">
                                     <div sec:authorize="isAuthenticated()"
                                          th:if="${#authentication.principal.getName().equals(article.getAuthor())} ">
@@ -39,14 +49,6 @@
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                            <h5 class="mb-4 w-90 text-center text-secondary" th:text="${article.subTitle}"></h5>
-                            <div class="text-muted ms-auto d-flex justify-content-start">
-                                <span class="username meta-item" th:text="|${article.author}|"></span>
-                                <span class="separator "></span>
-                                <span class="createdAt meta-item" th:text="|${#temporals.format(article.createdAt, 'yyyy년 MM월 dd일')}|"></span>
-                                <span class="separator"></span>
-                                <span class="updatedAt meta-item" th:text="|${#temporals.format(article.updatedAt, 'yyyy년 MM월 dd일')} 수정됨|"></span>
                             </div>
                         </header>
                         <section class="mb-5 markdown-body">
