@@ -34,6 +34,7 @@ public class MenuService {
                         .name(menu.getName())
                         .description(menu.getDescription())
                         .updatedAt(menu.getUpdatedAt())
+                        .articleCount(menu.getArticles() == null ? 0 : menu.getArticles().size())
                         .build()
         ).toList();
         return new MenusResponse(menus);
@@ -50,6 +51,7 @@ public class MenuService {
                                 .categoryId(menu.getCategory().getId())
                                 .createdAt(menu.getCreatedAt())
                                 .updatedAt(menu.getUpdatedAt())
+                                .articleCount(menu.getArticles() == null ? 0 : menu.getArticles().size())
                                 .build())
                         .toList())
                 .build();

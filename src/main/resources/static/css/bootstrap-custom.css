@@ -67,7 +67,7 @@ common
 */
 
 .bd-links-link {
-    padding: 0.1875rem 0.5rem;
+    padding: 0.25rem 0.5rem;
     margin-top: 0.125rem;
     /*margin-left: 1.125rem;*/
     color: var(--bs-body-color);

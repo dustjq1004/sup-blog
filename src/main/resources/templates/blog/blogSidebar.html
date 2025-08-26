@@ -8,11 +8,13 @@
 
             <ul class="side-link list-unstyled fw-normal pb-2 ms-4 big">
                 <li th:each="menu : ${item.menus}">
-                    <a class="bd-links-link d-inline-block rounded" aria-current="page"
+                    <a class="bd-links-link d-inline-block rounded-3" aria-current="page"
                        th:href="@{/blog/{menuName}(menuName=${menu.name})}"
-                       th:data="${menu.id}"
-                       th:text="${menu.name}">
-                        메뉴
+                       th:data-id="${menu.id}"
+                       th:data-menu-name="${menu.name}">
+                        <span th:text="${menu.name}">메뉴</span>
+                        <span class="badge ms-1"
+                              th:text="${menu.articleCount}">0</span>
                     </a>
                 </li>
             </ul>

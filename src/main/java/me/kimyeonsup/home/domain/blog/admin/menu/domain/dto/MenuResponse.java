@@ -17,6 +17,7 @@ public class MenuResponse {
     private String description;
     private String createdAt;
     private String updatedAt;
+    private Integer articleCount;
 
     private Long categoryId;
     private String categoryEmoji;
@@ -29,13 +30,15 @@ public class MenuResponse {
         this.categoryId = menu.getCategory().getId();
         this.categoryEmoji = menu.getCategory().getEmoji();
         this.categoryName = menu.getCategory().getName();
+        this.articleCount = menu.getArticles() == null ? 0 : menu.getArticles().size();
     }
 
     @Builder
     public MenuResponse(Long id, String emoji, String name, String description,
                         Long categoryId, String categoryEmoji, String categoryName,
                         LocalDateTime createdAt,
-                        LocalDateTime updatedAt) {
+                        LocalDateTime updatedAt,
+                        Integer articleCount) {
         this.id = id;
         this.emoji = emoji;
         this.name = name;
@@ -45,5 +48,6 @@ public class MenuResponse {
         this.categoryName = categoryName;
         this.createdAt = DateTimeFormat.diffDateFromNow(createdAt);
         this.updatedAt = DateTimeFormat.diffDateFromNow(updatedAt);
+        this.articleCount = articleCount;
     }
 }
