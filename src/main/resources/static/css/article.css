@@ -39,6 +39,29 @@
     transition-duration: 0.5s;
 }
 
+.article-list .article-card h5 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--black);
+    margin-bottom: 0.5rem;
+}
+
+.article-list .card-body {
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.article-list .card-body .card-text {
+    font-size: 14px;
+    color: var(--gray-400);
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+}
+
 /* ==========================================================================
    ARTICLE DETAIL STYLES
    ========================================================================== */

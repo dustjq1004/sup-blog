@@ -93,13 +93,13 @@ const getArticlesPagination = async (pageNumber, menuName) => {
                                        href="${article.thumbnailUrl}"></image>
 
                             </svg>
-                            <div class="card-body">
+                            <div class="article-card card-body">
                                 <div class="mb-2">
                                     <span class="text-secondary fs-7"
                                           text="${moment(article.updatedAt).format("YYYY.MM.DD")}"></span>
                                 </div>
-                                <h5 class="mb-1 text-truncate">${article.title}</h5>
-                                <p class="card-text text-body-tertiary fs-6 text-truncate">${article.subTitle}</p>
+                                <h5 class="mb-1">${article.title}</h5>
+                                <p class="card-text text-body-tertiary text-truncate">${article.subTitle}</p>
                             </div>
                         </div>
                     </a>

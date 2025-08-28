@@ -14,7 +14,7 @@
     <div class="row flex-lg-row-reverse d-lg-grid content">
         <div class="offcanvas-body p-4 pt-0 p-lg-2" th:insert="~{blog/blogSidebar}" th:with="articles=${articles}">
         </div>
-        <div id="main" class="main">
+        <div id="main">
             <div class="position-relative p-lg-2 mb-3 page-fade-in">
                 <div class="blog-menu-title">
                     <span class="blog-menu-quote">"</span>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div id="article-list" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xxl-4 gy-3 gx-0">
+            <div id="article-list" class="article-list row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xxl-4 gy-3 gx-0">
                 <!--                <div class="col" th:each="item : ${articles}">-->
                 <!--                    <a th:href="@{/blog/{menuName}/{id}(id=${item.id},menuName=${item.menuName})}"-->
                 <!--                       class="link-offset-2 link-underline link-underline-opacity-0">-->
