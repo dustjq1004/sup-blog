@@ -154,6 +154,10 @@ article header .separator {
     50% { background-position: 100% 50%; }
 }
 
+.main {
+    width: 90%;
+}
+
 
 /* Previous/Next Navigation */
 #prev-next-card .card {
