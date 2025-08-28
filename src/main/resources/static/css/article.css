@@ -1,53 +1,193 @@
 /*
-article - list CSS
-글 목록
-*/
+ * Article CSS
+ * 블로그 글 목록 및 글 상세 페이지 스타일
+ */
+
+/* ==========================================================================
+   CSS VARIABLES (COLORS)
+   ========================================================================== */
+
+:root {
+    /* Primary Colors */
+    --primary-color: #7C3AED;
+    --primary-hover: #5b21b6;
+    --primary-light: rgba(124, 58, 237, 0.10);
+    --primary-focus: rgba(124, 58, 237, 0.16);
+    
+    /* Neutral Colors */
+    --white: #fff;
+    --black: #222;
+    --gray-100: #f6f6f6;
+    --gray-200: #b0b0b0;
+    --gray-300: #666;
+    --gray-400: #444;
+    
+    /* Shadow Colors */
+    --shadow-light: rgba(0, 0, 0, 0.08);
+    --shadow-medium: rgba(0, 0, 0, 0.10);
+    
+    /* Transparent Colors */
+    --transparent-purple: rgba(112.520718, 44.062154, 249.437846, 0.1);
+}
+
+/* ==========================================================================
+   ARTICLE LIST STYLES
+   ========================================================================== */
+
 #article-list .card:hover {
     transform: translateY(-6px);
     transition-duration: 0.5s;
 }
 
+/* ==========================================================================
+   ARTICLE DETAIL STYLES
+   ========================================================================== */
 
-/*
-article CSS
-글 정보
-*/
+/* Article Header */
+article header {
+    background: var(--white);
+    margin-bottom: 3rem;
+    /*box-shadow:*/
+        /*0 4px 6px -1px rgba(0, 0, 0, 0.1),*/
+        /*0 2px 4px -1px rgba(0, 0, 0, 0.06);*/
+    border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+    position: relative;
+    overflow: hidden;
+}
 
+/*article header::before {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    height: 4px;*/
+/*    background: linear-gradient(90deg, var(--primary-color), #a855f7, var(--primary-hover));*/
+/*    background-size: 200% 100%;*/
+/*    animation: shimmer 3s ease-in-out infinite;*/
+/*}*/
+
+/*article header::after {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    right: 0;*/
+/*    width: 100px;*/
+/*    height: 100px;*/
+/*    background: radial-gradient(circle, rgba(124, 58, 237, 0.05) 0%, transparent 70%);*/
+/*    border-radius: 50%;*/
+/*    transform: translate(30px, -30px);*/
+/*}*/
+
+article header h1 {
+    font-size: calc(0.9rem + 1.5vw);
+    color: var(--black);
+    margin-bottom: 2rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    display: inline-block;
+}
+
+article header h5 {
+    font-size: 1.15rem;
+}
+
+.blog-title-quote {
+    color: var(--gray-200);
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0 10px;
+}
+
+article header .meta-item {
+    color: var(--gray-400);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+article header .username {
+    background: rgba(124, 58, 237, 0.08);
+    border: 1px solid rgba(124, 58, 237, 0.15);
+}
+
+article header .createdAt {
+    background: rgba(58, 237, 202, 0.08);
+    border: 1px solid rgba(58, 237, 202, 0.15);
+}
+
+article header .updatedAt {
+    background: rgba(237, 77, 58, 0.08);
+    border: 1px solid rgba(237, 77, 58, 0.15);
+}
+
+article header .username::before {
+    content: '✨';
+    font-size: 0.9rem;
+}
+
+article header .createdAt::before {
+    content: '🗓';
+    font-size: 0.9rem;
+}
+
+article header .updatedAt::before {
+    content: '🗓';
+    font-size: 0.9rem;
+}
+
+article header .separator {
+    color: var(--gray-300);
+    margin: 0 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.7;
+}
+
+@keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.main {
+    width: 90%;
+}
+
+
+/* Previous/Next Navigation */
 #prev-next-card .card {
-    background: #f6f6f6;
-    width: 55%
+    background: var(--gray-100);
+    width: 55%;
 }
 
 #prev-next-card .card:hover {
-    background-color: rgba(112.520718, 44.062154, 249.437846, .1);
-    border-color: white;
+    background-color: var(--transparent-purple);
+    border-color: var(--white);
     transform: translateY(-5px);
     transition-duration: 0.5s;
 }
 
-/* Header */
-article header .username {
-    font-weight: bold;
-}
-
-article header .separator {
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-}
-
-/* prev , next post*/
 .pn-label {
     font-size: 0.80em;
 }
 
-/*
-markdown - css
-*/
+/* ==========================================================================
+   MARKDOWN STYLES
+   ========================================================================== */
+
 .markdown-body pre > code {
     white-space: pre-wrap;
 }
 
-/* no articles */
+/* ==========================================================================
+   EMPTY STATE STYLES
+   ========================================================================== */
+
 .empty-article-message {
     width: 100%;
     min-height: 60vh;
@@ -55,7 +195,7 @@ markdown - css
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #fff;
+    background: var(--white);
     padding: 0 16px;
     box-sizing: border-box;
     animation: fadeIn 0.7s;
@@ -67,15 +207,15 @@ markdown - css
 
 .empty-article-text {
     font-size: 1.25rem;
-    color: #222;
+    color: var(--black);
     margin-bottom: 32px;
     text-align: center;
     font-weight: 500;
 }
 
 .empty-article-btn {
-    background: #222;
-    color: #fff;
+    background: var(--black);
+    color: var(--white);
     border: none;
     border-radius: 12px;
     padding: 16px 0;
@@ -87,28 +227,20 @@ markdown - css
 }
 
 .empty-article-btn:hover {
-    background: #444;
+    background: var(--gray-400);
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+/* ==========================================================================
+   BLOG MENU STYLES
+   ========================================================================== */
 
-/* blog menu title */
 .blog-menu-title {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem; /* 기존 사이즈와 동일하게 조정 */
+    font-size: 2rem;
     font-weight: 600;
-    margin: 32px 0 20px 0; /* 위아래 여백은 필요에 따라 조정 */
+    margin: 32px 0 20px 0;
 }
 
 .blog-menu-sub-title {
@@ -117,47 +249,55 @@ markdown - css
     justify-content: center;
     font-size: 1.3rem;
     font-weight: 500;
-    color: #666; /* 연한 회색 */
+    color: var(--gray-300);
 }
 
 .blog-menu-sub-title span {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 24px 0 24px 0; /* 위아래 여백은 필요에 따라 조정 */
+    margin: 24px 0;
 }
 
 .blog-menu-quote {
-    color: #b0b0b0; /* 회색 ("") */
-    font-size: 2.2rem; /* 따옴표는 살짝 더 크게 */
+    color: var(--gray-200);
+    font-size: 2.2rem;
     font-weight: 700;
     margin: 0 10px;
 }
 
 .blog-menu-name {
-    color: #222; /* 메뉴 이름은 진한 색 */
+    color: var(--black);
     font-size: 2rem;
     font-weight: 600;
 }
 
-/* blog search */
+.side-link .badge {
+    position: relative;
+    top: -1px;
+    color: #7C3AED;
+    border: 1px solid rgba(124, 58, 237, 0.15);
+}
+
+/* ==========================================================================
+   BLOG SEARCH STYLES
+   ========================================================================== */
+
 .blog-search-group {
     display: flex;
     align-items: center;
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
-    background: #fff;
+    background: var(--white);
     border-radius: 8px;
-    /* 더 강한 그림자 효과 */
-    box-shadow: 0 4px 24px rgba(124, 58, 237, 0.10), 0 1.5px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 24px var(--primary-light), 0 1.5px 6px var(--shadow-light);
     overflow: hidden;
     transition: box-shadow 0.2s;
 }
 
 .blog-search-group:focus-within {
-    /* 포커스 시 그림자 강조 */
-    box-shadow: 0 8px 32px rgba(124, 58, 237, 0.16), 0 2px 8px rgba(0, 0, 0, 0.10);
+    box-shadow: 0 8px 32px var(--primary-focus), 0 2px 8px var(--shadow-medium);
 }
 
 .blog-search-input {
@@ -170,10 +310,15 @@ markdown - css
     border-radius: 8px 0 0 8px;
 }
 
+.blog-search-input::placeholder {
+    color: var(--gray-200);
+    font-size: 1rem;
+}
+
 .blog-search-btn {
     border: none;
-    background: #7C3AED;
-    color: #fff;
+    background: var(--primary-color);
+    color: var(--white);
     padding: 0 15px;
     height: 48px;
     font-size: 1.1rem;
@@ -187,11 +332,21 @@ markdown - css
 
 .blog-search-btn:hover,
 .blog-search-btn:focus {
-    background: #5b21b6;
-    color: #fff;
+    background: var(--primary-hover);
+    color: var(--white);
 }
 
-.blog-search-input::placeholder {
-    color: #b0b0b0;
-    font-size: 1rem;
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
