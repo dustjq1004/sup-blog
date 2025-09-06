@@ -109,6 +109,23 @@ article header h1 {
     line-height: 1.2;
     letter-spacing: -0.02em;
     display: inline-block;
+    position: relative;
+}
+
+article header h1::before {
+    content: '"';
+    color: var(--gray-200);
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+article header h1::after {
+    content: '"';
+    color: var(--gray-200);
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-left: 10px;
 }
 
 article header h5 {
@@ -178,7 +195,16 @@ article header .separator {
 }
 
 .main {
-    width: 90%;
+    min-height: 60vh;
+}
+
+/* Blog List Container */
+.container {
+    min-height: 100vh;
+}
+
+#article-list {
+    min-height: 50vh;
 }
 
 
@@ -358,6 +384,19 @@ article header .separator {
     background: var(--primary-hover);
     color: var(--white);
 }
+
+@media (min-width: 1200px) {
+    .main {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1400px) {
+    .main {
+        width: 90%;
+    }
+}
+
 
 /* ==========================================================================
    ANIMATIONS
