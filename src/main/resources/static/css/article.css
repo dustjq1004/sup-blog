@@ -172,7 +172,6 @@ article header .separator {
 }
 
 .main {
-    width: 90%;
     min-height: 60vh;
 }
 
@@ -361,6 +360,18 @@ article header .separator {
 .blog-search-btn:focus {
     background: var(--primary-hover);
     color: var(--white);
+}
+
+@media (min-width: 1200px) {
+    .main {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1400px) {
+    .main {
+        width: 90%;
+    }
 }
 
 /* ==========================================================================
