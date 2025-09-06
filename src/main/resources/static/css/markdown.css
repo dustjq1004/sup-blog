@@ -242,17 +242,17 @@
     margin: 1em var(--base-size-40);
 }
 
-.markdown-body hr {
-    box-sizing: content-box;
-    overflow: hidden;
-    background: transparent;
-    border-bottom: 1px solid var(--borderColor-muted);
-    height: .25em;
-    padding: 0;
-    margin: var(--base-size-24) 0;
-    background-color: var(--borderColor-default);
-    border: 0;
-}
+/*.markdown-body hr {*/
+/*    box-sizing: content-box;*/
+/*    overflow: hidden;*/
+/*    background: transparent;*/
+/*    border-bottom: 1px solid var(--borderColor-muted);*/
+/*    height: .25em;*/
+/*    padding: 0;*/
+/*    margin: var(--base-size-24) 0;*/
+/*    background-color: var(--borderColor-default);*/
+/*    border: 0;*/
+/*}*/
 
 .markdown-body input {
     font: inherit;
@@ -307,15 +307,20 @@
     opacity: 1;
 }
 
+.markdown-body hr {
+    margin: 12px 0;
+    border: 0;
+    text-align: center;
+}
+
 .markdown-body hr::before {
-    display: table;
-    content: "";
+    content: "\2022 \2022 \2022";
+    font-size: 50px;
+    color: #4F8BCA;
 }
 
 .markdown-body hr::after {
-    display: table;
-    clear: both;
-    content: "";
+    display: none;
 }
 
 .markdown-body table {

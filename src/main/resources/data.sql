@@ -133,7 +133,7 @@ insert into article (title, sub_title, content, author, menu_id, created_at, upd
 insert into article (title, sub_title, content, author, menu_id, created_at, updated_at) values ('제목 97', 'subTitle 예시입니다.', '내용 5', 'dustjq1005', 1, NOW(), NOW())
 insert into article (title, sub_title, content, author, menu_id, created_at, updated_at) values ('제목 98', 'subTitle 예시입니다.', '내용 5', 'dustjq1005', 1, NOW(), NOW())
 insert into article (title, sub_title, content, author, menu_id, created_at, updated_at) values ('제목 99', 'subTitle 예시입니다.', '내용 5', 'dustjq1005', 1, NOW(), NOW())
-insert into article (title, sub_title, content, author, menu_id, created_at, updated_at) values ('제목 100', 'subTitle 예시입니다.', '내용 5', 'dustjq1005', 1, NOW(), NOW())
+insert into article (title, sub_title, content, author, menu_id, created_at, updated_at) values ('제목 100', 'subTitle 예시입니다.', '---', 'dustjq1005', 1, NOW(), NOW())
 
 
 
